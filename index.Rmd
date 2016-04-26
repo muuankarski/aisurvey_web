@@ -1,0 +1,41 @@
+---
+title: "Institute survey 2015"
+---
+
+`Generated: `r Sys.time()``
+
+
+
+<a href="https://www.r-project.org/">
+<img src="https://www.r-project.org/logo/Rlogo.png" alt="Smiley face" style="float:right;width:150px;">
+</a>
+
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+rmarkdown::render_site()
+
+# kirjoita .html filet sinettiin
+htmlfiles <- list.files("C:/btsync/kela/ropas/_site",pattern = ".html", full.names = TRUE)
+file.copy(from = htmlfiles, to = "\\\\oma-sinetti.kela.fi@SSL\\DavWWWRoot\\henkilot\\e275ceo\\Documents\\Jaettu kaikille\\ropas", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+file.copy(from = htmlfiles, to = "P:/Tuo_Hankkeet/Kainu16/ropas", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+file.copy(from = htmlfiles, to = "P:/Tutkimus/Yhteiset/Tutkimusryhma/kainu2016/ropas", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+
+
+# kirjoita plotit sinettiin
+plots <- list.files("C:/btsync/kela/ropas/_site/plot", full.names = TRUE)
+file.copy(from = plots, to = "\\\\oma-sinetti.kela.fi@SSL\\DavWWWRoot\\henkilot\\e275ceo\\Documents\\Jaettu kaikille\\ropas\\plot", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+file.copy(from = plots, to = "P:/Tuo_Hankkeet/Kainu16/ropas/plot", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+file.copy(from = plots, to = "P:/Tutkimus/Yhteiset/Tutkimusryhma/kainu2016/ropas/plot", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+
+plots <- list.files("C:/btsync/kela/ropas/_site/paikkatieto_files\\figure-html", full.names = TRUE)
+file.copy(from = plots, to = "\\\\oma-sinetti.kela.fi@SSL\\DavWWWRoot\\henkilot\\e275ceo\\Documents\\Jaettu kaikille\\ropas\\paikkatieto_files\\figure-html", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+file.copy(from = plots, to = "P:/Tuo_Hankkeet/Kainu16/ropas/paikkatieto_files/figure-html", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+file.copy(from = plots, to = "P:/Tutkimus/Yhteiset/Tutkimusryhma/kainu2016/ropas/paikkatieto_files/figure-html", overwrite = TRUE, copy.mode = FALSE, recursive=TRUE)
+
+
+
+
+# !! Jos pit?? kopioida koko hakemistorakenne niin k?yt? silloin tiedostoselainta!!
+```

@@ -1,0 +1,39 @@
+name: "Aisurvey"
+navbar:
+  title: "Survey 2015"
+  type: inverse
+  left:
+    - text: "Data manipulation"
+      icon: fa-database
+      menu:
+        - text: "RAW data"
+          icon: fa-table
+          href: rawdata.html
+        - text: "Constructed variables"
+          icon: fa-cogs
+          href: construct.html
+    - text: "Analysis"
+      icon: fa-line-chart
+      menu:
+        - text: "Descriptive visualisations"
+          icon: fa-bar-chart
+          href: viz.html
+        - text: "Modelling"
+          icon: fa-tasks
+          href: model.html
+    - text: "Upload file"
+      icon: fa-file
+      href: upload/index.php
+  right:
+#    - text: "Mistä on kyse?"
+#      img: plot/kela_logo.svg
+#      href: about.html
+    - icon: fa-info
+      href: http://markuskainu.fi
+output:
+  html_document:
+    theme: spacelab
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: styles.css
