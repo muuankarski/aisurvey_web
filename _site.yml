@@ -3,15 +3,9 @@ navbar:
   title: "Survey 2015"
   type: inverse
   left:
-    - text: "Data manipulation"
+    - text: "Data"
       icon: fa-database
-      menu:
-        - text: "RAW data"
-          icon: fa-table
-          href: rawdata.html
-        - text: "Constructed variables"
-          icon: fa-cogs
-          href: construct.html
+      href: data.html
     - text: "Analysis"
       icon: fa-line-chart
       menu:
@@ -21,6 +15,9 @@ navbar:
         - text: "Modelling"
           icon: fa-tasks
           href: model.html
+        - text: "Analysis application (In progress)"
+          icon: fa fa-cog fa-spin
+          href: http://82.181.168.173:443/sdmr_shiny/
     - text: "Upload file"
       icon: fa-file
       href: upload/index.php

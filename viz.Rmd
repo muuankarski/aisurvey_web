@@ -1,5 +1,5 @@
 ---
-title: Descriptive visualisations
+title: Visualisations
 output: 
   html_document: 
     toc: true
@@ -16,4 +16,26 @@ knitr::opts_chunk$set(list(echo=TRUE,
                            cache=FALSE,
                            warning=FALSE,
                            message=FALSE))
-opts_chunk$set(fig.width = 6, fig.height = 6)
+opts_chunk$set(fig.width = 10, fig.height = 10)
+library(ggplot2)
+library(dplyr)
+```
+
+
+# Descriptive visualisation
+
+## Number of cases per region
+
+```{r visu1, fig.height=25}
+load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionL.RData"))
+d <- arrange(as.data.frame(table(d15l$PUNKTc1),stringsAsFactors = FALSE),Freq)
+
+p <- ggplot(d, aes(x=reorder(Var1,Freq),y=Freq))
+p <- p + geom_point()
+p <- p + geom_text(aes(label=paste(Var1,Freq)),hjust=-.1,size=3)
+p <- p + scale_y_log10()
+p <- p + coord_flip()
+p <- p + theme(axis.text.y=element_blank())
+p
+```
+
