@@ -1,0 +1,96 @@
+---
+title: Codebook merged data
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    number_sections: yes
+    code_folding: hide
+---
+
+
+```{r setup, include = F}
+library(knitr)
+knitr::opts_chunk$set(list(echo=TRUE,
+                           eval=TRUE,
+                           cache=TRUE,
+                           warning=FALSE,
+                           message=FALSE))
+opts_chunk$set(fig.width = 10, fig.height = 10)
+library(ggplot2)
+library(dplyr)
+```
+
+
+**Variables**
+
+
+```{r load}
+# Cross-sectional NUMERIC 2015 raw data
+load(url("http://muuankarski.kapsi.fi/aisurvey/data/merged_4wave20151110N.RData"))
+d15n <- d_merge_N
+# Cross-sectional LABELS 2015 raw data
+load(url("http://muuankarski.kapsi.fi/aisurvey/data/merged_4wave20151110L.RData"))
+d15l <- d_merge_L
+```
+
+
+
+```{r taulukot, results="asis", fig.height=3, cache=TRUE}
+library(dplyr)
+library(ggplot2)
+
+d <- haven::read_sav("http://muuankarski.kapsi.fi/aisurvey/data/merged_4wave20151110.sav")
+
+df <- data.frame()
+for (i in 1:ncol(d)){
+  code  <- names(d[i])
+  label <- attributes(d[[i]])$label
+  df <- rbind(df,data.frame(code,label, stringsAsFactors = FALSE))
+}
+
+
+# for (i in names(d15l)[2:ncol(d15l)]){
+for (i in names(d15l)){
+  col1 <- as.data.frame(table(d15l[i]))
+  col2 <- as.data.frame(table(d15n[i]))
+  n <- min(length(col1[[1]]), length(col2[[1]]))
+  nx <- max(length(col1[[1]]), length(col2[[1]]))
+  if (n==0 & nx == 0) next()
+  if (n == 0) n = nx
+  if (nrow(col1)== 0){
+    names(col2) <- c("numeric","Freq")
+    tbl <- col2
+  } 
+  if (nrow(col2)== 0){
+    names(col1) <- c("labelled","Freq")    
+    tbl <- col1
+  } 
+  if (nrow(col2) > 0 & nrow(col1) > 1){
+      col1 <- col1[1:n,]
+      col2 <- col2[1:n,]
+      names(col1) <- c("labelled","Freq")
+      names(col2) <- c("numeric","Freq")
+      tbl <-  cbind(col1[1],col2)
+  }
+  tbl$share <- round(prop.table(tbl$Freq)*100,2)
+  if (is.numeric(d15n[[i]])){
+      tbl$median <- median(d15n[[i]],na.rm=TRUE)
+      tbl$mean <- mean(d15n[[i]],na.rm=TRUE)
+  }
+  cat("\n\n")
+  cat(paste("#",i,df[df$code %in% i,"label"]))
+  print(knitr::kable(tbl))
+  cat("\n\n")
+  # if (is.numeric(d15n[[i]]) &  n  <= 15 & n != 0){
+  # # if (i == "V2c99"){
+  # p <- ggplot(d15n, aes_string(i)) + geom_histogram() +
+  #     labs(title=i)
+  # print(p)
+  #   }
+}
+
+
+```
+
+

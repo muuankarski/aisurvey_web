@@ -40,7 +40,7 @@ file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.RData", to="./data/"
 | ------------------------------- |---- | ------------ |------------- |--------------- |-------------- |
 | sdmr_4_english_language_version | [.sav](./data/sdmr_4_english_language_version.sav) | [.csv L](./data/sdmr_4_english_language_versionL.csv) | [.csv N](./data/sdmr_4_english_language_versionN.csv) | [.Rdata N](./data/sdmr_4_english_language_versionN.RData) | [.Rdata L](./data/sdmr_4_english_language_versionL.RData) |
 | merged_4wave20151110            | [.sav](./data/merged_4wave20151110.sav) | [.csv L](./data/merged_4wave20151110L.csv) | [.csv N](./data/merged_4wave20151110N.csv) | [.Rdata N](./data/merged_4wave20151110N.RData) | [.Rdata L](./data/merged_4wave20151110L.RData) |
-
+| with class vars |  |  |   | [d_merge_N_class.RData](./data/d_merge_N_class.RData) |  [d_merge_L_class.RData](./data/d_merge_L_class.RData)   |
 
 # Complex generic constructed variables
 
@@ -52,7 +52,7 @@ Variables that are theoretically sound and complex to compute and worth of inclu
 | -------------------------    | -------- | ----------   | ----------   | -------     |
 | **for 2015 data**            |          |          |          |          |
 | Wright class vars            | [.csv]() | [varx.do]()  | [varx.sps]() | [varx.r]()  |
-| Kivinen class & autonomy     | [.csv]() | [vary.do]()  | [vary.sps]() | [vary.r]()  |
+| Kivinen class & autonomy     | [.csv]() | [vary.do]()  | [vary.sps]() | [class_variable1.R](./code/class_variable1.R)  |
 | Something else               | [.csv]() | [varz.do]()  | [varz.sps]() | [varz.r]()  |
 | **for all wawes**            |          |          |          |          |
 | Wright class vars            | [.csv]() | [varx.do]()  | [varx.sps]() | [varx.r]()  |

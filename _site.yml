@@ -6,6 +6,15 @@ navbar:
     - text: "Data"
       icon: fa-database
       href: data.html
+    - text: "Codebooks"
+      icon: fa-line-chart
+      menu:
+        - text: "Codebook 2015 data"
+          icon: fa-book
+          href: codebook_2015.html
+        - text: "Codebook merged file"
+          icon: fa-book
+          href: codebook_merge.html
     - text: "Analysis"
       icon: fa-line-chart
       menu:

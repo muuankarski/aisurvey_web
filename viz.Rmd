@@ -24,6 +24,9 @@ library(dplyr)
 
 # Descriptive visualisation
 
+## Class variables
+
+
 ## Number of cases per region
 
 ```{r visu1, fig.height=25}
