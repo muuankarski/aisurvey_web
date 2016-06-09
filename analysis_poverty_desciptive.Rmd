@@ -1,0 +1,553 @@
+---
+title: Descriptive poverty analysis
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    number_sections: yes
+    code_folding: hide
+---
+
+
+```{r setup, include = F}
+library(knitr)
+knitr::opts_chunk$set(list(echo=TRUE,
+                           eval=TRUE,
+                           cache=FALSE,
+                           warning=FALSE,
+                           message=FALSE))
+opts_chunk$set(fig.width = 10, fig.height = 10)
+library(ggplot2)
+library(dplyr)
+options(scipen=999)
+
+if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
+load("./data/merged_4wave20151110N.RData")
+longi <- d_merge_N
+load("./data/d_merge_N_class.RData")
+longi_class <- d_merge_N_class
+load("./data/sdmr_4_english_language_versionN.RData")
+cross15 <- d15n
+```
+
+# Cross-sectional 2015
+
+## monthly income 
+
+```{r incometaulukko}
+d <- cross15
+
+d$tulot <- d$V74c1 / 10404
+
+d %>% # data
+  mutate(sex = ifelse(V112c1 == 1, "male", "female")) %>% 
+  group_by(sex) %>% # ryhmittelevä muuttuja
+  mutate(V74c1 = as.integer(V74c1)) %>% 
+  summarise(keskiarvo_tulot = mean(V74c1, na.rm=TRUE),
+            mediaani_tulot = median(V74c1, na.rm=TRUE),
+            keskihajonta_tulot = sd(V74c1,na.rm = TRUE),
+            
+            keskiarvo_tulot1 = mean(tulot, na.rm=TRUE),
+            mediaani_tulot1 = median(tulot, na.rm=TRUE),
+            keskihajonta_tulot1 = sd(tulot,na.rm = TRUE)
+  ) %>% kable()
+```
+
+```{r incomekuva}
+dd <- d15n %>% filter(V74c1 <= 100000)
+
+dd <- d %>% 
+  mutate(sex = ifelse(V112c1 == 1, "male", "female")) %>% 
+  filter(V74c1 <= 100000)
+
+p <- ggplot(data=dd,# data 
+            aes(x=as.integer(age), # x-akselin luokitteleva muuttuja
+                y=as.integer(V74c1),
+                color=sex)) # y-akselin jatkuva muuttuja
+# p <- p + geom_jitter(alpha=.1)
+p <- p + geom_point(alpha=.3)
+p <- p + geom_smooth()
+p <- p + labs(x="age",y="monthly income in roubles")
+p
+```
+
+
+## Subjective poverty
+
+```{r subj}
+
+dd <- d %>% 
+  mutate(sex = ifelse(V112c1 == 1, "male", "female")) %>% 
+  filter(V74c1 <= 100000)
+
+dd$subpov[dd$V81c1 == 1] <- "We cannot make ends meet"
+dd$subpov[dd$V81c1 == 2] <- "We find it hard to buy clothes"
+dd$subpov[dd$V81c1 == 3] <- "Durables are a problem"
+dd$subpov[dd$V81c1 == 4] <- "Really expensive things are a problem"
+dd$subpov[dd$V81c1 == 5] <- "A car is not a problem, real estate is."
+dd$subpov[dd$V81c1 == 6] <- "No material problems"
+
+dd$subpov <- factor(dd$subpov, levels=c("We cannot make ends meet",
+                                        "We find it hard to buy clothes",
+                                        "Durables are a problem",
+                                        "Really expensive things are a problem",
+                                        "A car is not a problem, real estate is.",
+                                        "No material problems"))
+
+dd <- dd[!is.na(dd$subpov),]
+
+p <- ggplot(data=dd,# data 
+            aes(x=V74c1, # x-akselin luokitteleva muuttuja
+                color=subpov)) # y-akselin jatkuva muuttuja
+p <- p + geom_density()
+p <- p + labs(title="Monthly income distribution by income group")
+p
+```
+
+# Subjective poverty and ....
+
+>Toiseksi on aika standardimuotoinen subjektiivisen köyhyyden kysymys ts. kuinka selviytyy jokapäiväisistä menoista. Tarvittaneen siis näiden kahden vertailevaa analyysia hiukan ja olisi päätettävä kuinka köyhyyttä tai rikkautta analysoidaan. Tässä kohden voinee vähän kokeillakin ja molempia voi käyttää. Joka tapauksessa voi yrittää katsoa ensin perusdemografiset taustatiedot liittyen köyhyyden eri muotoihin (ikä, sukupuoli, alue, koulutus, mitä muuta?) ja sitten tarkastella esimerkiksi a) miten köyhyys liittyy tehtyihin luokkamuuttujiin ja b) miten se liittyy esim. yleiseen luottamukseen. Venäjältä on tiedossa yhtä ja toista sympaattista köyhyystyötä, mm. pidin taannoin luennon instituutissa tästä aiheesta ja siteerailin Gorshkovin ja Tihonovan aiheesta tehtyä kirjaa. Siinä on todella paljon tietoa ja tarkastellaan mm. mielipideilmastoa eri tuloluokissa -tulokset ovat samansuuntaisia mihin surveyaineistomme viittaa ts. eroja löytyy mutta tavanomaiset stratifikaatiotekijät eivät niitä selitä - tässä olisi mielestäni merkittävä haaste pohtia, mikä sitten. Mielestäni kannattaa rakentaa jo tehdyn tutkimuksen päälle, esim. saatuja tuloksia vahvistaen ja yhdessä ihmetellen, varoen sitä että kerromme uusina asioita jotka ovat jo yleisesti tiedossa.
+
+## Age
+
+```{r subjage}
+
+dd$age_class[dd$age < 20] <- "Below 20"
+dd$age_class[dd$age >= 20 & dd$age < 30] <- "20-29"
+dd$age_class[dd$age >= 30 & dd$age < 40] <- "30-39"
+dd$age_class[dd$age >= 40 & dd$age < 50] <- "40-49"
+dd$age_class[dd$age >= 50 & dd$age < 60] <- "50-59"
+dd$age_class[dd$age >= 60 & dd$age < 70] <- "60-69"
+dd$age_class[dd$age >= 70] <- "70 and older"
+
+dd$age_class <- factor(dd$age_class, levels=c(c("Below 20",  "20-29", "30-39", "40-49", "50-59", "60-69", "70 and older")))
+
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$age_class),2)*100)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity")
+p <- p + guides(fill = guide_legend(reverse=TRUE))
+p <- p + labs(title="Share of respondents")
+p <- p + theme(axis.text.x = element_text(angle=90))
+p
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$age_class))*100)
+
+tbl$Freq <- round(tbl$Freq, 1)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var1, # x-akselin luokitteleva muuttuja
+                y=Var2,
+                fill=Freq,
+                label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_tile()
+p <- p + geom_text()
+p <- p + labs(title="Number of cases per cell")
+p
+
+p <- ggplot(data=dd,# data 
+            aes(x=age_class, # x-akselin luokitteleva muuttuja
+                y=V74c1)) # y-akselin jatkuva muuttuja
+p <- p + geom_boxplot()
+p <- p + facet_wrap(~subpov)
+p <- p + labs(title="monthly income by subgroup")
+p
+
+```
+
+## Sex
+
+```{r subjsex}
+
+dd$sx[dd$V112c1  == 1] <- "male"
+dd$sx[dd$V112c1  == 2] <- "female"
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$sx),2)*100)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity")
+p <- p + guides(fill = guide_legend(reverse=TRUE))
+p <- p + labs(title="Share of respondents")
+p <- p + theme(axis.text.x = element_text(angle=90))
+p
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$sx))*100)
+
+tbl$Freq <- round(tbl$Freq, 1)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var1, # x-akselin luokitteleva muuttuja
+                y=Var2,
+                fill=Freq,
+                label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_tile()
+p <- p + geom_text()
+p <- p + labs(title="Number of cases per cell")
+p
+
+p <- ggplot(data=dd,# data 
+            aes(x=sx, # x-akselin luokitteleva muuttuja
+                y=V74c1)) # y-akselin jatkuva muuttuja
+p <- p + geom_boxplot()
+p <- p + facet_wrap(~subpov)
+p <- p + labs(title="monthly income by subgroup")
+p
+
+```
+
+
+
+## Education
+
+
+```{r subjedu}
+dd$edu[dd$V10c1 == 1] <- "Primary, fewer than 8 grades"
+dd$edu[dd$V10c1 == 2] <- "Incomplete secondary"
+dd$edu[dd$V10c1 == 3] <- "General secondary"
+dd$edu[dd$V10c1 == 4] <- "Secondary special"
+dd$edu[dd$V10c1 == 5] <- "Secondary technical"
+dd$edu[dd$V10c1 == 6] <- "Unfinished higher"
+dd$edu[dd$V10c1 == 7] <- "Higher"
+dd$edu[dd$V10c1 == 8] <- "Higher scientific (graduate course)"
+dd$edu[dd$V10c1 == 9] <- "Scientific degree"
+
+dd$edu <- factor(dd$edu, levels=c("Primary, fewer than 8 grades",
+                                  "Incomplete secondary",
+                                  "General secondary",
+                                  "Secondary special",
+                                  "Secondary technical",
+                                  "Unfinished higher",
+                                  "Higher",
+                                  "Higher scientific (graduate course)",
+                                  "Scientific degree"))
+
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$edu),2)*100)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity")
+p <- p + guides(fill = guide_legend(reverse=TRUE))
+p <- p + labs(title="Share of respondents")
+p <- p + theme(axis.text.x = element_text(angle=90))
+p
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$edu))*100)
+tbl$Freq <- round(tbl$Freq, 1)
+p <- ggplot(data=tbl,# data 
+            aes(x=Var1, # x-akselin luokitteleva muuttuja
+                y=Var2,
+                fill=Freq,
+                label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_tile()
+p <- p + geom_text()
+# p <- p + facet_wrap(~V112c1)
+# p <- p + facet_wrap(~V1c1)
+p
+
+p <- ggplot(data=dd,# data 
+            aes(x=age_class, # x-akselin luokitteleva muuttuja
+                y=V74c1)) # y-akselin jatkuva muuttuja
+p <- p + geom_boxplot()
+p <- p + facet_wrap(~subpov)
+p <- p + labs(title="monthly income by subgroup")
+p
+
+
+```
+
+## Type of settlement
+
+
+```{r subjsettl}
+
+dd$settl[dd$V1c1  == 1] <- "Moscow,Petersburg"
+dd$settl[dd$V1c1  == 2] <- "CIty of 500 th. or more"
+dd$settl[dd$V1c1  == 3] <- "City of 100-499 th."
+dd$settl[dd$V1c1  == 4] <- "Small city (under 100 th.)"
+dd$settl[dd$V1c1  == 5] <- "Village"
+dd$settl[dd$V1c1  == 6] <- "Other"
+
+dd$settl <- factor(dd$settl, levels=c("Moscow,Petersburg",
+                                  "CIty of 500 th. or more",
+                                  "City of 100-499 th.",
+                                  "Small city (under 100 th.)",
+                                  "Village",
+                                  "Other"))
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$settl),2)*100)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity")
+p <- p + guides(fill = guide_legend(reverse=TRUE))
+p <- p + labs(title="Share of respondents")
+p <- p + theme(axis.text.x = element_text(angle=90))
+p
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$settl))*100)
+tbl$Freq <- round(tbl$Freq, 1)
+p <- ggplot(data=tbl,# data 
+            aes(x=Var1, # x-akselin luokitteleva muuttuja
+                y=Var2,
+                fill=Freq,
+                label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_tile()
+p <- p + geom_text()
+p
+
+p <- ggplot(data=dd,# data 
+            aes(x=age_class, # x-akselin luokitteleva muuttuja
+                y=V74c1)) # y-akselin jatkuva muuttuja
+p <- p + geom_boxplot()
+p <- p + facet_wrap(~subpov)
+p <- p + labs(title="monthly income by subgroup")
+p
+
+
+```
+
+
+## Institutional trust
+
+
+
+```{r trust, results="asis"}
+#d <- haven::read_sav("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_version.sav")
+d <- haven::read_sav("./data/sdmr_4_english_language_version.sav")
+
+df <- data.frame()
+for (i in 1:ncol(d)){
+  code  <- names(d[i])
+  label <- attributes(d[[i]])$label
+  df <- rbind(df,data.frame(code,label, stringsAsFactors = FALSE))
+}
+trust_vars <- df[grepl("Trust", df$label),]
+
+# for the tot data.frame
+aggdf <- data.frame()
+
+for (i in trust_vars$code[-17]){
+
+  dd$trust1[dd[[i]]  == 1] <- "Completely distrust"
+  dd$trust1[dd[[i]]  == 2] <- "Mainly distrust"
+  dd$trust1[dd[[i]]  == 3] <- "Somewhat trust,\nsomewhat distrust"
+  dd$trust1[dd[[i]]  == 4] <- "Mainly trust"
+  dd$trust1[dd[[i]]  == 5] <- "Fully trust"
+  dd$trust1[dd[[i]]  == 6] <- "Hard to say"
+  
+  dd$trust1 <- factor(dd$trust1, levels=c("Completely distrust",
+                                        "Mainly distrust",
+                                        "Somewhat trust,\nsomewhat distrust",
+                                        "Mainly trust",
+                                        "Fully trust",
+                                        "Hard to say"))
+
+  tbl <- as.data.frame(prop.table(table(dd$subpov,dd$trust1),2)*100)
+  
+  cat("\n\n")
+  cat(paste("###",df[df$code %in% i,]$label))
+  cat("\n\n")
+  
+  p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+  p <- p + geom_bar(stat="identity")
+  p <- p + guides(fill = guide_legend(reverse=TRUE))
+  p <- p + labs(title=paste(df[df$code %in% i,]$label,"- Share of respondents"))
+  p <- p + theme(axis.text.x = element_text(angle=90))
+  print(p)
+  
+  tbl <- as.data.frame(table(dd$subpov,dd$trust1))
+  p <- ggplot(data=tbl,# data 
+              aes(x=Var1, # x-akselin luokitteleva muuttuja
+                  y=Var2,
+                  fill=Freq,
+                  label=Freq)) # y-akselin jatkuva muuttuja
+  p <- p + geom_tile()
+  p <- p + labs(title=paste(df[df$code %in% i,]$label,"- Number of cases in different combinations"))
+  p <- p + geom_text(color="white")
+  print(p)
+  
+  tbl <- as.data.frame(prop.table(table(dd$trust1))*100)
+  tbl$Freq <- round(tbl$Freq,1)
+  tbl$var <- df[df$code %in% i,]$label
+  aggdf <- rbind(aggdf,tbl)
+
+}
+
+```
+
+## Special case: Instutional trust in s single chart
+
+```{r insttrust}
+tbl <- aggdf
+p <- ggplot(data=tbl,# data 
+          aes(x=Var1, # x-akselin luokitteleva muuttuja
+              y=Freq,
+              label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity", position="dodge")
+p <- p + geom_text(position=position_dodge(width=1), vjust=1.5,color="white",size=3)
+p <- p + guides(fill = guide_legend(reverse=TRUE))
+p <- p + theme(axis.text.x = element_text(angle=90))
+p <- p + facet_wrap(~var)
+print(p)
+
+levelit <- tbl %>% filter(Var1 %in% "Fully trust") %>% 
+  arrange(-Freq) %>% 
+  select(var)
+
+tbl$var <- factor(tbl$var, levels=levelit$var)
+
+p <- ggplot(data=tbl,# data 
+          aes(x=var, # x-akselin luokitteleva muuttuja
+              y=Freq,
+              label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity", position="dodge")
+p <- p + geom_text(position=position_dodge(width=1), vjust=1.5,color="white",size=2)
+p <- p + guides(fill = guide_legend(reverse=TRUE))
+p <- p + theme(axis.text.x = element_text(angle=90))
+p <- p + facet_wrap(~Var1)
+print(p)
+
+```
+
+
+
+## Trust in others
+
+
+```{r trustothers}
+for (i in trust_vars$code[17]){
+
+  dd$trust1<-NULL
+  dd$trust1[dd[[i]]  == 1] <- "In our country you\ncan trust nobody"
+  dd$trust1[dd[[i]]  == 2] <- "You can only trust\na minority"
+  dd$trust1[dd[[i]]  == 3] <- "Some can be trusted and\nsome cannot be trusted"
+  dd$trust1[dd[[i]]  == 4] <- "You can trust a\nmajority of our citizens"
+  dd$trust1[dd[[i]]  == 5] <- "You can always trust\nour citizens"
+  dd$trust1[dd[[i]]  == 6] <- "Hard to say"
+  
+  dd$trust1 <- factor(dd$trust1, levels=c("In our country you\ncan trust nobody",
+                                        "You can only trust\na minority",
+                                        "Some can be trusted and\nsome cannot be trusted",
+                                        "You can trust a\nmajority of our citizens",
+                                        "You can always trust\nour citizens",
+                                        "Hard to say"))
+
+  tbl <- as.data.frame(prop.table(table(dd$subpov,dd$trust1),2)*100)
+  
+  cat("\n\n")
+  cat(paste("###",df[df$code %in% i,]$label))
+  cat("\n\n")
+  
+  p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+  p <- p + geom_bar(stat="identity")
+  p <- p + guides(fill = guide_legend(reverse=TRUE))
+  p <- p + labs(title=paste(df[df$code %in% i,]$label,"- Share of respondents"))
+  p <- p + theme(axis.text.x = element_text(angle=90))
+  print(p)
+  
+  tbl <- as.data.frame(table(dd$subpov,dd$trust1))
+  p <- ggplot(data=tbl,# data 
+              aes(x=Var1, # x-akselin luokitteleva muuttuja
+                  y=Var2,
+                  fill=Freq,
+                  label=Freq)) # y-akselin jatkuva muuttuja
+  p <- p + geom_tile()
+  p <- p + labs(title=paste(df[df$code %in% i,]$label,"- Number of cases in different combinations"))
+  p <- p + geom_text(color="white")
+  p <- p + theme(axis.text.x = element_text(angle=90))
+    print(p)
+  
+}
+
+```
+
+
+
+
+
+# Merged data
+
+```{r load_merged_data}
+
+```
+
+
+## Class variables
+
+```{r, eval=FALSE}
+l <- d_merge_N_class
+
+
+l %>% # data
+  # muokataan muuttujia
+  mutate(income = as.integer(v74_1998_2007_2015),
+         age = 2015 - v111_1991_1998_2007_2015) %>% 
+  # ryhmitellään data
+  group_by(occup_groups_labelled) %>% 
+  # lasketaan ryhmille tunnuslukuja tuloista ja iästä
+  summarise(keskiarvo_ika = mean(age, na.rm=TRUE),
+            mediaani_ika = median(age, na.rm=TRUE),
+            keskihajonta_ika = sd(age,na.rm = TRUE),
+            # tulot,
+            keskiarvo_tulot = mean(income, na.rm=TRUE),
+            mediaani_tulot = median(income, na.rm=TRUE),
+            keskihajonta_tulot = sd(income,na.rm = TRUE)
+  ) %>% knitr::kable() #%>% View()
+
+
+l %>% # data
+  # muokataan muuttujia
+  mutate(income = as.integer(v74_1998_2007_2015),
+         age = 2015 - v111_1991_1998_2007_2015) %>% 
+  # ryhmitellään data
+  group_by(autonomia_labelled) %>% 
+  # lasketaan ryhmille tunnuslukuja tuloista ja iästä
+  summarise(keskiarvo_ika = mean(age, na.rm=TRUE),
+            mediaani_ika = median(age, na.rm=TRUE),
+            keskihajonta_ika = sd(age,na.rm = TRUE),
+            # tulot,
+            keskiarvo_tulot = mean(income, na.rm=TRUE),
+            mediaani_tulot = median(income, na.rm=TRUE),
+            keskihajonta_tulot = sd(income,na.rm = TRUE)
+  ) %>% knitr::kable() #%>%  View()
+
+
+#' # Tulot
+#' 
+d <- d15l
+d$tulot <- as.integer(d$V74c1) / 10404
+
+p <- ggplot(data=d,# data 
+            aes(x=as.integer(V74c1), # x-akselin luokitteleva muuttuja
+                color=V112c1)) # y-akselin jatkuva muuttuja
+p <- p + geom_density()
+p
+
+
+p <- ggplot(data=d,# data 
+            aes(x=as.integer(tulot), # x-akselin luokitteleva muuttuja
+                color=V112c1)) # y-akselin jatkuva muuttuja
+p <- p + geom_density()
+p
+```
+
+
+

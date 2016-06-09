@@ -18,6 +18,9 @@ navbar:
     - text: "Analysis"
       icon: fa-line-chart
       menu:
+        - text: "Descriptive poverty analysis"
+          icon: fa-bar-chart
+          href: analysis_poverty_desciptive.html
         - text: "Descriptive visualisations"
           icon: fa-bar-chart
           href: viz.html
