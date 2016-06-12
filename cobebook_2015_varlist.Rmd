@@ -1,0 +1,32 @@
+---
+title: Variable list 2015 data
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    number_sections: yes
+    code_folding: hide
+---
+
+
+```{r setup, include = F}
+library(knitr)
+knitr::opts_chunk$set(list(echo=TRUE,
+                           eval=TRUE,
+                           cache=FALSE,
+                           warning=FALSE,
+                           message=FALSE))
+opts_chunk$set(fig.width = 10, fig.height = 10)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r print}
+library(DT)
+load("./data/label_data.RData")
+datatable(label_data, filter = 'top', options = list(
+  pageLength = 50, autoWidth = TRUE
+))
+
+```
+

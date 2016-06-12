@@ -28,6 +28,9 @@ load("./data/d_merge_N_class.RData")
 longi_class <- d_merge_N_class
 load("./data/sdmr_4_english_language_versionN.RData")
 cross15 <- d15n
+dd <- cross15
+
+source("./code/label_data.R")
 ```
 
 # Cross-sectional 2015
@@ -35,75 +38,23 @@ cross15 <- d15n
 ## Institutional trust
 
 
-```{r trust, results="asis"}
-#d <- haven::read_sav("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_version.sav")
-d <- haven::read_sav("./data/sdmr_4_english_language_version.sav")
-dd <- cross15
+```{r trust, results="asis", eval=TRUE}
 
+load("./data/label_data.RData")
 
-df <- data.frame()
-for (i in 1:ncol(d)){
-  code  <- names(d[i])
-  label <- attributes(d[[i]])$label
-  df <- rbind(df,data.frame(code,label, stringsAsFactors = FALSE))
-}
-trust_vars <- df[grepl("Trust", df$label),]
-
-
-d <- cross15
-d$trst <- label_sdmr(d,"V95_1c1")
-
-
+trust_vars <- label_data[grepl("Trust:", label_data$name),]
+trust_vars <- trust_vars[!duplicated(trust_vars$code),]
 
 # for the tot data.frame
 aggdf <- data.frame()
 
-for (i in trust_vars$code[-17]){
+for (i in trust_vars$code){
 
-  dd$trust1[dd[[i]]  == 1] <- "Completely distrust"
-  dd$trust1[dd[[i]]  == 2] <- "Mainly distrust"
-  dd$trust1[dd[[i]]  == 3] <- "Somewhat trust,\nsomewhat distrust"
-  dd$trust1[dd[[i]]  == 4] <- "Mainly trust"
-  dd$trust1[dd[[i]]  == 5] <- "Fully trust"
-  dd$trust1[dd[[i]]  == 6] <- "Hard to say"
-  
-  dd$trust1 <- factor(dd$trust1, levels=c("Completely distrust",
-                                        "Mainly distrust",
-                                        "Somewhat trust,\nsomewhat distrust",
-                                        "Mainly trust",
-                                        "Fully trust",
-                                        "Hard to say"))
+  dd$trust1 <- label_sdmr(data = dd, var= i)
 
-  # tbl <- as.data.frame(prop.table(table(dd$subpov,dd$trust1),2)*100)
-  # 
-  # cat("\n\n")
-  # cat(paste("###",df[df$code %in% i,]$label))
-  # cat("\n\n")
-  # 
-  # p <- ggplot(data=tbl,# data 
-  #           aes(x=Var2, # x-akselin luokitteleva muuttuja
-  #               y=Freq,
-  #               fill=Var1)) # y-akselin jatkuva muuttuja
-  # p <- p + geom_bar(stat="identity")
-  # p <- p + guides(fill = guide_legend(reverse=TRUE))
-  # p <- p + labs(title=paste(df[df$code %in% i,]$label,"- Share of respondents"))
-  # p <- p + theme(axis.text.x = element_text(angle=90))
-  # print(p)
-  # 
-  # tbl <- as.data.frame(table(dd$subpov,dd$trust1))
-  # p <- ggplot(data=tbl,# data 
-  #             aes(x=Var1, # x-akselin luokitteleva muuttuja
-  #                 y=Var2,
-  #                 fill=Freq,
-  #                 label=Freq)) # y-akselin jatkuva muuttuja
-  # p <- p + geom_tile()
-  # p <- p + labs(title=paste(df[df$code %in% i,]$label,"- Number of cases in different combinations"))
-  # p <- p + geom_text(color="white")
-  # print(p)
-  
   tbl <- as.data.frame(prop.table(table(dd$trust1))*100)
   tbl$Freq <- round(tbl$Freq,1)
-  tbl$var <- df[df$code %in% i,]$label
+  tbl$var <- label_data[label_data$code %in% i,"name"]
   aggdf <- rbind(aggdf,tbl)
 
 }
@@ -150,266 +101,104 @@ p <- p + facet_wrap(~Var1)
 print(p)
 ```
 
-### Institutional trust by ....
+# Trust (institutional and general) by background variables 
 
 
-## Age
+```{r subjpov3, results="asis"}
 
-```{r subjage}
+bg_vars <- read.table(textConnection('
 
-dd$age_class[dd$age < 20] <- "Below 20"
-dd$age_class[dd$age >= 20 & dd$age < 30] <- "20-29"
-dd$age_class[dd$age >= 30 & dd$age < 40] <- "30-39"
-dd$age_class[dd$age >= 40 & dd$age < 50] <- "40-49"
-dd$age_class[dd$age >= 50 & dd$age < 60] <- "50-59"
-dd$age_class[dd$age >= 60 & dd$age < 70] <- "60-69"
-dd$age_class[dd$age >= 70] <- "70 and older"
+name code
+"Age"  age
+"Sex"  V112c1
+"Education" V10c1
+"Type of Settlement" V1c1
+"General trust" V96c1
+"Subjective poverty" V82c1
 
-dd$age_class <- factor(dd$age_class, levels=c(c("Below 20",  "20-29", "30-39", "40-49", "50-59", "60-69", "70 and older")))
+'), stringsAsFactors=FALSE, header=TRUE)
 
+# lets add the institutional trust
+load("./data/label_data.RData")
+trust_vars <- label_data[grepl("Trust", label_data$name),]
+trust_vars <- trust_vars[!duplicated(trust_vars$code),c("name","code")]
 
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$age_class),2)*100)
+for (tr in trust_vars$code){
+  
+  dd$indep <- label_sdmr(dd,tr, factor=TRUE)
+  
+  cat("\n\n")
+  cat(paste("##",trust_vars[trust_vars$code %in% tr,]$name),"-",tr)
+  cat("\n\n")
+  
+  for (i in bg_vars$code){
+  
+  if (i %in% "age"){
+  dd$depend[dd[[i]] < 20] <- "Below 20"
+  dd$depend[dd[[i]] >= 20 & dd$age < 30] <- "20-29"
+  dd$depend[dd[[i]] >= 30 & dd$age < 40] <- "30-39"
+  dd$depend[dd[[i]] >= 40 & dd$age < 50] <- "40-49"
+  dd$depend[dd[[i]] >= 50 & dd$age < 60] <- "50-59"
+  dd$depend[dd[[i]] >= 60 & dd$age < 70] <- "60-69"
+  dd$depend[dd[[i]] >= 70] <- "70 and older"
+  
+  dd$depend <- factor(dd$depend, 
+                      levels=c(c("Below 20",
+                                 "20-29",
+                                 "30-39",
+                                 "40-49",
+                                 "50-59",
+                                 "60-69",
+                                 "70 and older")))
+  } else dd$depend <- label_sdmr(dd,i, factor=TRUE)
+  
+  tbl <- as.data.frame(prop.table(table(dd$indep,dd$depend),2)*100)
+  
+  levels(tbl$Var1) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var1))
+  levels(tbl$Var2) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var2))
+  
+  cat("\n\n")
+  cat(paste("###",bg_vars[bg_vars$code %in% i,]$name),"-",i)
+  cat("\n\n")
+  
+  p <- ggplot(data=tbl,# data 
+              aes(x=Var2, # x-akselin luokitteleva muuttuja
+                  y=Freq,
+                  fill=Var1)) # y-akselin jatkuva muuttuja
+  p <- p + geom_bar(stat="identity")
+  p <- p + guides(fill = guide_legend(reverse=TRUE, title = trust_vars[trust_vars$code %in% tr,]$name))
+  p <- p + labs(title=paste(trust_vars[trust_vars$code %in% tr,]$name, "- share of respondents - ", bg_vars[bg_vars$code %in% i, "name"]),
+                x=bg_vars[bg_vars$code %in% i,]$name)
+  p <- p + theme(axis.text.x = element_text(angle=90))
+  print(p)
+  
+  tbl <- as.data.frame(table(dd$indep,dd$depend))
+  
+  levels(tbl$Var1) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var1))
+  levels(tbl$Var2) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var2))
+  
+  tbl$Freq <- round(tbl$Freq, 1)
+  
+  p <- ggplot(data=tbl,# data 
+              aes(x=Var1, # x-akselin luokitteleva muuttuja
+                  y=Var2,
+                  fill=Freq,
+                  label=Freq)) # y-akselin jatkuva muuttuja
+  p <- p + geom_tile()
+  p <- p + geom_text(color="white")
+  p <- p + labs(y=bg_vars[bg_vars$code %in% i,]$name,
+                x=trust_vars[trust_vars$code %in% tr,]$name)
+  p <- p + labs(title=paste(trust_vars[trust_vars$code %in% tr,]$name, "- nr of cases per cell - ", bg_vars[bg_vars$code %in% i, "name"]))
+  print(p)
 
-p <- ggplot(data=tbl,# data 
-            aes(x=Var2, # x-akselin luokitteleva muuttuja
-                y=Freq,
-                fill=Var1)) # y-akselin jatkuva muuttuja
-p <- p + geom_bar(stat="identity")
-p <- p + guides(fill = guide_legend(reverse=TRUE))
-p <- p + labs(title="Share of respondents")
-p <- p + theme(axis.text.x = element_text(angle=90))
-p
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$age_class))*100)
-
-tbl$Freq <- round(tbl$Freq, 1)
-
-p <- ggplot(data=tbl,# data 
-            aes(x=Var1, # x-akselin luokitteleva muuttuja
-                y=Var2,
-                fill=Freq,
-                label=Freq)) # y-akselin jatkuva muuttuja
-p <- p + geom_tile()
-p <- p + geom_text()
-p <- p + labs(title="Number of cases per cell")
-p
-
-p <- ggplot(data=dd,# data 
-            aes(x=age_class, # x-akselin luokitteleva muuttuja
-                y=V74c1)) # y-akselin jatkuva muuttuja
-p <- p + geom_boxplot()
-p <- p + facet_wrap(~subpov)
-p <- p + labs(title="monthly income by subgroup")
-p
-
-```
-
-## Sex
-
-```{r subjsex}
-
-dd$sx[dd$V112c1  == 1] <- "male"
-dd$sx[dd$V112c1  == 2] <- "female"
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$sx),2)*100)
-
-p <- ggplot(data=tbl,# data 
-            aes(x=Var2, # x-akselin luokitteleva muuttuja
-                y=Freq,
-                fill=Var1)) # y-akselin jatkuva muuttuja
-p <- p + geom_bar(stat="identity")
-p <- p + guides(fill = guide_legend(reverse=TRUE))
-p <- p + labs(title="Share of respondents")
-p <- p + theme(axis.text.x = element_text(angle=90))
-p
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$sx))*100)
-
-tbl$Freq <- round(tbl$Freq, 1)
-
-p <- ggplot(data=tbl,# data 
-            aes(x=Var1, # x-akselin luokitteleva muuttuja
-                y=Var2,
-                fill=Freq,
-                label=Freq)) # y-akselin jatkuva muuttuja
-p <- p + geom_tile()
-p <- p + geom_text()
-p <- p + labs(title="Number of cases per cell")
-p
-
-p <- ggplot(data=dd,# data 
-            aes(x=sx, # x-akselin luokitteleva muuttuja
-                y=V74c1)) # y-akselin jatkuva muuttuja
-p <- p + geom_boxplot()
-p <- p + facet_wrap(~subpov)
-p <- p + labs(title="monthly income by subgroup")
-p
-
-```
+}
+}
 
 
 
-## Education
-
-
-```{r subjedu}
-dd$edu[dd$V10c1 == 1] <- "Primary, fewer than 8 grades"
-dd$edu[dd$V10c1 == 2] <- "Incomplete secondary"
-dd$edu[dd$V10c1 == 3] <- "General secondary"
-dd$edu[dd$V10c1 == 4] <- "Secondary special"
-dd$edu[dd$V10c1 == 5] <- "Secondary technical"
-dd$edu[dd$V10c1 == 6] <- "Unfinished higher"
-dd$edu[dd$V10c1 == 7] <- "Higher"
-dd$edu[dd$V10c1 == 8] <- "Higher scientific (graduate course)"
-dd$edu[dd$V10c1 == 9] <- "Scientific degree"
-
-dd$edu <- factor(dd$edu, levels=c("Primary, fewer than 8 grades",
-                                  "Incomplete secondary",
-                                  "General secondary",
-                                  "Secondary special",
-                                  "Secondary technical",
-                                  "Unfinished higher",
-                                  "Higher",
-                                  "Higher scientific (graduate course)",
-                                  "Scientific degree"))
-
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$edu),2)*100)
-
-p <- ggplot(data=tbl,# data 
-            aes(x=Var2, # x-akselin luokitteleva muuttuja
-                y=Freq,
-                fill=Var1)) # y-akselin jatkuva muuttuja
-p <- p + geom_bar(stat="identity")
-p <- p + guides(fill = guide_legend(reverse=TRUE))
-p <- p + labs(title="Share of respondents")
-p <- p + theme(axis.text.x = element_text(angle=90))
-p
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$edu))*100)
-tbl$Freq <- round(tbl$Freq, 1)
-p <- ggplot(data=tbl,# data 
-            aes(x=Var1, # x-akselin luokitteleva muuttuja
-                y=Var2,
-                fill=Freq,
-                label=Freq)) # y-akselin jatkuva muuttuja
-p <- p + geom_tile()
-p <- p + geom_text()
-# p <- p + facet_wrap(~V112c1)
-# p <- p + facet_wrap(~V1c1)
-p
-
-p <- ggplot(data=dd,# data 
-            aes(x=age_class, # x-akselin luokitteleva muuttuja
-                y=V74c1)) # y-akselin jatkuva muuttuja
-p <- p + geom_boxplot()
-p <- p + facet_wrap(~subpov)
-p <- p + labs(title="monthly income by subgroup")
-p
 
 
 ```
-
-## Type of settlement
-
-
-```{r subjsettl}
-
-dd$settl[dd$V1c1  == 1] <- "Moscow,Petersburg"
-dd$settl[dd$V1c1  == 2] <- "CIty of 500 th. or more"
-dd$settl[dd$V1c1  == 3] <- "City of 100-499 th."
-dd$settl[dd$V1c1  == 4] <- "Small city (under 100 th.)"
-dd$settl[dd$V1c1  == 5] <- "Village"
-dd$settl[dd$V1c1  == 6] <- "Other"
-
-dd$settl <- factor(dd$settl, levels=c("Moscow,Petersburg",
-                                  "CIty of 500 th. or more",
-                                  "City of 100-499 th.",
-                                  "Small city (under 100 th.)",
-                                  "Village",
-                                  "Other"))
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$settl),2)*100)
-
-p <- ggplot(data=tbl,# data 
-            aes(x=Var2, # x-akselin luokitteleva muuttuja
-                y=Freq,
-                fill=Var1)) # y-akselin jatkuva muuttuja
-p <- p + geom_bar(stat="identity")
-p <- p + guides(fill = guide_legend(reverse=TRUE))
-p <- p + labs(title="Share of respondents")
-p <- p + theme(axis.text.x = element_text(angle=90))
-p
-
-tbl <- as.data.frame(prop.table(table(dd$subpov,dd$settl))*100)
-tbl$Freq <- round(tbl$Freq, 1)
-p <- ggplot(data=tbl,# data 
-            aes(x=Var1, # x-akselin luokitteleva muuttuja
-                y=Var2,
-                fill=Freq,
-                label=Freq)) # y-akselin jatkuva muuttuja
-p <- p + geom_tile()
-p <- p + geom_text()
-p
-
-p <- ggplot(data=dd,# data 
-            aes(x=age_class, # x-akselin luokitteleva muuttuja
-                y=V74c1)) # y-akselin jatkuva muuttuja
-p <- p + geom_boxplot()
-p <- p + facet_wrap(~subpov)
-p <- p + labs(title="monthly income by subgroup")
-p
-
-
-```
-
-
-
-
-
-
-
-
-
-
-## General trust 
-
-
-```{r trustothers}
-i <-  trust_vars$code[17]
-
-dd$trust1<-NULL
-dd$trust1[dd[[i]]  == 1] <- "In our country you\ncan trust nobody"
-dd$trust1[dd[[i]]  == 2] <- "You can only trust\na minority"
-dd$trust1[dd[[i]]  == 3] <- "Some can be trusted and\nsome cannot be trusted"
-dd$trust1[dd[[i]]  == 4] <- "You can trust a\nmajority of our citizens"
-dd$trust1[dd[[i]]  == 5] <- "You can always trust\nour citizens"
-dd$trust1[dd[[i]]  == 6] <- "Hard to say"
-
-dd$trust1 <- factor(dd$trust1, levels=c("In our country you\ncan trust nobody",
-                                      "You can only trust\na minority",
-                                      "Some can be trusted and\nsome cannot be trusted",
-                                      "You can trust a\nmajority of our citizens",
-                                      "You can always trust\nour citizens",
-                                      "Hard to say"))
-
-tbl <- as.data.frame(prop.table(table(dd$trust1))*100)
-tbl$Freq <- round(tbl$Freq,1)
-
-p <- ggplot(data=tbl,# data 
-          aes(x=Var1, # x-akselin luokitteleva muuttuja
-              y=Freq,
-              label=Freq)) # y-akselin jatkuva muuttuja
-p <- p + geom_bar(stat="identity", position="dodge")
-p <- p + geom_text(position=position_dodge(width=1), vjust=1.5,color="white",size=3)
-p <- p + guides(fill = guide_legend(reverse=TRUE))
-p <- p + theme(axis.text.x = element_text(angle=90))
-# p <- p + facet_wrap(~var)
-print(p)
-```
-
-
-## General trust by ...
 
 
 

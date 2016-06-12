@@ -5,3 +5,10 @@
 _site
 aisurvey_web.Rproj
 data
+analysis_poverty_desciptive.html
+analysis_poverty_desciptive_files
+analysis_trust_desciptive_files
+codebook_2015_cache
+codebook_merge_cache
+simo1.R
+site_libs

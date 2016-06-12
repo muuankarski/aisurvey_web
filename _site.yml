@@ -12,6 +12,9 @@ navbar:
         - text: "Codebook 2015 data"
           icon: fa-book
           href: codebook_2015.html
+        - text: "Variable list 2015 data"
+          icon: fa-book
+          href: codebook_2015_varlist.html
         - text: "Codebook merged file"
           icon: fa-book
           href: codebook_merge.html
@@ -21,6 +24,9 @@ navbar:
         - text: "Descriptive poverty analysis"
           icon: fa-bar-chart
           href: analysis_poverty_desciptive.html
+        - text: "Descriptive trust analysis"
+          icon: fa-bar-chart
+          href: analysis_trust_desciptive.html
         - text: "Descriptive visualisations"
           icon: fa-bar-chart
           href: viz.html

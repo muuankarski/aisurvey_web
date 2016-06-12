@@ -175,41 +175,46 @@ save(d_merge_L_class, file="./data/d_merge_L_class.RData")
 
 
 # /Second type. Classification on decision-making and autonomy (SDMR2015)
-# 
+
 # /Indexes of decision-making and autonomy
-# /There are a number of questions in the study that gauge the level of participation in the decision-making. Each question defines individual input into decision-making using a three-point scale: decision taken by the respondent without prior consultations with his or her superiors, decision taken in consort with other employees and no influence upon decisions in the designated area. The questions serves as the basis for an index of decision-making (DM index) normalized to range from 1 to 100.  The autonomy index (AUT-index) is measured in the same way as the decision-making power.
-# 
-# /Syntax for calculation of DMi_15022016
-# /Questions v51_1c1 … v51_13c1 (decision-making)
-# 
-# mvencode V51_1c1 V51_2c1 V51_3c1 V51_4c1 V51_5c1 V51_6c1 V51_7c1 V51_8c1 V51_9c1 V51_10c1 V51_11c1 V51_12c1 V51_13c1, mv(0)
-# gen v51_whole_for_13=V51_1c1 + V51_2c1 + V51_3c1 + V51_4c1 + V51_5c1 + V51_6c1 + V51_7c1 + V51_8c1 + V51_9c1 + V51_10c1 + V51_11c1 + V51_12c1 + V51_13c1
-# /Dmax=3*13=39
-# gen DMi_for13=( v51_whole_for_13/39)*100
-# gen v51_whole_for_12=V51_1c1 + V51_2c1 + V51_3c1 + V51_4c1 + V51_5c1 + V51_6c1 + V51_7c1 + V51_8c1 + V51_9c1 + V51_10c1 + V51_11c1 + V51_12c1
-# /Dmax=3*12=36
-# gen DMi_for12=( v51_whole_for_12/36)*100
-# /The DM index and the Wright variable
-# tabstat DMi_for12, statistics( mean sd ) by(wright)
-# tabstat DMi_for13, statistics( mean sd ) by(wright)
-# 
-# /Questions v46_1c1…v46_6c1 (autonomy)
-# gen v46_1= V46_1c1
-# gen v46_2= V46_2c1
-# gen v46_3= V46_3c1
-# gen v46_4= V46_4c1
-# gen v46_5= V46_5c1
-# gen v46_6= V46_6c1
-# mvencode v46_1 v46_2 v46_3 v46_4 v46_5 v46_6, mv(0)
-# / All 9s (“Hard to say”) have been replaced to 0s.
-# replace v46_1=0 if v46_1==9
-# replace v46_2=0 if v46_2==9
-# replace v46_3=0 if v46_3==9
-# replace v46_4=0 if v46_4==9
-# replace v46_5=0 if v46_5==9
-# replace v46_6=0 if v46_6==9
-# gen v46_for6= v46_1 + v46_2 + v46_3 + v46_4 + v46_5 + v46_6
-# /Dmax=3*6=18
-# gen AUT_index= (v46_for6/18)*100
-# /The DM index and the Wright variable
-# tabstat AUT_index, statistics( mean sd ) by(wright)
+# /There are a number of questions in the study that gauge the level of participation in the decision-making. 
+#  Each question defines individual input into decision-making using a three-point scale: 
+## 1 decision taken by the respondent without prior consultations with his or her superiors, 
+## 2 decision taken in consort with other employees and no influence upon decisions in the designated area. 
+# The questions serves as the basis for an index of decision-making (DM index) normalized to range from 1 to 100.  
+# The autonomy index (AUT-index) is measured in the same way as the decision-making power.
+
+/Syntax for calculation of DMi_15022016
+/Questions v51_1c1 … v51_13c1 (decision-making)
+
+mvencode V51_1c1 V51_2c1 V51_3c1 V51_4c1 V51_5c1 V51_6c1 V51_7c1 V51_8c1 V51_9c1 V51_10c1 V51_11c1 V51_12c1 V51_13c1, mv(0)
+gen v51_whole_for_13=V51_1c1 + V51_2c1 + V51_3c1 + V51_4c1 + V51_5c1 + V51_6c1 + V51_7c1 + V51_8c1 + V51_9c1 + V51_10c1 + V51_11c1 + V51_12c1 + V51_13c1
+/Dmax=3*13=39
+gen DMi_for13=( v51_whole_for_13/39)*100
+gen v51_whole_for_12=V51_1c1 + V51_2c1 + V51_3c1 + V51_4c1 + V51_5c1 + V51_6c1 + V51_7c1 + V51_8c1 + V51_9c1 + V51_10c1 + V51_11c1 + V51_12c1
+/Dmax=3*12=36
+gen DMi_for12=( v51_whole_for_12/36)*100
+/The DM index and the Wright variable
+tabstat DMi_for12, statistics( mean sd ) by(wright)
+tabstat DMi_for13, statistics( mean sd ) by(wright)
+
+/Questions v46_1c1…v46_6c1 (autonomy)
+gen v46_1= V46_1c1
+gen v46_2= V46_2c1
+gen v46_3= V46_3c1
+gen v46_4= V46_4c1
+gen v46_5= V46_5c1
+gen v46_6= V46_6c1
+mvencode v46_1 v46_2 v46_3 v46_4 v46_5 v46_6, mv(0)
+/ All 9s (“Hard to say”) have been replaced to 0s.
+replace v46_1=0 if v46_1==9
+replace v46_2=0 if v46_2==9
+replace v46_3=0 if v46_3==9
+replace v46_4=0 if v46_4==9
+replace v46_5=0 if v46_5==9
+replace v46_6=0 if v46_6==9
+gen v46_for6= v46_1 + v46_2 + v46_3 + v46_4 + v46_5 + v46_6
+/Dmax=3*6=18
+gen AUT_index= (v46_for6/18)*100
+/The DM index and the Wright variable
+tabstat AUT_index, statistics( mean sd ) by(wright)
