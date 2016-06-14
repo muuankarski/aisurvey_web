@@ -1,4 +1,4 @@
-# # Manipulate the excel from Misha
+# # # # Manipulate the excel from Misha
 # library(readxl)
 # d <- read_excel("./data/sdmr_4_linear_distributions.xls", skip=1)
 # names(d) <- c("name","label","share","n")
@@ -13,6 +13,14 @@
 # library(dplyr)
 # dd <- d %>% group_by(name) %>% mutate(value = 1:n())
 # 
+# #
+# # yml <- yaml::as.yaml(dd, column.major = FALSE) # 1
+# # writeLines(yml,con = "./data/metadata2015.yaml")
+# #
+# # d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
+# # d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
+# 
+# 
 # # VAriable names from labelled SPSS data
 # library(haven)
 # d <- haven::read_sav("./data/sdmr_4_english_language_version.sav")
@@ -25,10 +33,12 @@
 # }
 # 
 # label_data <- merge(dd,name_data,by="name", all.x=TRUE)
+# write.csv(label_data, file="./data/label_data.csv", row.names = FALSE)
 # save(label_data, file="./data/label_data.RData")
 
 # data=d
 # var="V95_1c1"
+# var="V54_6c1"
 
 label_sdmr <- function(data,var,factor=TRUE){
   
@@ -41,6 +51,3 @@ label_sdmr <- function(data,var,factor=TRUE){
   if (factor) data[["newvar"]] <- factor(data[["newvar"]], levels=labdat[order(labdat$value),]$label)
   return(data[["newvar"]])
 }
-
-
-# var="V54_6c1"

@@ -3,17 +3,17 @@ navbar:
   title: "Survey 2015"
   type: inverse
   left:
-    - text: "Data"
+    - text: "Data & scripts"
       icon: fa-database
       href: data.html
     - text: "Codebooks"
-      icon: fa-line-chart
+      icon: fa-book
       menu:
         - text: "Codebook 2015 data"
           icon: fa-book
           href: codebook_2015.html
         - text: "Variable list 2015 data"
-          icon: fa-book
+          icon: fa-table
           href: codebook_2015_varlist.html
         - text: "Codebook merged file"
           icon: fa-book
@@ -22,20 +22,23 @@ navbar:
       icon: fa-line-chart
       menu:
         - text: "Descriptive poverty analysis"
-          icon: fa-bar-chart
+          icon: fa-hand-grab-o
           href: analysis_poverty_desciptive.html
         - text: "Descriptive trust analysis"
-          icon: fa-bar-chart
+          icon: fa-group
           href: analysis_trust_desciptive.html
-        - text: "Descriptive visualisations"
-          icon: fa-bar-chart
-          href: viz.html
-        - text: "Modelling"
-          icon: fa-tasks
-          href: model.html
-        - text: "Analysis application (In progress)"
-          icon: fa fa-cog fa-spin
-          href: http://82.181.168.173:443/sdmr_shiny/
+        - text: "Spatial visualisations"
+          icon: fa-map
+          href: analysis_spatial_visualisations.html
+#        - text: "Descriptive visualisations"
+#          icon: fa-bar-chart
+#          href: viz.html
+#        - text: "Modelling"
+#          icon: fa-tasks
+#          href: model.html
+#        - text: "Analysis application (In progress)"
+#          icon: fa fa-cog fa-spin
+#          href: http://82.181.168.173:443/sdmr_shiny/
     - text: "Upload file"
       icon: fa-file
       href: upload/index.php

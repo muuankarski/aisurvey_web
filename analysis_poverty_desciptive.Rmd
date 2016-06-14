@@ -13,22 +13,20 @@ output:
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=TRUE,
-                           cache=FALSE,
+                           cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
-opts_chunk$set(fig.width = 10, fig.height = 10)
+opts_chunk$set(fig.width = 10, fig.height = 6)
 library(ggplot2)
 library(dplyr)
 options(scipen=999)
 
 if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
-load("./data/merged_4wave20151110N.RData")
-longi <- d_merge_N
-load("./data/d_merge_N_class.RData")
-longi_class <- d_merge_N_class
 load("./data/sdmr_4_english_language_versionN.RData")
-cross15 <- d15n
-
+d <- d15n
+# lets apply the new class variables
+# source("./code/class_variable_2015.R")
+# Lets make the label_data()-function available
 source("./code/label_data.R")
 ```
 
@@ -37,7 +35,6 @@ source("./code/label_data.R")
 ## monthly income 
 
 ```{r incometaulukko}
-d <- cross15
 
 d$tulot <- d$V74c1 / 10404
 
@@ -105,7 +102,7 @@ p
 bg_vars <- read.table(textConnection('
 
 name code
-"Age"  V81c1
+"Age"  age
 "Sex"  V112c1
 "Education" V10c1
 "Type of Settlement" V1c1
@@ -123,7 +120,7 @@ dd$subpov <- label_sdmr(dd,"V81c1", factor=TRUE)
 
 for (i in bg_vars$code){
   
-  if (i %in% "V82c1"){
+  if (i %in% "age"){
   dd$depend[dd[[i]] < 20] <- "Below 20"
   dd$depend[dd[[i]] >= 20 & dd$age < 30] <- "20-29"
   dd$depend[dd[[i]] >= 30 & dd$age < 40] <- "30-39"
@@ -192,6 +189,11 @@ for (i in bg_vars$code){
 # Merged data
 
 ```{r load_merged_data}
+
+load("./data/merged_4wave20151110N.RData")
+longi <- d_merge_N
+load("./data/d_merge_N_class.RData")
+longi_class <- d_merge_N_class
 
 ```
 

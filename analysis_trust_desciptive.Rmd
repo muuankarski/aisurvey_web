@@ -13,10 +13,10 @@ output:
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=TRUE,
-                           cache=FALSE,
+                           cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
-opts_chunk$set(fig.width = 10, fig.height = 10)
+opts_chunk$set(fig.width = 10, fig.height = 6)
 library(ggplot2)
 library(dplyr)
 options(scipen=999)
@@ -38,7 +38,7 @@ source("./code/label_data.R")
 ## Institutional trust
 
 
-```{r trust, results="asis", eval=TRUE}
+```{r trust, results="asis", eval=TRUE, fig.height=10}
 
 load("./data/label_data.RData")
 
@@ -63,7 +63,7 @@ for (i in trust_vars$code){
 
 ## By institution
 
-```{r insttrust}
+```{r insttrust, fig.height=10}
 tbl <- aggdf
 p <- ggplot(data=tbl,# data 
           aes(x=Var1, # x-akselin luokitteleva muuttuja
