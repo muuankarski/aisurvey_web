@@ -13,7 +13,7 @@ output:
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=TRUE,
-                           cache=FALSE,
+                           cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
 opts_chunk$set(fig.width = 10, fig.height = 10)
@@ -22,71 +22,50 @@ library(dplyr)
 ```
 
 
-**Variables**
+**Variables names, codes, values & labels**
+
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>READ THIS!</strong> If variable has more than 450 values (is numeric in most cases), table only shows first 10 rows!
+</div>
 
 
-```{r load}
-# Cross-sectional NUMERIC 2015 raw data
-load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionN.RData"))
-# Cross-sectional LABELS 2015 raw data
-load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionL.RData"))
-```
-
-
-
-```{r taulukot, results="asis", fig.height=3, cache=TRUE}
+```{r taulukot, cache=TRUE, results="asis"}
 library(dplyr)
 library(ggplot2)
 d <- haven::read_sav("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_version.sav")
 
-df <- data.frame()
 for (i in 1:ncol(d)){
+  df <- data.frame()
   code  <- names(d[i])
-  label <- attributes(d[[i]])$label
-  df <- rbind(df,data.frame(code,label, stringsAsFactors = FALSE))
-}
-
-
-# for (i in names(d15l)[2:ncol(d15l)]){
-for (i in names(d15l)){
-  col1 <- as.data.frame(table(d15l[i]))
-  col2 <- as.data.frame(table(d15n[i]))
-  n <- min(length(col1[[1]]), length(col2[[1]]))
-  nx <- max(length(col1[[1]]), length(col2[[1]]))
-  if (n==0 & nx == 0) next()
-  if (n == 0) n = nx
-  if (nrow(col1)== 0){
-    names(col2) <- c("numeric","Freq")
-    tbl <- col2
-  } 
-  if (nrow(col2)== 0){
-    names(col1) <- c("labelled","Freq")    
-    tbl <- col1
-  } 
-  if (nrow(col2) > 0 & nrow(col1) > 1){
-      col1 <- col1[1:n,]
-      col2 <- col2[1:n,]
-      names(col1) <- c("labelled","Freq")
-      names(col2) <- c("numeric","Freq")
-      tbl <-  cbind(col1[1],col2)
+  name <- attributes(d[[i]])$label
+  labels <- names(attributes(d[[i]])$labels)
+  if (is.null(labels)){
+  values = unique(d[[i]])
+  df <- data.frame(code=code,
+             name=name,
+             labels=NA,
+             values=values)  
+  } else {
+    values = as.integer(attributes(d[[i]])$labels)
+    df <- data.frame(code=code,
+             name=name,
+             labels=labels,
+             values=values)
   }
-  tbl$share <- round(prop.table(tbl$Freq)*100,2)
-  if (is.numeric(d15n[[i]])){
-      tbl$median <- median(d15n[[i]],na.rm=TRUE)
-      tbl$mean <- mean(d15n[[i]],na.rm=TRUE)
+  
+  cat("\n\n")
+  cat(paste("#",code,"-",name))
+  cat("\n\n")
+  
+  if (nrow(df) >= 450){
+   print(knitr::kable(df[1:10,], "html", table.attr='class="table table-striped table-hover"')) 
+  } else {
+    print(knitr::kable(df, "html", table.attr='class="table table-striped table-hover"'))
   }
-  cat("\n\n")
-  cat(paste("#",i,df[df$code %in% i,"label"]))
-  print(knitr::kable(tbl))
-  cat("\n\n")
-  # if (is.numeric(d15n[[i]]) &  n  <= 15 & n != 0){
-  # # if (i == "V2c99"){
-  # p <- ggplot(d15n, aes_string(i)) + geom_histogram() +
-  #     labs(title=i)
-  # print(p)
-  #   }
-}
+   cat("\n\n")
 
+}
 
 ```
 

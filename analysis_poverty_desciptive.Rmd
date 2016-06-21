@@ -183,6 +183,105 @@ for (i in bg_vars$code){
 
 ```
 
+# Class- variables
+
+```{r class2015}
+oldvar = "V14_CODE"
+oldvar2 <- "occup_groups"
+d <- dd
+# Creates four new variables 
+## "occup_groups"
+## "occup_groups_labelled"
+## "autonomia"
+## "autonomia_labelled"
+source("./code/create_class_2015.R")
+
+dd <- d
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$occup_groups_labelled),2)*100)
+
+levels(tbl$Var1) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var1))
+levels(tbl$Var2) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var2))
+
+cat("\n\n")
+cat("## occup_groups_labelled")
+cat("\n\n")
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity")
+p <- p + guides(fill = guide_legend(reverse=TRUE, title="Income group"))
+p <- p + labs(title="Share of respondents - occup_groups_labelled",
+              x="occup_groups_labelled")
+p <- p + theme(axis.text.x = element_text(angle=90))
+print(p)
+
+tbl <- as.data.frame(table(dd$subpov,dd$occup_groups_labelled))
+
+levels(tbl$Var1) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var1))
+levels(tbl$Var2) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var2))
+
+tbl$Freq <- round(tbl$Freq, 1)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var1, # x-akselin luokitteleva muuttuja
+                y=Var2,
+                fill=Freq,
+                label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_tile()
+p <- p + geom_text()
+p <- p + labs(title="Number of cases per cell - occup_groups_labelled",
+              x="Income group",
+              y=bg_vars[bg_vars$code %in% i,]$name)
+print(p)
+
+
+tbl <- as.data.frame(prop.table(table(dd$subpov,dd$autonomia_labelled),2)*100)
+
+levels(tbl$Var1) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var1))
+levels(tbl$Var2) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var2))
+
+cat("\n\n")
+cat("## autonomia_labelled")
+cat("\n\n")
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var2, # x-akselin luokitteleva muuttuja
+                y=Freq,
+                fill=Var1)) # y-akselin jatkuva muuttuja
+p <- p + geom_bar(stat="identity")
+p <- p + guides(fill = guide_legend(reverse=TRUE, title="Income group"))
+p <- p + labs(title="Share of respondents - autonomia_labelled",
+              x="autonomia_labelled")
+p <- p + theme(axis.text.x = element_text(angle=90))
+print(p)
+
+tbl <- as.data.frame(table(dd$subpov,dd$autonomia_labelled))
+
+levels(tbl$Var1) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var1))
+levels(tbl$Var2) <- gsub('(.{1,20})(\\s|$)', '\\1\n', levels(tbl$Var2))
+
+tbl$Freq <- round(tbl$Freq, 1)
+
+p <- ggplot(data=tbl,# data 
+            aes(x=Var1, # x-akselin luokitteleva muuttuja
+                y=Var2,
+                fill=Freq,
+                label=Freq)) # y-akselin jatkuva muuttuja
+p <- p + geom_tile()
+p <- p + geom_text()
+p <- p + labs(title="Number of cases per cell - autonomia_labelled",
+              x="Income group",
+              y=bg_vars[bg_vars$code %in% i,]$name)
+print(p)
+
+
+```
+
+
+
+
 
 
 

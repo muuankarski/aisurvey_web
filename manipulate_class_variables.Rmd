@@ -28,6 +28,7 @@ library(ggplot2)
 load("./data/sdmr_4_english_language_versionN.RData")
 d <- d15n
 
+source("./code/label_data.R")
 d$V14_CODE_labelled <- label_sdmr(data = d, var = "V14_CODE")
 ```
 
@@ -75,18 +76,18 @@ d[[oldvar2]][d[[oldvar]]>=7511 & d[[oldvar]]<=7549] <- 7
 d[[oldvar2]][d[[oldvar]]>=8111 & d[[oldvar]]<=8189] <- 8
 d[[oldvar2]][d[[oldvar]]>=8211 & d[[oldvar]]<=8219] <- 8
 d[[oldvar2]][d[[oldvar]]>=8311 & d[[oldvar]]<=8343] <- 8
-d[[oldvar2]][d[[oldvar]]>=9112 & d[[oldvar]]<=9129] <- 91
+d[[oldvar2]][d[[oldvar]]>=9112 & d[[oldvar]]<=9129 | d[[oldvar]]==9412] <- 91
 d[[oldvar2]][d[[oldvar]]>=9211 & d[[oldvar]]<=9212] <- 92
 d[[oldvar2]][d[[oldvar]]>=9312 & d[[oldvar]]<=9334] <- 92
 d[[oldvar2]][d$oldvar==9412] <- 92
 d[[oldvar2]][d[[oldvar]]>=9613 & d[[oldvar]]<=9629] <- 92
 d[[oldvar2]][d[[oldvar]]>=9997 & d[[oldvar]]<=9999] <- 99
-d[[oldvar2]][d$oldvar==110] <- 11
-d[[oldvar2]][d$oldvar==210] <- 21
+d[[oldvar2]][d[[oldvar]]==110] <- 11
+d[[oldvar2]][d[[oldvar]]==210] <- 34
 d[[oldvar2]][d[[oldvar]]>=2351 & d[[oldvar]]<=2359] <- 23
-d[[oldvar2]][d$oldvar==3] <- 35
-d[[oldvar2]][d$oldvar==52] <- 5
-d[[oldvar2]][d$oldvar==62] <- 6
+d[[oldvar2]][d[[oldvar]]==3] <- 35
+d[[oldvar2]][d[[oldvar]]==52] <- 5
+d[[oldvar2]][d[[oldvar]]==62] <- 6
 
 # table(d$occup_groups, useNA="ifany")
   
@@ -207,7 +208,7 @@ d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 91] <- 11
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==21 | d$occup_groups==22 | d$occup_groups==23 | d$occup_groups==24 | d$occup_groups==25 | d$occup_groups==26) replace autonomia=5
 d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 21:26] <- 5
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==31 | d$occup_groups==32 | d$occup_groups==33 | d$occup_groups==34 | d$occup_groups==35) replace autonomia=6
-d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 31:35] <- 6
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% c(31:35,3)] <- 6
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==53) replace autonomia=7
 d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 53] <- 7
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==4 | d$occup_groups==41 | d$occup_groups==42 | d$occup_groups==43 | d$occup_groups==44) replace autonomia=8
@@ -215,9 +216,12 @@ d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% c(4,41:44)] <- 8
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==5) replace autonomia=9
 d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 5] <- 9
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==6 | d$occup_groups==7 | d$occup_groups==8) replace autonomia=10
-d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 6:8] <- 10
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% c(6:8)] <- 10
 # if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==92) replace autonomia=11
 d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 92] <- 10
+d$autonomia[d$V21==1 & d$V19==1 & d$V14_CODE %in% 5120] <- 10 # Cooks
+
+
 # if (v21_1998_2007_2015==2) replace autonomia=12
 d$autonomia[d$V21==2] <- 12
 d$autonomia[d$V19==2] <- 14
@@ -442,4 +446,28 @@ print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-s
 
 
 ```
+
+
+```{r}
+d15 <- d
+save(d15, file="./data/d15.RData")
+```
+
+
+# Summaries
+
+## V14_CODE, Occup_groups & occr crosstabulated
+
+```{r summarytable}
+load("./data/d15.RData")
+library(dplyr)
+tbl <- d15 %>% group_by(V14_CODE_labelled) %>% 
+  summarise(occup_groups_labelled = occup_groups_labelled[1],
+            occr_labelled = occr_labeled[1])
+  
+print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
+```
+
+
+
 

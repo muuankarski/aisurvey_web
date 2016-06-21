@@ -3,9 +3,15 @@ navbar:
   title: "Survey 2015"
   type: inverse
   left:
-    - text: "Data & scripts"
+    - text: "Data & data manipulation"
       icon: fa-database
-      href: data.html
+      menu:
+        - text: "Data overview"
+          icon: fa-list-ul
+          href: data.html
+        - text: "Creating class variables"
+          icon: fa-wrench
+          href: manipulate_class_variables.html
     - text: "Codebooks"
       icon: fa-book
       menu:
@@ -39,6 +45,12 @@ navbar:
 #        - text: "Analysis application (In progress)"
 #          icon: fa fa-cog fa-spin
 #          href: http://82.181.168.173:443/sdmr_shiny/
+    - text: "Applications"
+      icon: fa fa-cog fa-spin
+      menu:
+        - text: "A frequency application"
+          icon: fa-line-chart
+          href: http://82.181.168.173:443/shiny_aisurvey_desc/
     - text: "Upload file"
       icon: fa-file
       href: upload/index.php
