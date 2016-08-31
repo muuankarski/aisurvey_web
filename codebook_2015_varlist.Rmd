@@ -22,11 +22,11 @@ library(dplyr)
 ```
 
 ```{r print}
-library(DT)
-load("./data/label_data.RData")
-datatable(label_data, filter = 'top', options = list(
-  pageLength = 50, autoWidth = TRUE
-))
+# library(DT)
+# load("./data/label_data.RData")
+# datatable(label_data, filter = 'top', options = list(
+#   pageLength = 50, autoWidth = TRUE
+# ))
 
 ```
 

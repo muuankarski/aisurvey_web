@@ -459,15 +459,45 @@ save(d15, file="./data/d15.RData")
 ## V14_CODE, Occup_groups & occr crosstabulated
 
 ```{r summarytable}
-load("./data/d15.RData")
 library(dplyr)
 tbl <- d15 %>% group_by(V14_CODE_labelled) %>% 
   summarise(occup_groups_labelled = occup_groups_labelled[1],
-            occr_labelled = occr_labeled[1])
+            occr_labelled = occr_labeled[1],
+            skill2_labeled = skill2_labeled[1],
+            autonomia_labelled = autonomia_labelled[1],
+            mean_AUT_index = mean(AUT_index, na.rm=TRUE),
+            mean_DMi_for13 = mean(DMi_for13, na.rm=TRUE))
   
-print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
+# print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
+
+library(DT)
+datatable(tbl, filter = 'top', options = list(
+  pageLength = 25, autoWidth = TRUE
+))
 ```
 
+
+
+## testitesti
+
+```{r summarytable2}
+
+tbl <- d15 %>% group_by(V14_CODE_labelled) %>% 
+  summarise(occup_groups_labelled = occup_groups_labelled[3],
+            occr_labelled = occr_labeled[3],
+            skill2_labeled = skill2_labeled[3],
+            autonomia_labelled = autonomia_labelled[3],
+            mean_AUT_index = mean(AUT_index, na.rm=TRUE),
+            mean_DMi_for13 = mean(DMi_for13, na.rm=TRUE))
+  
+# print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
+
+library(DT)
+datatable(tbl, filter = 'top', options = list(
+  pageLength = 15, autoWidth = TRUE
+))
+
+```
 
 
 
