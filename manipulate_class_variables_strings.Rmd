@@ -1,0 +1,929 @@
+---
+title: Constructing class variables
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: yes
+    code_folding: hide
+---
+
+
+This page documents the construction of various class variables. Click "Show"-button to see the code applied!
+
+
+```{r setup, include = F}
+library(knitr)
+knitr::opts_chunk$set(list(echo=TRUE,
+                           eval=TRUE,
+                           cache=FALSE,
+                           warning=FALSE,
+                           message=FALSE,
+                           results="asis"))
+opts_chunk$set(fig.width = 10, fig.height = 6)
+options(scipen=999)
+
+library(dplyr)
+library(ggplot2)
+load("./data/sdmr_4_english_language_versionN.RData")
+d <- d15n
+
+source("./code/label_data.R")
+d$V14_CODE_labelled <- label_sdmr(data = d, var = "V14_CODE")
+```
+
+
+# Occupational groups
+
+```{r occup_groups}
+oldvar = "V14_CODE"
+oldvar2 <- "occup_groups"
+d[[oldvar2]][d[[oldvar]] %in% c(1100,1101,
+                                1102,1103,
+                                1104,1105,
+                                1106,1107,
+                                1108,1109,
+                                1110,1111,
+                                1112,1113,
+                                1114,1115,
+                                1116,1117,
+                                1118,1119,
+                                1120)] <- "11-Chief executives, senior officials and legislators"
+
+d[[oldvar2]][d[[oldvar]] %in% c(1311,1312,
+                                1313,1314,
+                                1315,1316,
+                                1317,1318,
+                                1319,1320,
+                                1321,1322,
+                                1323,1324)] <- "13-Production and specialized services managers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(1342,1343,
+                                1344,1345,
+                                1346,1347,
+                                1348,1349)] <- "53-Personal care workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(1412,1413,
+                                1414,1415,
+                                1416,1417,
+                                1418,1419,
+                                1420,1421,
+                                1422,1423,
+                                1424,1425,
+                                1426,1427,
+                                1428,1429,
+                                1430,1431)] <- "13-Production and specialized services managers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2112,2113,
+                                2114,2115,
+                                2116,2117,
+                                2118,2119,
+                                2120,2121,
+                                2122,2123,
+                                2124,2125,
+                                2126,2127,
+                                2128,2129,
+                                2130,2131,
+                                2132,2133)] <- "21-Science and engineering professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2161,2162,
+                                2163,2164,
+                                2165)] <- "21-Science and engineering professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2141,2142,
+                                2143,2144,
+                                2145,2146,
+                                2147,2148,
+                                2149,2150,
+                                2151,2152,
+                                2153)] <- "3-Technicians and associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2212,2213,
+                                2214,2215,
+                                2216,2217,
+                                2218,2219,
+                                2220,2221,
+                                2222)] <- "53-Personal care workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2261,2262,
+                                2263,2264,
+                                2265,2266)] <- "22-Health professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2310,2311,
+                                2312,2313,
+                                2314,2315,
+                                2316,2317,
+                                2318,2319,
+                                2320,2321,
+                                2322,2323,
+                                2324,2325,
+                                2326,2327,
+                                2328,2329,
+                                2330)] <- "23-Teaching professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2341,2342)] <- "53-Personal care workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2411,2412,
+                                2413,2414,
+                                2415,2416,
+                                2417,2418,
+                                2419,2420,
+                                2421,2422,
+                                2423,2424,
+                                2425,2426,
+                                2427,2428,
+                                2429,2430,
+                                2431)] <- "24-Business and administration professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2512,2513,
+                                2514,2515,
+                                2516,2517,
+                                2518,2519,
+                                2520,2521,
+                                2522)] <- "25-Information and communications technology professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2611,2612,
+                                2613,2614,
+                                2615,2616,
+                                2617,2618,
+                                2619,2620,
+                                2621,2622,
+                                2623,2624,
+                                2625,2626,
+                                2627,2628,
+                                2629,2630,
+                                2631,2632,
+                                2633,2634,
+                                2635,2636,
+                                2637,2638,
+                                2639,2640,
+                                2641,2642,
+                                2643,2644,
+                                2645,2646,
+                                2647,2648,
+                                2649,2650,
+                                2651,2652,
+                                2653)] <- "26-Legal, social and cultural professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3111,3112,
+                                3113,3114,
+                                3115,3116,
+                                3117,3118,
+                                3119,3120,
+                                3121,3122,
+                                3123,3124,
+                                3125,3126,
+                                3127,3128,
+                                3129,3130,
+                                3131,3132,
+                                3133,3134,
+                                3135,3136,
+                                3137,3138,
+                                3139,3140,
+                                3141,3142,
+                                3143,3144,
+                                3145,3146,
+                                3147,3148,
+                                3149,3150,
+                                3151,3152,
+                                3153,3154)] <- "31-Science and engineering associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3211,3212,
+                                3213,3214,
+                                3215,3216,
+                                3217,3218,
+                                3219,3220,
+                                3221,3222,
+                                3223,3224,
+                                3225,3226,
+                                3227,3228,
+                                3229,3230,
+                                3231,3232,
+                                3233,3234,
+                                3235,3236,
+                                3237,3238,
+                                3239,3240,
+                                3241,3242,
+                                3243,3244,
+                                3245,3246,
+                                3247,3248,
+                                3249,3250,
+                                3251,3252,
+                                3253,3254,
+                                3255,3256,
+                                3257,3258)] <- "32-Health associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3311,3312,
+                                3313,3314,
+                                3315,3316,
+                                3317,3318,
+                                3319,3320,
+                                3321,3322,
+                                3323)] <- "33-Business and administration associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3333,3334)] <- "12-Administrative and commercial managers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3341,3342,
+                                3343,3344)] <- "4-Clerical support workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3351,3352,
+                                3353,3354,
+                                3355,3356,
+                                3357,3358,
+                                3359)] <- "33-Business and administration associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3411,3412,
+                                3413,3414,
+                                3415,3416,
+                                3417,3418,
+                                3419,3420,
+                                3421,3422,
+                                3423,3424,
+                                3425,3426,
+                                3427,3428,
+                                3429,3430,
+                                3431,3432,
+                                3433,3434,
+                                3435)] <- "34-Legal, social, cultural and related associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(3511,3512,
+                                3513,3514,
+                                3515,3516,
+                                3517,3518,
+                                3519,3520,
+                                3521)] <- "35-Information and communications technicians"
+
+d[[oldvar2]][d[[oldvar]] %in% c(4110,4111,
+                                4112,4113,
+                                4114,4115,
+                                4116,4117,
+                                4118,4119,
+                                4120,4121,
+                                4122,4123,
+                                4124,4125,
+                                4126,4127,
+                                4128,4129,
+                                4130,4131,
+                                4132)] <- "41-General and keyboard clerks"
+
+d[[oldvar2]][d[[oldvar]] %in% c(4210,4211,
+                                4212,4213,
+                                4214,4215,
+                                4216,4217,
+                                4218,4219,
+                                4220,4221,
+                                4222,4223,
+                                4224,4225,
+                                4226,4227)] <- "42-Customer services clerks"
+
+d[[oldvar2]][d[[oldvar]]  %in% c(4311,4312,
+                                 4313,4314,
+                                 4315,4316,
+                                 4317,4318,
+                                 4319,4320,
+                                 4321,4322,
+                                 4323)] <- "43-Numerical and material recording clerks"
+
+d[[oldvar2]][d[[oldvar]] %in% c(4411,4412,
+                                4413,4414,
+                                4415,4416,
+                                4417,4418,
+                                4419)] <- "44-Other clerical support workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(5111,5112,
+                                5113,5114,
+                                5115,5116,
+                                5117,5118,
+                                5119,5120,
+                                5121,5122,
+                                5123,5124,
+                                5125,5126,
+                                5127,5128,
+                                5129,5130,
+                                5131,5132,
+                                5133,5134,
+                                5135,5136,
+                                5137,5138,
+                                5139,5140,
+                                5141,5142,
+                                5143,5144,
+                                5145,5146,
+                                5147,5148,
+                                5149,5150,
+                                5151,5152,
+                                5153,5154,
+                                5155,5156,
+                                5157,5158,
+                                5159,5160,
+                                5161,5162,
+                                5163,5164,
+                                5165,5166,
+                                5167,5168,
+                                5169)] <- "52-Sales workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(5311,5312,
+                                5313,5314,
+                                5315,5316,
+                                5317,5318,
+                                5319,5320,
+                                5321)] <- "53-Personal care workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(5411,5412,
+                                5413,5414,
+                                5415,5416,
+                                5417,5418,
+                                5419)] <- "11-Chief executives, senior officials and legislators"
+
+d[[oldvar2]][d[[oldvar]] %in% c(6210,6211,
+                                6212,6213,
+                                6214,6215,
+                                6216,6217,
+                                6218,6219,
+                                6220,6221,
+                                6222,6223)] <- "6-Skilled agricultural, forestry and fishery workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(7111,7112,
+                                7113,7114,
+                                7115,7116,
+                                7117,7118,
+                                7119,7120,
+                                7121,7122,
+                                7123,7124,
+                                7125,7126,
+                                7127,7128,
+                                7129,7130,
+                                7131,7132,
+                                7133)] <- "7-Craft and related trades workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(7211,7212,
+                                7213,7214,
+                                7215,7216,
+                                7217,7218,
+                                7219,7220,
+                                7221,7222,
+                                7223,7224,
+                                7225,7226,
+                                7227,7228,
+                                7229,7230,
+                                7231,7232,
+                                7233,7234)] <- "7-Craft and related trades workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(7311,7312,
+                                7313,7314,
+                                7315,7316,
+                                7317,7318,
+                                7319,7320,
+                                7321,7322,
+                                7323)] <- "7-Craft and related trades workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(7411,7412,
+                                7413,7414,
+                                7415,7416,
+                                7417,7418,
+                                7419,7420,
+                                7421)] <- "7-Craft and related trades workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(7511,7512,
+                                7513,7514,
+                                7515,7516,
+                                7517,7518,
+                                7519,7520,
+                                7521,7522,
+                                7523,7524,
+                                7525,7526,
+                                7527,7528,
+                                7529,7530,
+                                7531,7532,
+                                7533,7534,
+                                7535,7536,
+                                7537,7538,
+                                7539,7540,
+                                7541,7542,
+                                7543,7544,
+                                7545,7546,
+                                7547,7548,
+                                7549)] <- "7-Craft and related trades workers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(8111,8112,
+                                8113,8114,
+                                8115,8116,
+                                8117,8118,
+                                8119,8120,
+                                8121,8122,
+                                8123,8124,
+                                8125,8126,
+                                8127,8128,
+                                8129,8130,
+                                8131,8132,
+                                8133,8134,
+                                8135,8136,
+                                8137,8138,
+                                8139,8140,
+                                8141,8142,
+                                8143,8144,
+                                8145,8146,
+                                8147,8148,
+                                8149,8150,
+                                8151,8152,
+                                8153,8154,
+                                8155,8156,
+                                8157,8158,
+                                8159,8160,
+                                8161,8162,
+                                8163,8164,
+                                8165,8166,
+                                8167,8168,
+                                8169,8170,
+                                8171,8172,
+                                8173,8174,
+                                8175,8176,
+                                8177,8178,
+                                8179,8180,
+                                8181,8182,
+                                8183,8184,
+                                8185,8186,
+                                8187,8188,
+                                8189)] <- "8-Plant and machine operators, and assemblers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(8211,8212,
+                                8213,8214,
+                                8215,8216,
+                                8217,8218,
+                                8219)] <- "8-Plant and machine operators, and assemblers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(8311,8312,
+                                8313,8314,
+                                8315,8316,
+                                8317,8318,
+                                8319,8320,
+                                8321,8322,
+                                8323,8324,
+                                8325,8326,
+                                8327,8328,
+                                8329,8330,
+                                8331,8332,
+                                8333,8334,
+                                8335,8336,
+                                8337,8338,
+                                8339,8340,
+                                8341,8342,
+                                8343)] <- "8-Plant and machine operators, and assemblers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(9112,9113,
+                                9114,9115,
+                                9116,9117,
+                                9118,9119,
+                                9120,9121,
+                                9122,9123,
+                                9124,9125,
+                                9126,9127,
+                                9128,9129,
+                                # this was a separate item
+                                9412)] <- "91-Cleaners and helpers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(9211,9212)] <- "92-Agricultural, forestry and fishery labourers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(9312,9313,
+                                9314,9315,
+                                9316,9317,
+                                9318,9319,
+                                9320,9321,
+                                9322,9323,
+                                9324,9325,
+                                9326,9327,
+                                9328,9329,
+                                9330,9331,
+                                9332,9333,
+                                9334,9412)] <- "92-Agricultural, forestry and fishery labourers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(9613,9614,
+                                 9615,9616,
+                                 9617,9618,
+                                 9619,9620,
+                                 9621,9622,
+                                 9623,9624,
+                                 9625,9626,
+                                 9627,9628,
+                                 9629)] <- "92-Agricultural, forestry and fishery labourers"
+
+d[[oldvar2]][d[[oldvar]] %in% c(9997,9998,9999)] <- NA
+
+d[[oldvar2]][d[[oldvar]] %in% 110] <- "11-Chief executives, senior officials and legislators"
+
+d[[oldvar2]][d[[oldvar]] %in% 210] <- "34-Legal, social, cultural and related associate professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% c(2351,2352,
+                                2353,2354,
+                                2355,2356,
+                                2357,2358,
+                                2359)] <- "23-Teaching professionals"
+
+d[[oldvar2]][d[[oldvar]] %in% 3] <- "35-Information and communications technicians"
+
+d[[oldvar2]][d[[oldvar]] %in% 52] <- "5-Service and sales workers"
+
+d[[oldvar2]][d[[oldvar]] %in% 62] <- "6-Skilled agricultural, forestry and fishery workers"
+
+# table(d$occup_groups, useNA="ifany")
+
+# d$occup_groups_labelled[d$koccup_groups %in% 3 ] <- "3-Technicians and associate professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 4 ] <- "4-Clerical support workers"
+# d$occup_groups_labelled[d$occup_groups %in% 5 ] <- "5-Service and sales workers"
+# d$occup_groups_labelled[d$occup_groups %in% 6 ] <- "6-Skilled agricultural, forestry and fishery workers"
+# d$occup_groups_labelled[d$occup_groups %in% 7 ] <- "7-Craft and related trades workers"
+# d$occup_groups_labelled[d$occup_groups %in% 8 ] <- "8-Plant and machine operators, and assemblers"
+# d$occup_groups_labelled[d$occup_groups %in% 9 ] <- "9-Elementary occupations"
+# d$occup_groups_labelled[d$occup_groups %in% 11 ] <- "11-Chief executives, senior officials and legislators"
+# d$occup_groups_labelled[d$occup_groups %in% 12 ] <- "12-Administrative and commercial managers"
+# d$occup_groups_labelled[d$occup_groups %in% 13 ] <- "13-Production and specialized services managers"
+# d$occup_groups_labelled[d$occup_groups %in% 14 ] <- "14-Hospitality, retail and other services managers"
+# d$occup_groups_labelled[d$occup_groups %in% 21 ] <- "21-Science and engineering professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 22 ] <- "22-Health professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 23 ] <- "23-Teaching professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 24 ] <- "24-Business and administration professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 25 ] <- "25-Information and communications technology professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 26 ] <- "26-Legal, social and cultural professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 31 ] <- "31-Science and engineering associate professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 32 ] <- "32-Health associate professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 33 ] <- "33-Business and administration associate professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 34 ] <- "34-Legal, social, cultural and related associate professionals"
+# d$occup_groups_labelled[d$occup_groups %in% 35 ] <- "35-Information and communications technicians"
+# d$occup_groups_labelled[d$occup_groups %in% 41 ] <- "41-General and keyboard clerks"
+# d$occup_groups_labelled[d$occup_groups %in% 42 ] <- "42-Customer services clerks"
+# d$occup_groups_labelled[d$occup_groups %in% 43 ] <- "43-Numerical and material recording clerks"
+# d$occup_groups_labelled[d$occup_groups %in% 44 ] <- "44-Other clerical support workers"
+# d$occup_groups_labelled[d$occup_groups %in% 51 ] <- "51-Personal service workers"
+# d$occup_groups_labelled[d$occup_groups %in% 52 ] <- "52-Sales workers"
+# d$occup_groups_labelled[d$occup_groups %in% 53 ] <- "53-Personal care workers"
+# d$occup_groups_labelled[d$occup_groups %in% 54 ] <- "54-Protective services workers"
+# d$occup_groups_labelled[d$occup_groups %in% 62 ] <- "62-Market-oriented skilled forestry, fishing and hunting workers"
+# d$occup_groups_labelled[d$occup_groups %in% 71 ] <- "71-Building and related trades workers, excluding electricians"
+# d$occup_groups_labelled[d$occup_groups %in% 72 ] <- "72-Metal, machinery and related trades workers"
+# d$occup_groups_labelled[d$occup_groups %in% 73 ] <- "73-Handicraft and printing workers"
+# d$occup_groups_labelled[d$occup_groups %in% 74 ] <- "74-Electrical and electronic trades workers"
+# d$occup_groups_labelled[d$occup_groups %in% 75 ] <- "75-Food processing, wood working, garment and other craft and related trades workers"
+# d$occup_groups_labelled[d$occup_groups %in% 81 ] <- "81-Stationary plant and machine operators"
+# d$occup_groups_labelled[d$occup_groups %in% 82 ] <- "82-Assemblers"
+# d$occup_groups_labelled[d$occup_groups %in% 83 ] <- "83-Drivers and mobile plant operators"
+# d$occup_groups_labelled[d$occup_groups %in% 91 ] <- "91-Cleaners and helpers"
+# d$occup_groups_labelled[d$occup_groups %in% 92 ] <- "92-Agricultural, forestry and fishery labourers"
+# d$occup_groups_labelled[d$occup_groups %in% 93 ] <- "93-Labourers in mining, construction, manufacturing and transport"
+# d$occup_groups_labelled[d$occup_groups %in% 94 ] <- "94-Food preparation assistants"
+# d$occup_groups_labelled[d$occup_groups %in% 96 ] <- "96-Refuse workers and other elementary workers"
+d$occup_groups_labelled <- factor(d$occup_groups_labelled, levels=c("3-Technicians and associate professionals" ,
+                                                                   "4-Clerical support workers" ,
+                                                                   "5-Service and sales workers" ,
+                                                                   "6-Skilled agricultural, forestry and fishery workers" ,
+                                                                   "7-Craft and related trades workers" ,
+                                                                   "8-Plant and machine operators, and assemblers" ,
+                                                                   "9-Elementary occupations" ,
+                                                                   "11-Chief executives, senior officials and legislators" ,
+                                                                   "12-Administrative and commercial managers" ,
+                                                                   "13-Production and specialized services managers" ,
+                                                                   "14-Hospitality, retail and other services managers" ,
+                                                                   "21-Science and engineering professionals" ,
+                                                                   "22-Health professionals" ,
+                                                                   "23-Teaching professionals" ,
+                                                                   "24-Business and administration professionals" ,
+                                                                   "25-Information and communications technology professionals" ,
+                                                                   "26-Legal, social and cultural professionals" ,
+                                                                   "31-Science and engineering associate professionals" ,
+                                                                   "32-Health associate professionals" ,
+                                                                   "33-Business and administration associate professionals" ,
+                                                                   "34-Legal, social, cultural and related associate professionals" ,
+                                                                   "35-Information and communications technicians" ,
+                                                                   "41-General and keyboard clerks" ,
+                                                                   "42-Customer services clerks" ,
+                                                                   "43-Numerical and material recording clerks" ,
+                                                                   "44-Other clerical support workers" ,
+                                                                   "51-Personal service workers" ,
+                                                                   "52-Sales workers" ,
+                                                                   "53-Personal care workers" ,
+                                                                   "54-Protective services workers" ,
+                                                                   "62-Market-oriented skilled forestry, fishing and hunting workers" ,
+                                                                   "71-Building and related trades workers, excluding electricians" ,
+                                                                   "72-Metal, machinery and related trades workers" ,
+                                                                   "73-Handicraft and printing workers" ,
+                                                                   "74-Electrical and electronic trades workers" ,
+                                                                   "75-Food processing, wood working, garment and other craft and related trades workers" ,
+                                                                   "81-Stationary plant and machine operators" ,
+                                                                   "82-Assemblers" ,
+                                                                   "83-Drivers and mobile plant operators" ,
+                                                                   "91-Cleaners and helpers" ,
+                                                                   "92-Agricultural, forestry and fishery labourers" ,
+                                                                   "93-Labourers in mining, construction, manufacturing and transport" ,
+                                                                   "94-Food preparation assistants" ,
+                                                                   "96-Refuse workers and other elementary workers"))
+tbl <- as.data.frame(table(d$occup_groups_labelled, useNA="ifany"))
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+cat("\n\n")
+cat("## Occupational codes of those missing")
+cat("\n\n")
+
+df_na <- d[is.na(d$occup_groups_labelled),c("V14_CODE_labelled")]
+tbl <- as.data.frame(table(df_na))
+tbl <- tbl[tbl$Freq > 0,]
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+```
+
+
+# Autonomia
+
+```{r autonomia}
+
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==12) replace autonomia=1
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 12] <- 1
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==13) replace autonomia=1
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 13] <- 1
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==11) replace autonomia=1
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 11:13] <- 1
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==91) replace autonomia=11
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 91] <- 11
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==21 | d$occup_groups==22 | d$occup_groups==23 | d$occup_groups==24 | d$occup_groups==25 | d$occup_groups==26) replace autonomia=5
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 21:26] <- 5
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==31 | d$occup_groups==32 | d$occup_groups==33 | d$occup_groups==34 | d$occup_groups==35) replace autonomia=6
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% c(31:35,3)] <- 6
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==53) replace autonomia=7
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 53] <- 7
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==4 | d$occup_groups==41 | d$occup_groups==42 | d$occup_groups==43 | d$occup_groups==44) replace autonomia=8
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% c(4,41:44)] <- 8
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==5) replace autonomia=9
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 5] <- 9
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==6 | d$occup_groups==7 | d$occup_groups==8) replace autonomia=10
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% c(6:8)] <- 10
+# if (v21_1998_2007_2015==1) & (v19_1998_2007_2015==1) & (occup_groups==92) replace autonomia=11
+d$autonomia[d$V21==1 & d$V19==1 & d$occup_groups %in% 92] <- 10
+d$autonomia[d$V21==1 & d$V19==1 & d$V14_CODE %in% 5120] <- 10 # Cooks
+
+
+# if (v21_1998_2007_2015==2) replace autonomia=12
+d$autonomia[d$V21==2] <- 12
+d$autonomia[d$V19==2] <- 14
+
+
+d$autonomia_labelled[d$autonomia %in% 1 ] <- "1-managerial"
+d$autonomia_labelled[d$autonomia %in% 5 ] <- "5-professional"
+d$autonomia_labelled[d$autonomia %in% 6 ] <- "6-scientific-technical"
+d$autonomia_labelled[d$autonomia %in% 7 ] <- "7-care work"
+d$autonomia_labelled[d$autonomia %in% 8 ] <- "8-clerical"
+d$autonomia_labelled[d$autonomia %in% 9 ] <- "9-sales"
+d$autonomia_labelled[d$autonomia %in% 10 ] <- "10-craftsman qualified"
+d$autonomia_labelled[d$autonomia %in% 11 ] <- "11-craftsman unqualified"
+d$autonomia_labelled[d$autonomia %in% 12 ] <- "12-entrepreneurs"
+d$autonomia_labelled[d$autonomia %in% 14 ] <- "14-not working"
+
+d$autonomia_labelled <- factor(d$autonomia_labelled, levels=c("1-managerial",
+                                                              "5-professional",
+                                                              "6-scientific-technical",
+                                                              "7-care work",
+                                                              "8-clerical",
+                                                              "10-craftsman qualified",
+                                                              "11-craftsman unqualified",
+                                                              "12-entrepreneurs",
+                                                              "14-not working"))
+
+tbl <- as.data.frame(table(d$autonomia_labelled, useNA="ifany"))
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+cat("\n\n")
+cat("## Occupational codes of those missing")
+cat("\n\n")
+
+df_na <- d[is.na(d$autonomia_labelled),c("V14_CODE_labelled")]
+tbl <- as.data.frame(table(df_na))
+tbl <- tbl[tbl$Freq > 0,]
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+```
+
+
+# Decision-making index (DMi)
+
+
+```{r DMindex}
+
+# # /Indexes of decision-making and autonomy
+# # /There are a number of questions in the study that gauge the level of participation in the decision-making.
+# #  Each question defines individual input into decision-making using a three-point scale:
+# ## 1 decision taken by the respondent without prior consultations with his or her superiors,
+# ## 2 decision taken in consort with other employees and no influence upon decisions in the designated area.
+# # The questions serves as the basis for an index of decision-making (DM index) normalized to range from 1 to 100.  
+# # The autonomy index (AUT-index) is measured in the same way as the decision-making power.
+
+d$v51_whole_for_13 <- rowSums(d[c("V51_1c1",  "V51_2c1", "V51_3c1", "V51_4c1", "V51_5c1",
+                          "V51_6c1", "V51_7c1", "V51_8c1", "V51_9c1", "V51_10c1",
+                          "V51_11c1", "V51_12c1", "V51_13c1")],na.rm = TRUE)
+
+d$DMi_for13 <- d$v51_whole_for_13/39*100
+
+
+ggplot(d, aes(DMi_for13)) + geom_density()
+
+tbl <- as.data.frame(prop.table(table(d$DMi_for13))*100)
+tbl$Freq <- round(tbl$Freq,1)
+
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+```
+
+# The autonomy index (AUT-index)
+
+```{r}
+
+d$V46_1c1[d$V46_1c1 == 9] <- 0
+d$V46_2c1[d$V46_2c1 == 9] <- 0
+d$V46_3c1[d$V46_3c1 == 9] <- 0
+d$V46_4c1[d$V46_4c1 == 9] <- 0
+d$V46_5c1[d$V46_5c1 == 9] <- 0
+d$V46_6c1[d$V46_6c1 == 9] <- 0
+
+d$v46_for6 <- rowSums(d[c("V46_1c1",
+                          "V46_2c1",
+                          "V46_3c1",
+                          "V46_4c1",
+                          "V46_5c1",
+                          "V46_6c1")],na.rm = TRUE)
+
+d$AUT_index <- d$v46_for6/18*100
+
+ggplot(d, aes(AUT_index)) + geom_density()
+
+tbl <- as.data.frame(prop.table(table(d$AUT_index))*100)
+tbl$Freq <- round(tbl$Freq,1)
+
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+```
+
+
+# OCCR
+
+
+```{r occr}
+
+d$occr[d$V14_CODE %in% c(2212, 2221, 2222, 2223, 2224, 2220)] <- 1
+d$occr[d$V14_CODE %in% c(2229, 2230, 3220, 3223, 3224, 3226, 3229, 3231, 3232)] <- 2
+d$occr[d$V14_CODE %in% c(2411)] <- 3
+d$occr[d$V14_CODE %in% c(2320, 2331, 2332, 2340, 2351, 2359, 3310, 3320, 3330, 3340, 2300, 2330, 2350, 3300)] <- 4
+d$occr[d$V14_CODE %in% c(2310, 2400, 2410, 2431, 2432, 2430)] <- 5
+d$occr[d$V14_CODE %in% c(2211, 2212, 2213, 2412, 2419,2441:2445,2000, 2210, 2440)] <- 5.5
+d$occr[d$V14_CODE %in% c(2111, 2112, 2113, 2121, 2122, 2131, 2139, 2141, 2142, 2143, 2144, 2145, 2146, 2147, 2148, 2149, 3112,
+                         3141, 3434, 2100, 2110, 2114, 2130, 2140)] <- 6
+d$occr[d$V14_CODE %in% c(3114, 3117, 3118, 3121, 3122, 3123, 3131, 3132, 3133, 3139, 3142, 3143, 3144, 3145, 3211, 3212,
+                         3213, 3111, 3113, 3115, 3116, 3119, 3151)] <- 7
+d$occr[d$V14_CODE %in% c(2446, 2460, 2470, 3423, 3429, 3432, 3460, 3480, 5150)] <- 8
+d$occr[d$V14_CODE %in% c(2421, 2422, 2429)] <- 9
+d$occr[d$V14_CODE %in% c(2451, 2452, 2453, 2454, 2455, 3471, 3472, 3473, 3474, 3475, 5210, 2450, 3470, 3000, 3100, 3110, 3120,
+                         3130, 3140, 3150, 3200, 3210)] <- 10
+d$occr[d$V14_CODE %in% c(1110, 1141, 1142, 1143, 2352, 3152, 1140)] <- 11
+d$occr[d$V14_CODE %in% c(1210, 1231, 1232, 1234, 1235, 1236, 1237, 1238, 1239, 1316, 1317, 1318, 1319,
+                         3416)] <- 12
+d$occr[d$V14_CODE %in% c(1225, 1233, 1314, 1315)] <- 13
+d$occr[d$V14_CODE %in% c(3431, 3233, 4115)] <- 14
+d$occr[d$V14_CODE %in% c(4111, 4112, 4113, 4114, 4121, 4122, 4131, 4132, 4133, 4141, 4142, 4143, 4144, 4190, 4211,
+                         4212, 4213, 4214, 4215, 4221, 4222, 4223, 3430, 4000, 4100, 4110, 4120, 4130, 4140, 4200, 4210,
+                         4220)] <- 15
+d$occr[d$V14_CODE %in% c(3411, 3412, 3413, 3414, 3415, 3417, 3419, 3421, 3422, 5220, 5221, 5222, 5223, 5230, 9111, 9113, 3400,
+                         3410, 3420, 5200, 9100, 9110)] <- 16
+d$occr[d$V14_CODE %in% c(1221, 1222, 1226, 1227, 1228, 1229, 1223, 1224,1311, 1312, 1313, 1200, 1220, 1300, 1310)] <- 17
+d$occr[d$V14_CODE %in% c(7111:7113, 7121:7137, 7139:7143, 7211:7216, 7221:7224, 7231:7245,
+                         7311:7313, 7321:7324, 7331, 7332, 7341:7343, 7345, 7346, 7411:7413, 7415, 7421,
+                         7422, 7433:7437, 7441, 7442, 8124, 7000, 7100, 7110, 7120, 7200, 7210, 7220, 7230, 7300, 7310,
+                         7320, 7330, 7340, 7400)] <- 18
+d$occr[d$V14_CODE %in% c(3441:3444, 3449, 3450, 5161:5163, 5169, 0100, 5160)] <- 19
+d$occr[d$V14_CODE %in% c(5112, 8311, 8312, 8321:8324, 8331:8334, 8340, 8300, 8310, 8320, 8330)] <- 20
+d$occr[d$V14_CODE %in% c(7344, 7414, 7416, 7423, 7424, 7431, 7432, 8111, 8112, 8113, 8121:8123, 8131, 8139:8143,
+                         8151:8155, 8159:8163, 8170, 8211, 8212, 8221:8224, 8229:8232, 8240, 8251:8253,
+                         8261:8266, 8269:8287, 8290, 9320, 7410, 7420, 7430, 8000, 8100, 8110, 8120, 8130, 8150, 8200,
+                         8210, 8220, 8250, 8260)] <- 21
+d$occr[d$V14_CODE %in% c(6121:6129, 6142, 9142, 9161,
+                         9311:9313, 9330, 9300, 9310)] <- 22
+d$occr[d$V14_CODE %in% c(6141, 6151:6154, 9211, 9212, 9213, 6140, 6150, 9200, 9210)] <- 23
+d$occr[d$V14_CODE %in% c(3221, 3222, 3225, 3227, 3228)] <- 24
+d$occr[d$V14_CODE %in% c(5113, 5122, 5141, 5140)] <- 25
+d$occr[d$V14_CODE %in% c(5111, 5121, 5131:5139, 5142, 5143, 5149, 9120, 9131:9133, 9141, 9151:9153, 9162, 5000,
+                         5120, 5123, 5130, 9000,9130, 9140, 9150, 9160)] <- 26
+d$occr[d$V14_CODE %in% c(6121:6130, 6111, 6112, 6000, 6100, 6110, 6120)] <- 27
+d$occr[d$V14_CODE %in% c(1100)] <- 11
+d$occr[d$V14_CODE %in% c(1230)] <- 12
+d$occr[d$V14_CODE %in% c(2420)] <- 9
+d$occr[d$V14_CODE %in% c(3230)] <- 2
+d$occr[d$V14_CODE %in% c(3433)] <- 14
+d$occr[d$V14_CODE %in% c(3440)] <- 19
+d$occr[d$V14_CODE %in% c(5100)] <- NA
+
+
+d$occr_labeled[d$occr == 1 ] <-  'Physicians and dentists'
+d$occr_labeled[d$occr == 2 ] <-  'Other medical and paramedical'
+d$occr_labeled[d$occr == 3 ] <-  'Accountants, auditors, actuaries'
+d$occr_labeled[d$occr == 4 ] <-  'Teachers: elementary and secondary'
+d$occr_labeled[d$occr == 5 ] <-  'Teachers: university, social sc, librarians'
+d$occr_labeled[d$occr == 5.5]<-  'Other univ professionals'
+d$occr_labeled[d$occr == 6 ] <-  'Mathematicians, engineers etc'
+d$occr_labeled[d$occr == 7 ] <-  'Technicians etc'
+d$occr_labeled[d$occr == 8 ] <-  'Public advisors'
+d$occr_labeled[d$occr == 9 ] <-  'Lawyers and judges'
+d$occr_labeled[d$occr == 10 ] <-  'Arts and entertainment'
+d$occr_labeled[d$occr == 11 ] <-  'Managers: public and quasi-public'
+d$occr_labeled[d$occr == 12 ] <-  'Managers: corporate'
+d$occr_labeled[d$occr == 13 ] <-  'Managers: other'
+d$occr_labeled[d$occr == 14 ] <-  'Secretaries'
+d$occr_labeled[d$occr == 15 ] <-  'Other clerical'
+d$occr_labeled[d$occr == 16 ] <-  'Sales'
+d$occr_labeled[d$occr == 17 ] <-  'Foremen'
+d$occr_labeled[d$occr == 18 ] <-  'Crafts'
+d$occr_labeled[d$occr == 19 ] <-  'Government protective workers'
+d$occr_labeled[d$occr == 20 ] <-  'Transportation workers'
+d$occr_labeled[d$occr == 21 ] <-  'Operatives, except transportation'
+d$occr_labeled[d$occr == 22 ] <-  'Laborers, except farm laborers'
+d$occr_labeled[d$occr == 23 ] <-  'Farm Workers'
+d$occr_labeled[d$occr == 24 ] <-  'White collar services'
+d$occr_labeled[d$occr == 25 ] <-  'Skilled manual services'
+d$occr_labeled[d$occr == 26 ] <-  'Lowskilled services'
+d$occr_labeled[d$occr == 27 ] <-  'Farmers and related profession'
+
+
+tbl <- as.data.frame(table(d$occr_labeled, useNA="ifany"))
+print(knitr::kable(arrange(arrange(tbl, -Freq), -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+cat("\n\n")
+cat("## Occupational codes of those missing")
+cat("\n\n")
+
+df_na <- d[is.na(d$occr_labeled),c("V14_CODE_labelled")]
+tbl <- as.data.frame(table(df_na))
+tbl <- tbl[tbl$Freq > 0,]
+print(knitr::kable(arrange(arrange(tbl, -Freq), -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+```
+
+
+# Skill2
+
+```{r skill2}
+d$skill2[d$occr %in% c(1, 3, 5, 5.5, 6, 9, 11, 12)] <- 1
+d$skill2[d$occr %in% c(2, 4, 7, 8, 10, 13, 17, 18, 19, 25, 27)] <- 2
+d$skill2[d$occr %in% c(14, 15, 16, 20, 21, 22, 23,24, 26)] <- 3
+
+d$skill2_labeled[d$skill2 == 1] <- 'Expert'
+d$skill2_labeled[d$skill2 == 2] <- 'Skilled'
+d$skill2_labeled[d$skill2 == 3] <- 'Low/semi skilled'
+
+tbl <- as.data.frame(table(d$skill2_labeled, useNA="ifany"))
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+cat("\n\n")
+cat("## Occupational codes of those missing")
+cat("\n\n")
+
+df_na <- d[is.na(d$skill2_labeled),c("V14_CODE_labelled")]
+tbl <- as.data.frame(table(df_na))
+tbl <- tbl[tbl$Freq > 0,]
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+
+```
+
+
+```{r}
+d15 <- d
+save(d15, file="./data/d15.RData")
+```
+
+
+# Summaries
+
+## V14_CODE, Occup_groups & occr crosstabulated
+
+```{r summarytable}
+library(dplyr)
+tbl <- d15 %>% group_by(V14_CODE_labelled) %>%
+  summarise(occup_groups_labelled = occup_groups_labelled[1],
+            occr_labelled = occr_labeled[1],
+            skill2_labeled = skill2_labeled[1],
+            autonomia_labelled = autonomia_labelled[1],
+            mean_AUT_index = mean(AUT_index, na.rm=TRUE),
+            mean_DMi_for13 = mean(DMi_for13, na.rm=TRUE))
+
+# print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
+
+library(DT)
+datatable(tbl, filter = 'top', options = list(
+  pageLength = 25, autoWidth = TRUE
+))
+```
+
+
+
+## testitesti
+
+```{r summarytable2}
+load("./data/d15.RData")
+tbl <- d15 %>% select(V14_CODE_labelled,occup_groups_labelled,skill2_labeled,autonomia_labelled,V19c1,AUT_index,DMi_for13)
+
+# print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
+
+library(DT)
+datatable(tbl, filter = 'top', options = list(
+  pageLength = 15, autoWidth = TRUE
+))
+
+```

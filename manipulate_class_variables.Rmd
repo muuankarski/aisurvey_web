@@ -54,7 +54,7 @@ d[[oldvar2]][d[[oldvar]]>=2611 & d[[oldvar]]<=2653] <- 26
 d[[oldvar2]][d[[oldvar]]>=3111 & d[[oldvar]]<=3154] <- 31
 d[[oldvar2]][d[[oldvar]]>=3211 & d[[oldvar]]<=3258] <- 32
 d[[oldvar2]][d[[oldvar]]>=3311 & d[[oldvar]]<=3323] <- 33
-d[[oldvar2]][d[[oldvar]]>=3333 & d[[oldvar]]<=3334] <- 12
+
 d[[oldvar2]][d[[oldvar]]>=3341 & d[[oldvar]]<=3344] <- 4
 d[[oldvar2]][d[[oldvar]]>=3351 & d[[oldvar]]<=3359] <- 33
 d[[oldvar2]][d[[oldvar]]>=3411 & d[[oldvar]]<=3435] <- 34
@@ -481,14 +481,8 @@ datatable(tbl, filter = 'top', options = list(
 ## testitesti
 
 ```{r summarytable2}
-
-tbl <- d15 %>% group_by(V14_CODE_labelled) %>% 
-  summarise(occup_groups_labelled = occup_groups_labelled[3],
-            occr_labelled = occr_labeled[3],
-            skill2_labeled = skill2_labeled[3],
-            autonomia_labelled = autonomia_labelled[3],
-            mean_AUT_index = mean(AUT_index, na.rm=TRUE),
-            mean_DMi_for13 = mean(DMi_for13, na.rm=TRUE))
+load("./data/d15.RData")
+tbl <- d15 %>% select(V14_CODE_labelled,occup_groups_labelled,skill2_labeled,autonomia_labelled,V19c1,AUT_index,DMi_for13)
   
 # print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
 
