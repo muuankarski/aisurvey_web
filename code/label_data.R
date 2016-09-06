@@ -23,6 +23,8 @@
 
 # Add vars that do not exist yet
 # load("./data/label_data_orig.RData")
+# # # lets remove the "'" sign from variable names
+# label_data_orig$name <- gsub("'", "", label_data_orig$name)
 # load("./data/d15.RData")
 # newvars <- names(d15)[!names(d15) %in% unique(label_data_orig$code)]
 # 
@@ -45,7 +47,7 @@
 # dat <- dat[!(is.na(dat$labels) & is.na(dat$values)),]
 # label_data <- rbind(label_data_orig,dat)
 # save(label_data, file="./data/label_data.RData")
-# # data=d
+# # # data=d
 # # var="V95_1c1"
 # # var="V54_6c1"
  
