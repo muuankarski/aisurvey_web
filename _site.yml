@@ -11,7 +11,7 @@ navbar:
           href: data.html
         - text: "Creating class variables"
           icon: fa-wrench
-          href: manipulate_class_variables.html
+          href: manipulate_class_variables_string.html
     - text: "Codebooks"
       icon: fa-book
       menu:

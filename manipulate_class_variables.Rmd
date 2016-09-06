@@ -15,7 +15,7 @@ This page documents the construction of various class variables. Click "Show"-bu
 ```{r setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
-                           eval=TRUE,
+                           eval=FALSE,
                            cache=FALSE,
                            warning=FALSE,
                            message=FALSE,
