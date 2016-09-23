@@ -34,17 +34,6 @@ d$V14_CODE_labeled <- label_sdmr(data = d, var = "V14_CODE")
 # Occupational groups
 
 ```{r occup_groups}
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1100)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1101)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1102)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1103)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1104)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1105)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1106)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1107)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1108)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1109)]                                                                           = "11-Chief executives, senior officials and legislators"
-d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c(1110)]                                                                           = "11-Chief executives, senior officials and legislators"
 d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c("Legislators")]                                                                  = "11-Chief executives, senior officials and legislators"
 d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c("Senior government officials")]                                                  = "11-Chief executives, senior officials and legislators"
 d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c("Traditional chiefs and heads of village")]                                      = "11-Chief executives, senior officials and legislators"
