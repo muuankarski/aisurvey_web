@@ -988,6 +988,14 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3229)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3231)]                                                                           = 'Other medical and paramedical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3232)]                                                                           = 'Other medical and paramedical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Accountants")]                                                                  = 'Accountants, auditors, actuaries'
+
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Primary school teachers")]                                                = 'Teachers: elementary and secondary'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Child care workers")]                                                = 'Teachers: elementary and secondary'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Teachers aides")]                                                = 'Teachers: elementary and secondary'
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Early childhood educators")]                                                = 'Teachers: elementary and secondary'
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Vocational education teachers")]                                                = 'Teachers: elementary and secondary'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2331)]                                                                           = 'Teachers: elementary and secondary'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2332)]                                                                           = 'Teachers: elementary and secondary'
@@ -1007,6 +1015,8 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2400)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2410)]                                                                           = 'Teachers: university, social sc, librarians'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Advertising and marketing professionals")]                                      = 'Teachers: university, social sc, librarians'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Public relations professionals")]                                               = 'Teachers: university, social sc, librarians'
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Library clerks")]                                                                           = 'Teachers: university, social sc, librarians'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2430)]                                                                           = 'Teachers: university, social sc, librarians'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Generalist medical practitioners")]                                             = 'Other univ professionals'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Specialist medical practitioners")]                                             = 'Other univ professionals'
@@ -1043,9 +1053,15 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Chefs")]                    
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2100)]                                                                           = 'Mathematicians, engineers etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2110)]                                                                           = 'Mathematicians, engineers etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Geologists and geophysicists")]                                                 = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Statistical, mathematical and related associate professionals")]                                                 = 'Mathematicians, engineers etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2130)]                                                                           = 'Mathematicians, engineers etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2140)]                                                                           = 'Mathematicians, engineers etc'
+
+  
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Electronics engineering technicians")]                                          = 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Product graders and testers (excluding foods and beverages)")]                                          = 'Technicians etc'
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mining and metallurgical technicians")]                                         = 'Technicians etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Draughtspersons")]                                                              = 'Technicians etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mining supervisors")]                                                           = 'Technicians etc'
@@ -1136,6 +1152,10 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4113)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4114)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4121)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4122)]                                                                           = 'Other clerical'
+
+
+  
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mail carriers and sorting clerks")]                                             = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Typists and word processing operators")]                                        = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Data entry clerks")]                                                            = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4133)]                                                                           = 'Other clerical'
@@ -1157,11 +1177,16 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4000)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4100)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("General office clerks")]                                                        = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Secretaries (general)")]                                                        = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Accounting and bookkeeping clerks")]                                            = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4130)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4140)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4200)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4210)]                                                                           = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4220)]                                                                           = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Payroll clerks")]                                                               = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Stock clerks")]                                                                 = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Regulatory government associate professionals not elsewhere classified")]                                                                 = 'Other clerical'
+  
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Police inspectors and detectives")]                                             = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Social work associate professionals")]                                          = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Religious associate professionals")]                                            = 'Sales'
@@ -1177,6 +1202,9 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Shop supervisors")]         
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Shop sales assistants")]                                                        = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Cashiers and ticket clerks")]                                                   = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Domestic cleaners and helpers")]                                                = 'Sales'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Commercial sales representatives")]                                                = 'Sales'
+
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9113)]                                                                           = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3400)]                                                                           = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3410)]                                                                           = 'Sales'
@@ -1200,7 +1228,11 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1200)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1220)]                                                                           = 'Foremen'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1300)]                                                                           = 'Foremen'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1310)]                                                                           = 'Foremen'
+  
 
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sewing, embroidery and related workers")]                                                               = 'Crafts'
+ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Bakers, pastry-cooks and confectionery makers")]                                                               = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Carpenters and joiners")]                                                               = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("House builders")]                                                               = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Bricklayers and related workers")]                                              = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Stonemasons, stone cutters, splitters and carvers")]                            = 'Crafts'
@@ -1226,6 +1258,9 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(7140)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(7141)]                                                                           = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(7142)]                                                                           = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(7143)]                                                                           = 'Crafts'
+
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Crane, hoist and related plant operators")]                                                = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Metal moulders and coremakers")]                                                = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Welders and flamecutters")]                                                     = 'Crafts'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sheet-metal workers")]                                                          = 'Crafts'
@@ -1305,7 +1340,8 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Undertakers and embalmers")]
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Personal services workers not elsewhere classified")]                           = 'Government protective workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(0100)]                                                                           = 'Government protective workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5160)]                                                                           = 'Government protective workers'
-d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Transport conductors")]                                                         = 'Transportation workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Freight handlers")]                                                         = 'Transportation workers'
+ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Transport conductors")]                                                         = 'Transportation workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Locomotive engine drivers")]                                                    = 'Transportation workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Railway brake, signal and switch operators")]                                   = 'Transportation workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Motorcycle drivers")]                                                           = 'Transportation workers'
@@ -1406,6 +1442,8 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(8210)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(8220)]                                                                           = 'Operatives, except transportation'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(8250)]                                                                           = 'Operatives, except transportation'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(8260)]                                                                           = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Hand packers")]                                                                           = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Kitchen helpers")]                                                                           = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Livestock and dairy producers")]                                                = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Poultry producers")]                                                            = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Apiarists and sericulturists")]                                                 = 'Laborers, except farm laborers'
@@ -1418,6 +1456,8 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Animal producers not elsewhe
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6142)]                                                                           = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9142)]                                                                           = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9161)]                                                                           = 'Laborers, except farm laborers'
+  
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Odd job persons")]                                               = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mining and quarrying labourers")]                                               = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Civil engineering labourers")]                                                  = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Building construction labourers")]                                              = 'Laborers, except farm laborers'
@@ -1429,6 +1469,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6151)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6152)]                                                                           = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6153)]                                                                           = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6154)]                                                                           = 'Farm Workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mobile farm and forestry plant operators")]                                    = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Crop farm labourers")]                                                          = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Livestock farm labourers")]                                                     = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mixed crop and livestock farm labourers")]                                      = 'Farm Workers'
@@ -1436,8 +1477,13 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6140)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6150)]                                                                           = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9200)]                                                                           = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9210)]                                                                           = 'Farm Workers'
+  
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Veterinary technicians and assistants")]                                                                 = 'White collar services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Nursing associate professionals")]                                              = 'White collar services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Midwifery associate professionals")]                                            = 'White collar services'
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Other artistic and cultural associate professionals")]                                                                           = 'White collar services'
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3225)]                                                                           = 'White collar services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3227)]                                                                           = 'White collar services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3228)]                                                                           = 'White collar services'
@@ -1445,7 +1491,18 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Travel guides")]            
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5122)]                                                                           = 'Skilled manual services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Hairdressers")]                                                                 = 'Skilled manual services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5140)]                                                                           = 'Skilled manual services'
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Cleaners and helpers in offices, hotels and other establishments")]                                                                      = 'Lowskilled services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Security guards")]                                                              = 'Lowskilled services'
+
+# d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Security guards")]                                                              = 'Lowskilled services'
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Travel attendants and travel stewards")]                                        = 'Lowskilled services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sweepers and related labourers")]                                        = 'Lowskilled services'
+  
+
+  
+ 
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5121)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Waiters")]                                                                      = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Bartenders")]                                                                   = 'Lowskilled services'
@@ -1457,6 +1514,10 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5137)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5138)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5139)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Beauticians and related workers")]                                              = 'Lowskilled services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Messengers, package deliverers and luggage porters")]                                              = 'Lowskilled services'
+  
+  
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Building caretakers")]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5143)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5149)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9120)]                                                                           = 'Lowskilled services'
@@ -1495,11 +1556,137 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6110)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6120)]                                                                           = 'Farmers and related profession'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1100)]                                                                           = 'Managers: public and quasi-public'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1230)]                                                                           = 'Managers: corporate'
-d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2420)]                                                                           = 'Lawyers and judges'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Lawyers")]                                                                      = 'Lawyers and judges'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Traditional and complementary medicine associate professionals")]               = 'Other medical and paramedical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Gallery, museum and library technicians")]                                      = 'Secretaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Administrative and executive secretaries")]                                      = 'Secretaries'
+
+  
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3440)]                                                                           = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Non-commissioned armed forces officers")]                                                                           = 'Government protective workers'
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Police officers")]                                                                           = 'Government protective workers'
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Commissioned armed forces officers")]                                                                           = 'Government protective workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5100)]                                                                           = NA
+
+
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Transport clerks")]                                                  = 'Transportation workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Clerical support workers not elsewhere classified")]                 = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Stall and market salespersons")]                                     = 'Sales'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Health care assistants")]                                            = 'White collar services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Stationary plant and machine operators not elsewhere classified")]   = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Assemblers not elsewhere classified")]                               = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Concrete placers, concrete finishers and related workers")]          = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Buyers")]                                                            = 'Sales'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Information and communications technology operations technicians")]  = 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Hotel receptionists")]                                               = 'Lowskilled services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Electronics engineers")]                                             = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Psychologists")]                                                     = 'Physicians and dentists'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Medical records and health information technicians")]                = 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Employment agents and contractors")]                                 = 'White collar services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Medical assistants")]                                                = 'Lowskilled services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Credit and loans officers")]                                         = 'Accountants, auditors, actuaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Service station attendants")]                                        = 'Lowskilled services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Food and beverage tasters and graders")]                             = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Garment and related pattern-makers and cutters")]                    = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Vehicle cleaners")]                                                  = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Farming, forestry and fisheries advisers")]                          = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Broadcasting and audio-visual technicians")]                         = 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Forestry and related workers")]                                      = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Tailors, dressmakers, furriers and hatters")]                        = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Shelf fillers")]                                                     = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Electrical engineers")]                                              = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Dentists")]                                                          = 'Physicians and dentists'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Software developers")]                                               = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Production clerks")]                                                 = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Fire-fighters")]                                                     = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Steam engine and boiler operators")]                                 = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Elementary workers not elsewhere classified")]                       = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Managing directors and chief executives")]                           = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Journalists")]                                                       = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Legal secretaries")]                                                 = 'Secretaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Receptionists (general)")]                                           = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Personnel clerks")]                                                  = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Cement, stone and other mineral products machine operators")]        = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Glass and ceramics plant operators")]                                = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Retail and wholesale trade managers")]                               = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sports, recreation and cultural centre managers")]                   = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Real estate agents and property managers")]                          = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Statistical, finance and insurance clerks")]                         = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Craft and related workers not elsewhere classified")]                = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Wood processing plant operators")]                                   = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Telecommunications engineers")]                                      = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Archivists and curators")]                                           = 'White collar services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Translators, interpreters and other linguists")]                     = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Securities and finance dealers and brokers")]                        = 'Accountants, auditors, actuaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Filing and copying clerks")]                                         = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Deep-sea fishery workers")]                                          = 'Farm Workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Butchers, fishmongers and related food preparers")]                  = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Earthmoving and related plant operators")]                           = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Construction managers")]                                             = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Cartographers and surveyors")]                                       = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Visual artists")]                                                    = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Musicians, singers and composers")]                                  = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Petroleum and natural gas refining plant operators")]                = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Environmental and occupational health inspectors and associates")]   = 'Physicians and dentists'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Accounting associate professionals")]                                = 'Accountants, auditors, actuaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Insurance representatives")]                                         = 'Accountants, auditors, actuaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Office supervisors")]                                                = 'Foremen'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Government tax and excise officials")]                               = 'Accountants, auditors, actuaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Coding, proof-reading and related clerks")]                          = 'Other clerical'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sign writers, decorative painters, engravers and etchers")]          = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Shoemakers and related workers")]                                    = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Senior officials of special-interest organizations")]                = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Manufacturing managers")]                                            = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Supply, distribution and related managers")]                         = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mathematicians, actuaries and statisticians")]                       = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Environmental protection professionals")]                            = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Building architects")]                                               = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Pharmacists")]                                                       = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Audiologists and speech therapists")]                                = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Systems administrators")]                                            = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sociologists, anthropologists and related professionals")]           = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Authors and related writers")]                                       = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Dancers and choreographers")]                                        = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Aircraft pilots and related associate professionals")]               = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Air traffic controllers")]                                           = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Ambulance workers")]                                                 = 'Transportation workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Computer network and systems technicians")]                          = 'Mathematicians, engineers etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Street food salespersons")]                                          = 'Sales'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Fashion and other models")]                                          = 'Sales'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Contact centre salespersons")]                                       = 'Sales'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Glass makers, cutters, grinders and finishers")]                     = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Upholsterers and related workers")]                                  = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Packing, bottling and labelling machine operators")]                 = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Hand launderers and pressers")]                                      = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Other cleaning workers")]                                            = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Water and firewood collectors")]                                     = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Traditional chiefs and heads of village")]                           = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Health services managers")]                                          = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Education managers")]                                                = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Financial and insurance services branch managers")]                  = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Professional services managers not elsewhere classified")]           = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Restaurant managers")]                                               = 'Managers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Philosophers, historians and political scientists")]                 = 'Other univ professionals'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Medical and dental prosthetic technicians")]                         = 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Physiotherapy technicians and assistants")]                          = 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Medical secretaries")]                                               = 'Secretaries'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Customs and border inspectors")]                                     = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Government social benefits officials")]                              = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Government licensing officials")]                                    = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Information and communications technology user support technicians")]= 'Technicians etc'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Survey and market research interviewers")]                           = 'White collar services'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Prison guards")]                                                     = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Protective services workers not elsewhere classified")]              = 'Government protective workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Aquaculture workers")]                                               = 'Farm Workers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Handicraft workers not elsewhere classified")]                       = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Fruit, vegetable and related preservers")]                           = 'Laborers, except farm laborers'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Underwater divers")]                                                 = 'Crafts'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Photographic products machine operators")]                           = 'Operatives, except transportation'
+d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Laundry machine operators")]                                         = 'Operatives, except transportation'
+
+
 
 tbl <- as.data.frame(table(d$occr_labeled, useNA="ifany"))
 print(knitr::kable(arrange(arrange(tbl, -Freq), -Freq), "html", table.attr='class="table table-striped table-hover"'))
@@ -1545,6 +1732,13 @@ d$skill2_labeled[d$occr_labeled %in% c('Operatives, except transportation')]    
 d$skill2_labeled[d$occr_labeled %in% c('Laborers, except farm laborers')]              <- 'Low/semi skilled'
 d$skill2_labeled[d$occr_labeled %in% c('Farm Workers')]                                <- 'Low/semi skilled'
 d$skill2_labeled[d$occr_labeled %in% c('White collar services')]                       <- 'Low/semi skilled'
+
+
+d$skill2_labeled[d$occr_labeled %in% c('13-Production and specialized services managers')]       <- 'Expert'
+d$skill2_labeled[d$occr_labeled %in% c('11-Chief executives, senior officials and legislators')] <- 'Expert'
+d$skill2_labeled[d$occr_labeled %in% c('12-Administrative and commercial managers')]             <- 'Expert'
+d$skill2_labeled[d$occr_labeled %in% c('53-Personal care workers')]                              <- 'Skilled'
+
 
 tbl <- as.data.frame(table(d$skill2_labeled, useNA="ifany"))
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
