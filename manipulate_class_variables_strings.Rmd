@@ -1753,6 +1753,87 @@ print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-s
 
 ```
 
+# Kivinen class 08
+
+```{r autnomia}
+# Tästä alkaa Kivisen autonomiamuuttujan mun hapuilut. Ekaks tein noi tsunkin lopun csv:t ekseliin ja lähetin markulle/joukolle (23.9.2016)
+
+# d$auto1[d$v34c1 %in% "Yes" &
+#         d$v35c1 %in% "To a significant degree " &
+#         d$v35c1 %in% "To a significant degree "] <- "Core of MC"
+# 
+
+d$V34c1[d$V34c1 %in% 9] <- 0
+d$V34c1[d$V35c1 %in% 9] <- 0
+d$V34c1[d$V37c1 %in% 9] <- 0
+
+d$V34c1[is.na(d$V34c1)] <- 0
+d$V34c1[is.na(d$V35c1)] <- 0
+d$V34c1[is.na(d$V37c1)] <- 0
+
+
+# 
+# dd <- d[!is.na(d$V34c1),]
+# 
+# 
+# r <- expand.grid(unique(dd$V34c1),
+#             unique(dd$V35c1),
+#             unique(dd$V37c1))
+# names(r) <- c("V34c1","V35c1","V37c1")
+# write.csv(r, file="./data/autonomia_numeric.csv")
+# 
+# r <- expand.grid(unique(label_sdmr(dd,"V34c1")),
+#             unique(label_sdmr(dd,"V35c1")),
+#             unique(label_sdmr(dd,"V37c1")))
+# names(r) <- c("V34c1","V35c1","V37c1")
+# write.csv(r, file="./data/autonomia_labeled.csv")
+
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 3 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 2 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 1 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
+d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
+
+tbl <- as.data.frame(table(d$kivinen_class_08, useNA="ifany"))
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+cat("\n\n")
+cat("## Occupational CLASSES of those missing")
+cat("\n\n")
+df_na <- d[is.na(d$kivinen_class_08),c("occup_groups_labeled")]
+tbl <- as.data.frame(table(df_na))
+tbl <- tbl[tbl$Freq > 0,]
+print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
+
+```
+
 
 ```{r}
 d15 <- d
