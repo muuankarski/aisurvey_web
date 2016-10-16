@@ -25,11 +25,11 @@ options(scipen=999)
 
 library(dplyr)
 library(ggplot2)
-load("./data/sdmr_4_english_language_versionN.RData")
-d <- d15n
+# load("./data/sdmr_4_english_language_versionN.RData")
 
-source("./code/label_data.R")
-d$V14_CODE_labelled <- label_sdmr(data = d, var = "V14_CODE")
+
+# source("./code/label_data.R")
+# d$V14_CODE_labelled <- label_sdmr(data = d, var = "V14_CODE")
 ```
 
 # Occupational groups

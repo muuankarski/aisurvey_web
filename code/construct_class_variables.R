@@ -1,42 +1,12 @@
----
-title: Constructing class variables
-output:
-  html_document:
-    toc: true
-    toc_float: true
-    number_sections: yes
-    code_folding: hide
----
 
-This page documents the construction of various class variables. Click "Show"-button to see the code applied!
-
-```{r setup, include = F}
-library(knitr)
-knitr::opts_chunk$set(list(echo=TRUE,
-                           eval=FALSE,
-                           cache=FALSE,
-                           warning=FALSE,
-                           message=FALSE,
-                           results="asis"))
-opts_chunk$set(fig.width = 10, fig.height = 6)
-options(scipen=999)
-
-library(dplyr)
+library(tidyverse)
 library(ggplot2)
-# load("./data/sdmr_4_english_language_versionN.RData")
-# d <- d15n
 
-# load("./data/structure_2015_with_class.RData")
-# d <- structure_2015_with_class
-
-# source("./code/label_data.R")
-# d$V14_CODE_labeled <- label_sdmr(data = d, var = "V14_CODE")
-```
-
+source("./code/label_data.R")
+d$V14_CODE_labeled <- label_sdmr(data = d, var = "V14_CODE")
 
 # Occupational groups
 
-```{r occup_groups}
 d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c("Legislators")]                                                                  = "11-Chief executives, senior officials and legislators"
 d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c("Senior government officials")]                                                  = "11-Chief executives, senior officials and legislators"
 d[["occup_groups_labeled"]][d[["V14_CODE_labeled"]] %in% c("Traditional chiefs and heads of village")]                                      = "11-Chief executives, senior officials and legislators"
@@ -815,20 +785,18 @@ df_na <- d[is.na(d$occup_groups_labeled),c("V14_CODE_labeled")]
 tbl <- as.data.frame(table(df_na))
 tbl <- tbl[tbl$Freq > 0,]
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
-```
-
 
 # Autonomia
 
-```{r autonomia}
 # Some notes for next lines of code
 ## VV21c1 - Working in an organization or self-employed
 ### 1 In an organization
-### 2 Self-employed	
+### 2 Self-employed
 
 ## V19c1 - Respondent’s current employment status
 ### 1 Working
 ### 2 Not working
+
 d$autonomia_labeled[d$V21c1 == 1 & # "In an organization"
                      d$V19==1 & # "Working"
                      d$occup_groups_labeled %in% "12-Administrative and commercial managers"]             <- "1-managerial"
@@ -885,7 +853,7 @@ d$autonomia_labeled[d$V21c1 == 1 & # "In an organization"
               d$V14_CODE_labeled %in% "Cooks"]                                                            <- "10-craftsman qualified"
 d$autonomia_labeled[d$V21==2]                                                                             <- "12-entrepreneurs" # Self-employed
 d$autonomia_labeled[d$V19==2]                                                                             <- "14-not working" # Not working
-              
+
 d$autonomia_labeled <- factor(d$autonomia_labeled, levels=c("1-managerial",
                                                               "5-professional",
                                                               "6-scientific-technical",
@@ -907,20 +875,16 @@ df_na <- d[is.na(d$autonomia_labeled),c("V14_CODE_labeled")]
 tbl <- as.data.frame(table(df_na))
 tbl <- tbl[tbl$Freq > 0,]
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
-```
-
 
 # Decision-making index (DMi)
 
-
-```{r DMindex}
 
 # # /Indexes of decision-making and autonomy
 # # /There are a number of questions in the study that gauge the level of participation in the decision-making.
 # #  Each question defines individual input into decision-making using a three-point scale:
 # ## 1 decision taken by the respondent without prior consultations with his or her superiors,
 # ## 2 decision taken in consort with other employees and no influence upon decisions in the designated area.
-# # The questions serves as the basis for an index of decision-making (DM index) normalized to range from 1 to 100.  
+# # The questions serves as the basis for an index of decision-making (DM index) normalized to range from 1 to 100.
 # # The autonomy index (AUT-index) is measured in the same way as the decision-making power.
 d$v51_whole_for_13 <- rowSums(d[c("V51_1c1",  "V51_2c1", "V51_3c1", "V51_4c1", "V51_5c1",
                           "V51_6c1", "V51_7c1", "V51_8c1", "V51_9c1", "V51_10c1",
@@ -959,13 +923,9 @@ tbl <- as.data.frame(prop.table(table(d$AUT_index))*100)
 tbl$Freq <- round(tbl$Freq,1)
 
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
-```
-
 
 # OCCR
 
-
-```{r occr}
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Specialist medical practitioners")]                                             = 'Physicians and dentists'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Nursing professionals")]                                                        = 'Physicians and dentists'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Midwifery professionals")]                                                      = 'Physicians and dentists'
@@ -1060,7 +1020,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Statistical, mathematical an
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2130)]                                                                           = 'Mathematicians, engineers etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(2140)]                                                                           = 'Mathematicians, engineers etc'
 
-  
+
 
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Electronics engineering technicians")]                                          = 'Technicians etc'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Product graders and testers (excluding foods and beverages)")]                                          = 'Technicians etc'
@@ -1157,7 +1117,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4121)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4122)]                                                                           = 'Other clerical'
 
 
-  
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mail carriers and sorting clerks")]                                             = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Typists and word processing operators")]                                        = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Data entry clerks")]                                                            = 'Other clerical'
@@ -1189,7 +1149,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(4220)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Payroll clerks")]                                                               = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Stock clerks")]                                                                 = 'Other clerical'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Regulatory government associate professionals not elsewhere classified")]                                                                 = 'Other clerical'
-  
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Police inspectors and detectives")]                                             = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Social work associate professionals")]                                          = 'Sales'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Religious associate professionals")]                                            = 'Sales'
@@ -1231,7 +1191,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1200)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1220)]                                                                           = 'Foremen'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1300)]                                                                           = 'Foremen'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(1310)]                                                                           = 'Foremen'
-  
+
 
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sewing, embroidery and related workers")]                                                               = 'Crafts'
  d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Bakers, pastry-cooks and confectionery makers")]                                                               = 'Crafts'
@@ -1459,7 +1419,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Animal producers not elsewhe
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6142)]                                                                           = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9142)]                                                                           = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9161)]                                                                           = 'Laborers, except farm laborers'
-  
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Odd job persons")]                                               = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Mining and quarrying labourers")]                                               = 'Laborers, except farm laborers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Civil engineering labourers")]                                                  = 'Laborers, except farm laborers'
@@ -1480,7 +1440,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6140)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(6150)]                                                                           = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9200)]                                                                           = 'Farm Workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(9210)]                                                                           = 'Farm Workers'
-  
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Veterinary technicians and assistants")]                                                                 = 'White collar services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Nursing associate professionals")]                                              = 'White collar services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Midwifery associate professionals")]                                            = 'White collar services'
@@ -1502,10 +1462,10 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Security guards")]          
 
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Travel attendants and travel stewards")]                                        = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Sweepers and related labourers")]                                        = 'Lowskilled services'
-  
 
-  
- 
+
+
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5121)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Waiters")]                                                                      = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Bartenders")]                                                                   = 'Lowskilled services'
@@ -1518,8 +1478,8 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5138)]                       
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5139)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Beauticians and related workers")]                                              = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Messengers, package deliverers and luggage porters")]                                              = 'Lowskilled services'
-  
-  
+
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Building caretakers")]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5143)]                                                                           = 'Lowskilled services'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(5149)]                                                                           = 'Lowskilled services'
@@ -1564,7 +1524,7 @@ d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Traditional and complementar
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Gallery, museum and library technicians")]                                      = 'Secretaries'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Administrative and executive secretaries")]                                      = 'Secretaries'
 
-  
+
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c(3440)]                                                                           = 'Government protective workers'
 d[["occr_labeled"]][d[["V14_CODE_labeled"]] %in% c("Non-commissioned armed forces officers")]                                                                           = 'Government protective workers'
 
@@ -1701,12 +1661,9 @@ df_na <- d[is.na(d$occr_labeled),c("V14_CODE_labeled")]
 tbl <- as.data.frame(table(df_na))
 tbl <- tbl[tbl$Freq > 0,]
 print(knitr::kable(arrange(arrange(tbl, -Freq), -Freq), "html", table.attr='class="table table-striped table-hover"'))
-```
-
 
 # Skill2
 
-```{r skill2}
 d$skill2_labeled[d$occr_labeled %in% c('Physicians and dentists')]                     <- 'Expert'
 d$skill2_labeled[d$occr_labeled %in% c('Accountants, auditors, actuaries')]            <- 'Expert'
 d$skill2_labeled[d$occr_labeled %in% c('Teachers: university, social sc, librarians')] <- 'Expert'
@@ -1754,17 +1711,14 @@ tbl <- as.data.frame(table(df_na))
 tbl <- tbl[tbl$Freq > 0,]
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
 
-```
-
 # Kivinen class 08
 
-```{r autnomia}
 # Tästä alkaa Kivisen autonomiamuuttujan mun hapuilut. Ekaks tein noi tsunkin lopun csv:t ekseliin ja lähetin markulle/joukolle (23.9.2016)
 
 # d$auto1[d$v34c1 %in% "Yes" &
 #         d$v35c1 %in% "To a significant degree " &
 #         d$v35c1 %in% "To a significant degree "] <- "Core of MC"
-# 
+#
 
 d$V34c1[d$V34c1 %in% 9] <- 0
 d$V34c1[d$V35c1 %in% 9] <- 0
@@ -1775,16 +1729,16 @@ d$V34c1[is.na(d$V35c1)] <- 0
 d$V34c1[is.na(d$V37c1)] <- 0
 
 
-# 
+#
 # dd <- d[!is.na(d$V34c1),]
-# 
-# 
+#
+#
 # r <- expand.grid(unique(dd$V34c1),
 #             unique(dd$V35c1),
 #             unique(dd$V37c1))
 # names(r) <- c("V34c1","V35c1","V37c1")
 # write.csv(r, file="./data/autonomia_numeric.csv")
-# 
+#
 # r <- expand.grid(unique(label_sdmr(dd,"V34c1")),
 #             unique(label_sdmr(dd,"V35c1")),
 #             unique(label_sdmr(dd,"V37c1")))
@@ -1830,7 +1784,7 @@ d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "workin
 d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
 d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
 d$kivinen_class_08[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
-# 
+#
 # core of the middle class
 # margin of middle class
 # working class
@@ -1880,51 +1834,3 @@ df_na <- d[is.na(d$kivinen_class_08),c("V14_CODE_labeled")]
 tbl <- as.data.frame(table(df_na))
 tbl <- tbl[tbl$Freq > 0,]
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
-
-```
-
-
-```{r}
-d15 <- d
-save(d15, file="./data/d15.RData")
-```
-
-
-# Summaries
-
-## V14_CODE, Occup_groups, occr, autonomia, skills2 and autonomia & DMi-index crosstabulated
-
-```{r summarytable}
-library(dplyr)
-tbl <- d15 %>% group_by(V14_CODE_labeled) %>%
-  summarise(occup_groups_labeled = occup_groups_labeled[1],
-            occr_labelled = occr_labeled[1],
-            skill2_labeled = skill2_labeled[1],
-            autonomia_labeled = autonomia_labeled[1],
-            mean_AUT_index = mean(AUT_index, na.rm=TRUE),
-            mean_DMi_for13 = mean(DMi_for13, na.rm=TRUE))
-
-# print(knitr::kable(tbl, "html", table.attr='class="table table-striped table-hover"'))
-
-library(DT)
-datatable(tbl, filter = 'top', options = list(
-  pageLength = 25, autoWidth = TRUE
-))
-```
-
-
-
-## testitesti
-
-```{r summarytable2, eval=FALSE}
-load("./data/d15.RData")
-tbl <- d15 %>% select(V14_CODE_labeled,occup_groups_labeled,skill2_labeled,autonomia_labeled,V19c1,AUT_index,DMi_for13)
-
-library(DT)
-datatable(tbl, filter = 'top', options = list(
-  pageLength = 15, autoWidth = TRUE
-))
-
-```
-
-

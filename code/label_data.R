@@ -1,5 +1,6 @@
-# d <- haven::read_sav("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_version.sav")
-# 
+# # d <- haven::read_sav("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_version.sav")
+# # 
+# d <- haven::read_sav("./data/structure_2015_with_class.sav")
 # label_data <- data.frame()
 # for (i in 1:ncol(d)){
 #   df <- data.frame()
@@ -20,8 +21,8 @@
 # }
 # label_data_orig <- label_data
 # save(label_data_orig, file="./data/label_data_orig.RData")
-
-# Add vars that do not exist yet
+# 
+# # # Add vars that do not exist yet
 # load("./data/label_data_orig.RData")
 # # # lets remove the "'" sign from variable names
 # label_data_orig$name <- gsub("'", "", label_data_orig$name)
@@ -52,7 +53,8 @@
 # # var="V54_6c1"
  
 label_sdmr <- function(data,var,into.factor=TRUE){
-  load("./data/label_data.RData")
+  # load("./data/label_data.RData")
+  label_data <- readRDS("./data/label_data.RDS")
   labdat <- label_data[label_data$code %in% var,]
   if (NA %in% labdat$labels){
     data[["newvar"]] <- data[[var]]

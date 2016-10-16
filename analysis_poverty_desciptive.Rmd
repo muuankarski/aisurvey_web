@@ -12,7 +12,7 @@ output:
 ```{r setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
-                           eval=TRUE,
+                           eval=FALSE,
                            cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
@@ -21,9 +21,10 @@ library(ggplot2)
 library(dplyr)
 options(scipen=999)
 
-if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
-load("./data/sdmr_4_english_language_versionN.RData")
-d <- d15n
+# if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
+# load("./data/sdmr_4_english_language_versionN.RData")
+# d <- d15n
+d <- readRDS("./data/sdmr15.RDS")
 # lets apply the new class variables
 # source("./code/class_variable_2015.R")
 # Lets make the label_data()-function available
@@ -111,7 +112,7 @@ name code
 '), stringsAsFactors=FALSE, header=TRUE)
 
 # lets add the institutional trust
-load("./data/label_data.RData")
+label_data <- readRDS("./data/label_data.RDS")
 trust_vars <- label_data[grepl("Trust:", label_data$name),]
 trust_vars <- trust_vars[!duplicated(trust_vars$code),c("name","code")]
 bg_vars <- rbind(bg_vars,trust_vars)
@@ -289,10 +290,10 @@ print(p)
 
 ```{r load_merged_data}
 
-load("./data/merged_4wave20151110N.RData")
-longi <- d_merge_N
-load("./data/d_merge_N_class.RData")
-longi_class <- d_merge_N_class
+# load("./data/merged_4wave20151110N.RData")
+# longi <- d_merge_N
+# load("./data/d_merge_N_class.RData")
+# longi_class <- d_merge_N_class
 
 ```
 

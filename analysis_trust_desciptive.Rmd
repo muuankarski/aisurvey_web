@@ -12,7 +12,7 @@ output:
 ```{r setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
-                           eval=TRUE,
+                           eval=FALSE,
                            cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
@@ -21,14 +21,15 @@ library(ggplot2)
 library(dplyr)
 options(scipen=999)
 
-if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
-load("./data/merged_4wave20151110N.RData")
-longi <- d_merge_N
-load("./data/d_merge_N_class.RData")
-longi_class <- d_merge_N_class
-load("./data/sdmr_4_english_language_versionN.RData")
-cross15 <- d15n
-dd <- cross15
+# if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
+# load("./data/merged_4wave20151110N.RData")
+# longi <- d_merge_N
+# load("./data/d_merge_N_class.RData")
+# longi_class <- d_merge_N_class
+# load("./data/sdmr_4_english_language_versionN.RData")
+# cross15 <- d15n
+# dd <- cross15
+dd <- readRDS("./data/sdmr15.RDS")
 
 source("./code/label_data.R")
 ```
@@ -38,9 +39,10 @@ source("./code/label_data.R")
 ## Institutional trust
 
 
-```{r trust, results="asis", eval=TRUE, fig.height=10}
+```{r trust, results="asis",  fig.height=10}
 
-load("./data/label_data.RData")
+# load("./data/label_data.RData")
+label_data <- readRDS("./data/label_data.RDS")
 
 trust_vars <- label_data[grepl("Trust:", label_data$name),]
 trust_vars <- trust_vars[!duplicated(trust_vars$code),]
