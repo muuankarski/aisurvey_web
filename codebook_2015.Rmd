@@ -13,7 +13,7 @@ output:
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=TRUE,
-                           cache=TRUE,
+                           cache=FALSE,
                            warning=FALSE,
                            message=FALSE))
 opts_chunk$set(fig.width = 10, fig.height = 10)
@@ -30,7 +30,7 @@ library(dplyr)
 </div>
 
 
-```{r taulukot, cache=TRUE, results="asis", eval=TRUE}
+```{r taulukot, cache=FALSE, results="asis", eval=TRUE}
 library(dplyr)
 library(ggplot2)
 

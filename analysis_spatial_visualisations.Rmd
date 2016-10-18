@@ -12,7 +12,7 @@ output:
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=FALSE,
-                           cache=TRUE,
+                           cache=FALSE,
                            warning=FALSE,
                            message=FALSE))
 opts_chunk$set(fig.width = 10, fig.height = 10)
