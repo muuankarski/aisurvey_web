@@ -31,6 +31,19 @@ saveRDS(d, file = "~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/s
 #' # Creating a metadata based on variable attributes
 
 #+ label_data, results="asis"
+
+# 
+library(labelled)
+val_labels(d$V74c1) <- NULL # force into numeric - Respondent’s aggregate monthly income 
+d$V74c1[d$V74c1 == 9999998] <- NA
+d$V74c1[d$V74c1 == 9999999] <- NA
+
+val_labels(d$V75c1) <- NULL # force into numeric - Respondent’s family aggregate monthly income
+d$V75c1[d$V75c1 == 9999998] <- NA
+d$V75c1[d$V75c1 == 9999999] <- NA
+
+var_label(d$age) <- "Respondents age"
+
 label_data <- data.frame()
 for (i in 1:ncol(d)){
   df <- data.frame()
@@ -2074,6 +2087,26 @@ d <- d[names(d)[!grepl("labeled", names(d))]]
 saveRDS(d, file="./data/sdmr15.RDS")
 saveRDS(label_data, file="./data/label_data.RDS")
 
+#+ convert_to_spss
+label_data$numeric <- ifelse(is.na(label_data$labels), TRUE, FALSE)
+library(labelled)
+for (n in names(d)){
+  var_label(d[[n]]) <- label_data[label_data$code %in% n, "name"][1]
+}
+
+for (n in names(d)){
+  # if numeric, no need for value labels
+  if (is.na(label_data[label_data$code %in% n, "numeric"][1])) next()
+  if (label_data[label_data$code %in% n, "numeric"][1]) next()
+  vec <- as.integer(label_data[label_data$code %in% n, "values"])
+  names(vec) <- label_data[label_data$code %in% n, "labels"]
+  d[[n]] <- labelled(d[[n]], labels=vec)
+}
+
+foreign::write.foreign(d,  
+              codefile="./data/sdmr2015.sps",
+              datafile="./data/sdmr2015.sav", 
+              package="SPSS") 
 
 
 #' # Summaries

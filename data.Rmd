@@ -20,6 +20,31 @@ opts_chunk$set(fig.width = 6, fig.height = 6)
 ```
 
 
+# Download up-to-dates files for 2015 wave
+
+## For R
+
+```{r, eval=FALSE}
+dir.create("./localdata", showWarnings = FALSE)
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/sdmr15.RDS",
+              destfile = "./localdata/sdmr15.RDS")
+dat <- readRDS("./localdata/sdmr15.RDS")
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/label_data.RDS",
+              destfile = "./localdata/label_data.RDS")
+label_data  <- readRDS("./localdata/label_data.RDS")
+```
+
+## For SPSS
+
+
+- [code](http://muuankarski.kapsi.fi/aisurvey/data/sdmr2015.sps)
+- [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr2015.sav)
+
+
+***
+***
+
+
 ```{r, eval=FALSE, echo=FALSE}
 dir.create("./data/")
 file.copy(from="~/btsync/mk/data/sdmr/sdmr_4_english_language_versionN.csv", to="./data/")
