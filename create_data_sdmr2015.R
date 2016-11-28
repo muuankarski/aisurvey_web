@@ -1942,13 +1942,13 @@ print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-s
 #         d$v35c1 %in% "To a significant degree "] <- "Core of MC"
 #
 
-d$V34c1[d$V34c1 %in% 9] <- 0
-d$V34c1[d$V35c1 %in% 9] <- 0
-d$V34c1[d$V37c1 %in% 9] <- 0
+d$V34c1[d$V34c1 %in% c(9)] <- 2
+d$V35c1[d$V35c1 %in% c(9)] <- 1
+d$V37c1[d$V37c1 %in% c(9)] <- 1
 
-d$V34c1[is.na(d$V34c1)] <- 0
-d$V34c1[is.na(d$V35c1)] <- 0
-d$V34c1[is.na(d$V37c1)] <- 0
+# d$V34c1[is.na(d$V34c1)] <- 0
+# d$V34c1[is.na(d$V35c1)] <- 0
+# d$V34c1[is.na(d$V37c1)] <- 0
 
 
 #
@@ -1967,45 +1967,88 @@ d$V34c1[is.na(d$V37c1)] <- 0
 # names(r) <- c("V34c1","V35c1","V37c1")
 # write.csv(r, file="./data/autonomia_labeled.csv")
 
+d2 <- d[!is.na(d$V34c1),]
+
+r <- expand.grid(unique(d2$V35c1),
+                 unique(d2$V35c1),
+                 unique(d2$V34c1))
+names(r) <- c("V34c1","V35c1","V37c1")
+
+
 table(d$V34c1, useNA="ifany")
 table(d$V35c1, useNA="ifany")
 table(d$V37c1, useNA="ifany")
 
 # xx <- d %>% filter(is.na(d$V34c1),is.na(d$V35c1),is.na(d$V37c1))
 
+# V34c1 
+# Yes 	1
+# No 	2 
+
+# V35c1 ja V37c1
+# To an insignificant degree 	1
+# Somewhat yes, somewhat no 	2
+# To a significant degree 	3 
+
 d$kivinen_class_08_labeled <- NA
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 1	 & d$V34c1 %in% 0] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 0] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 0] <- "margin of middle class"
-d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 0] <- "core of middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 3 & d$V37c1 %in% 3 & d$V34c1 %in% 1] <- "core of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 2 & d$V37c1 %in% 3 & d$V34c1 %in% 1] <- "core of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 3 & d$V37c1 %in% 2 & d$V34c1 %in% 1] <- "core of the middle class"
+
+d$kivinen_class_08_labeled[d$V35c1 %in% 1 & d$V37c1 %in% 3 & d$V34c1 %in% 1] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 2 & d$V37c1 %in% 2 & d$V34c1 %in% 1] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 1 & d$V37c1 %in% 2 & d$V34c1 %in% 1] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 3 & d$V37c1 %in% 1 & d$V34c1 %in% 1] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 2 & d$V37c1 %in% 1 & d$V34c1 %in% 1] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 3 & d$V37c1 %in% 3 & d$V34c1 %in% 2] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 2 & d$V37c1 %in% 3 & d$V34c1 %in% 2] <- "margin of the middle class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 3 & d$V37c1 %in% 2 & d$V34c1 %in% 2] <- "margin of the middle class"
+
+d$kivinen_class_08_labeled[d$V35c1 %in% 1 & d$V37c1 %in% 3 & d$V34c1 %in% 2] <- "working class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 2 & d$V37c1 %in% 2 & d$V34c1 %in% 2] <- "working class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 1 & d$V37c1 %in% 2 & d$V34c1 %in% 2] <- "working class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 3 & d$V37c1 %in% 1 & d$V34c1 %in% 2] <- "working class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 2 & d$V37c1 %in% 1 & d$V34c1 %in% 2] <- "working class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 1 & d$V37c1 %in% 1 & d$V34c1 %in% 2] <- "working class"
+d$kivinen_class_08_labeled[d$V35c1 %in% 1 & d$V37c1 %in% 1 & d$V34c1 %in% 1] <- "working class"
+
+
+
+
+# d$kivinen_class_08_labeled <- NA
+# d$kivinen_class_08_labeled[d$V34c1 %in%3 &	d$V34c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 1	 & d$V34c1 %in% 2] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 0	 & d$V34c1 %in% 2] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 2	 & d$V34c1 %in% 2] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 3 &	d$V37c1 %in% 3	 & d$V34c1 %in% 2] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+# 
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 1	 & d$V34c1 %in% 2] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 0	 & d$V34c1 %in% 2] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 2	 & d$V34c1 %in% 2] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 2 &	d$V37c1 %in% 3	 & d$V34c1 %in% 2] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 1	 & d$V34c1 %in% 2] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 0	 & d$V34c1 %in% 2] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 2	 & d$V34c1 %in% 2] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 1 &	d$V37c1 %in% 3	 & d$V34c1 %in% 2] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 1] <- "core of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 1] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 1	 & d$V34c1 %in% 1] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 1	 & d$V34c1 %in% 2] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 2] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 0	 & d$V34c1 %in% 1] <- "working class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 2	 & d$V34c1 %in% 2] <- "margin of middle class"
+# d$kivinen_class_08_labeled[d$V35c1 %in% 0 &	d$V37c1 %in% 3	 & d$V34c1 %in% 2] <- "core of middle class"
 #
 # core of the middle class
 # margin of middle class
@@ -2017,32 +2060,36 @@ d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "7-Craft and re
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "8-Plant and machine operators, and assemblers" & is.na(d$V35c1)]                  = "working class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "52-Sales workers" & is.na(d$V35c1)]                                               = "working class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "92-Agricultural, forestry and fishery labourers" & is.na(d$V35c1)]                = "working class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "32-Health associate professionals" & is.na(d$V35c1)]                              = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "53-Personal care workers" & is.na(d$V35c1)]                                       = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "43-Numerical and material recording clerks" & is.na(d$V35c1)]                     = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "23-Teaching professionals" & is.na(d$V35c1)]                                      = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "11-Chief executives, senior officials and legislators" & is.na(d$V35c1)]          = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "31-Science and engineering associate professionals" & is.na(d$V35c1)]             = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "3-Technicians and associate professionals" & is.na(d$V35c1)]                      = "margin of middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "32-Health associate professionals" & is.na(d$V35c1)]                              = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "53-Personal care workers" & is.na(d$V35c1)]                                       = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "43-Numerical and material recording clerks" & is.na(d$V35c1)]                     = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "23-Teaching professionals" & is.na(d$V35c1)]                                      = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "11-Chief executives, senior officials and legislators" & is.na(d$V35c1)]          = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "31-Science and engineering associate professionals" & is.na(d$V35c1)]             = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "3-Technicians and associate professionals" & is.na(d$V35c1)]                      = "margin of the middle class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "91-Cleaners and helpers" & is.na(d$V35c1)]                                        = "working class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "33-Business and administration associate professionals" & is.na(d$V35c1)]         = "margin of middle class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "44-Other clerical support workers" & is.na(d$V35c1)]                              = "working class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "41-General and keyboard clerks" & is.na(d$V35c1)]                                 = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "42-Customer services clerks" & is.na(d$V35c1)]                                    = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "34-Legal, social, cultural and related associate professionals" & is.na(d$V35c1)] = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "26-Legal, social and cultural professionals" & is.na(d$V35c1)]                    = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "21-Science and engineering professionals" & is.na(d$V35c1)]                       = "margin of middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "41-General and keyboard clerks" & is.na(d$V35c1)]                                 = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "42-Customer services clerks" & is.na(d$V35c1)]                                    = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "34-Legal, social, cultural and related associate professionals" & is.na(d$V35c1)] = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "26-Legal, social and cultural professionals" & is.na(d$V35c1)]                    = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "21-Science and engineering professionals" & is.na(d$V35c1)]                       = "margin of the middle class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "4-Clerical support workers" & is.na(d$V35c1)]                                     = "working class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "35-Information and communications technicians" & is.na(d$V35c1)]                  = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "13-Production and specialized services managers" & is.na(d$V35c1)]                = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "12-Administrative and commercial managers" & is.na(d$V35c1)]                      = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "24-Business and administration professionals" & is.na(d$V35c1)]                   = "margin of middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "35-Information and communications technicians" & is.na(d$V35c1)]                  = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "13-Production and specialized services managers" & is.na(d$V35c1)]                = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "12-Administrative and commercial managers" & is.na(d$V35c1)]                      = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "24-Business and administration professionals" & is.na(d$V35c1)]                   = "margin of the middle class"
 d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "6-Skilled agricultural, forestry and fishery workers" & is.na(d$V35c1)]           = "working class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "25-Information and communications technology professionals" & is.na(d$V35c1)]     = "margin of middle class"
-d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "22-Health professionals" & is.na(d$V35c1)]                                        = "margin of middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "25-Information and communications technology professionals" & is.na(d$V35c1)]     = "margin of the middle class"
+d[["kivinen_class_08_labeled"]][d[["occup_groups_labeled"]] %in% "22-Health professionals" & is.na(d$V35c1)]                                        = "margin of the middle class"
 
-d[["kivinen_class_08_labeled"]] <- factor(d[["kivinen_class_08_labeled"]], levels=c("core of middle class","margin of middle class","working class"))
+d[["kivinen_class_08_labeled"]] <- factor(d[["kivinen_class_08_labeled"]], levels=c("core of the middle class","margin of the middle class","working class"))
 
+prop.table(table(d$kivinen_class_08_labeled))*100
+table(d$kivinen_class_08_labeled)
+
+# d %>%  filter(is.na(kivinen_class_08_labeled)) %>% select(V34c1,V35c1,V37c1,kivinen_class_08_labeled)
 
 #% ------------------------------------
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
@@ -2059,7 +2106,7 @@ label_data <- rbind(label_data,new_row_for_label_data)
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
-    d$occup_groups[i] <- NA
+    d[[unlabeled_varname]][[i]] <- NA
   } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
 }
 #% ------------------------------------
@@ -2080,8 +2127,95 @@ tbl <- as.data.frame(table(df_na))
 tbl <- tbl[tbl$Freq > 0,]
 print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-striped table-hover"'))
 
-# in the end, lets remove all variables with variable name including "labeled"
 
+############ UUSIA MUUTTUJIA!!! ###################################################
+# palkkaindeksi
+# d %>% filter(kivinen_class_08 == 2) %>% summarise(kpalkka = mean(V74c1, na.rm=TRUE))
+d$wage_index <- d$V74c1 / 25270.17 *100
+new_row_for_label_data <- data_frame(code="wage_index",
+                                     name="wage_index",
+                                     labels=NA,
+                                     values=1)
+# Write lines for label_data
+label_data <- rbind(label_data,new_row_for_label_data)
+
+
+# poverty 60%
+d %>% summarise(kraja = median(V74c1, na.rm=TRUE)*.6) %>% .$kraja-> raja60
+d$poverty60_labeled <- ifelse(d$V74c1 <= raja60, "poor", "non-poor")
+d$poverty60_labeled <- factor(d$poverty60_labeled)
+
+#% ------------------------------------
+# This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
+this_var_name <- "poverty60_labeled"
+unlabeled_varname <- "poverty60"
+labels <- levels(d[[this_var_name]])
+values <- 1:length(labels)
+code <- rep(unlabeled_varname, length(labels))
+name <- rep(unlabeled_varname, length(labels))
+new_row_for_label_data <- data_frame(code,name,labels,values)
+# Write lines for label_data
+label_data <- rbind(label_data,new_row_for_label_data)
+# Recode the new variable into numeric!
+for (i in 1:nrow(d)){
+  label_value <- as.character(d[[this_var_name]][[i]])
+  if (is.na(label_value)){
+    d[[unlabeled_varname]][[i]] <- NA
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+}
+
+# poverty 50%
+d %>% summarise(kraja = median(V74c1, na.rm=TRUE)*.5) %>% .$kraja-> raja50
+d$poverty50_labeled <- ifelse(d$V74c1 <= raja50, "poor", "non-poor")
+d$poverty50_labeled <- factor(d$poverty50_labeled)
+
+#% ------------------------------------
+# This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
+this_var_name <- "poverty50_labeled"
+unlabeled_varname <- "poverty50"
+labels <- levels(d[[this_var_name]])
+values <- 1:length(labels)
+code <- rep(unlabeled_varname, length(labels))
+name <- rep(unlabeled_varname, length(labels))
+new_row_for_label_data <- data_frame(code,name,labels,values)
+# Write lines for label_data
+label_data <- rbind(label_data,new_row_for_label_data)
+# Recode the new variable into numeric!
+for (i in 1:nrow(d)){
+  label_value <- as.character(d[[this_var_name]][[i]])
+  if (is.na(label_value)){
+    d[[unlabeled_varname]][[i]] <- NA
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+}
+
+# poverty 40%
+d %>% summarise(kraja = median(V74c1, na.rm=TRUE)*.4) %>% .$kraja-> raja40
+d$poverty40_labeled <- ifelse(d$V74c1 <= raja40, "poor", "non-poor")
+d$poverty40_labeled <- factor(d$poverty40_labeled)
+
+#% ------------------------------------
+# This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
+this_var_name <- "poverty40_labeled"
+unlabeled_varname <- "poverty40"
+labels <- levels(d[[this_var_name]])
+values <- 1:length(labels)
+code <- rep(unlabeled_varname, length(labels))
+name <- rep(unlabeled_varname, length(labels))
+new_row_for_label_data <- data_frame(code,name,labels,values)
+# Write lines for label_data
+label_data <- rbind(label_data,new_row_for_label_data)
+# Recode the new variable into numeric!
+for (i in 1:nrow(d)){
+  label_value <- as.character(d[[this_var_name]][[i]])
+  if (is.na(label_value)){
+    d[[unlabeled_varname]][[i]] <- NA
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+}
+
+####################################################################################
+#% ------------------------------------
+
+# in the end, lets remove all variables with variable name including "labeled"
 d <- d[names(d)[!grepl("labeled", names(d))]]
 
 saveRDS(d, file="./data/sdmr15.RDS")
@@ -2107,6 +2241,14 @@ foreign::write.foreign(d,
               codefile="./data/sdmr2015.sps",
               datafile="./data/sdmr2015.sav", 
               package="SPSS") 
+
+foreign::write.foreign(d,  
+                       codefile="./data/sdmr2015.do",
+                       datafile="./data/sdmr2015.dta", 
+                       package="Stata") 
+
+write.csv(d,  file = "./data/sdmr2015.csv")
+
 
 
 #' # Summaries
