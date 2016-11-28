@@ -26,11 +26,9 @@ opts_chunk$set(fig.width = 6, fig.height = 6)
 
 ```{r, eval=FALSE}
 dir.create("./localdata", showWarnings = FALSE)
-download.file("http://muuankarski.kapsi.fi/aisurvey/data/sdmr15.RDS",
-              destfile = "./localdata/sdmr15.RDS")
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/sdmr15.RDS", destfile = "./localdata/sdmr15.RDS")
 dat <- readRDS("./localdata/sdmr15.RDS")
-download.file("http://muuankarski.kapsi.fi/aisurvey/data/label_data.RDS",
-              destfile = "./localdata/label_data.RDS")
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/label_data.RDS", destfile = "./localdata/label_data.RDS")
 label_data  <- readRDS("./localdata/label_data.RDS")
 ```
 
@@ -41,11 +39,21 @@ label_data  <- readRDS("./localdata/label_data.RDS")
 - [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr2015.sav)
 
 
-***
-***
+## For Stata
 
 
-```{r, eval=FALSE, echo=FALSE}
+- [code](http://muuankarski.kapsi.fi/aisurvey/data/sdmr2015.do)
+- [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr2015.dta)
+
+
+## As .csv
+
+
+- [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr2015.csv)
+
+
+
+```{r, eval=FALSE, echo=FALSE, include=FALSE}
 dir.create("./data/")
 file.copy(from="~/btsync/mk/data/sdmr/sdmr_4_english_language_versionN.csv", to="./data/")
 file.copy(from="~/btsync/mk/data/sdmr//sdmr_4_english_language_versionN.RData", to="./data/")
@@ -58,56 +66,56 @@ file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.csv", to="./data/")
 file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.RData", to="./data/")
 ```
 
-# Raw data 
+<!-- # Raw data  -->
 
 
-| What                            |.sav | .csv numeric | .csv labels | .RData numeric | .RData labels |
-| ------------------------------- |---- | ------------ |------------- |--------------- |-------------- |
-| sdmr_4_english_language_version | [.sav](./data/sdmr_4_english_language_version.sav) | [.csv L](./data/sdmr_4_english_language_versionL.csv) | [.csv N](./data/sdmr_4_english_language_versionN.csv) | [.Rdata N](./data/sdmr_4_english_language_versionN.RData) | [.Rdata L](./data/sdmr_4_english_language_versionL.RData) |
-| merged_4wave20151110            | [.sav](./data/merged_4wave20151110.sav) | [.csv L](./data/merged_4wave20151110L.csv) | [.csv N](./data/merged_4wave20151110N.csv) | [.Rdata N](./data/merged_4wave20151110N.RData) | [.Rdata L](./data/merged_4wave20151110L.RData) |
-| with class vars |  |  |   | [d_merge_N_class.RData](./data/d_merge_N_class.RData) |  [d_merge_L_class.RData](./data/d_merge_L_class.RData)   |
+<!-- | What                            |.sav | .csv numeric | .csv labels | .RData numeric | .RData labels | -->
+<!-- | ------------------------------- |---- | ------------ |------------- |--------------- |-------------- | -->
+<!-- | sdmr_4_english_language_version | [.sav](./data/sdmr_4_english_language_version.sav) | [.csv L](./data/sdmr_4_english_language_versionL.csv) | [.csv N](./data/sdmr_4_english_language_versionN.csv) | [.Rdata N](./data/sdmr_4_english_language_versionN.RData) | [.Rdata L](./data/sdmr_4_english_language_versionL.RData) | -->
+<!-- | merged_4wave20151110            | [.sav](./data/merged_4wave20151110.sav) | [.csv L](./data/merged_4wave20151110L.csv) | [.csv N](./data/merged_4wave20151110N.csv) | [.Rdata N](./data/merged_4wave20151110N.RData) | [.Rdata L](./data/merged_4wave20151110L.RData) | -->
+<!-- | with class vars |  |  |   | [d_merge_N_class.RData](./data/d_merge_N_class.RData) |  [d_merge_L_class.RData](./data/d_merge_L_class.RData)   | -->
 
-# Complex generic constructed variables
+<!-- # Complex generic constructed variables -->
 
-Variables that are theoretically sound and complex to compute and worth of including in the data!
+<!-- Variables that are theoretically sound and complex to compute and worth of including in the data! -->
 
-## Year 2015
+<!-- ## Year 2015 -->
 
-| Description                  | file     | Stata-script | SPSS-syntax  | R-script    |  
-| -------------------------    | -------- | ----------   | ----------   | -------     |
-| **for 2015 data**            |          |          |          |          |
-| Wright class vars            | [.csv]() | [varx.do]()  | [varx.sps]() | [varx.r]()  |
-| Kivinen class & autonomy     | [.csv]() | [vary.do]()  | [vary.sps]() | [class_variable1.R](./code/class_variable1.R)  |
-| Something else               | [.csv]() | [varz.do]()  | [varz.sps]() | [varz.r]()  |
-| **for all wawes**            |          |          |          |          |
-| Wright class vars            | [.csv]() | [varx.do]()  | [varx.sps]() | [varx.r]()  |
-| Kivinen class & autonomy     | [.csv]() | [vary.do]()  | [vary.sps]() | [vary.r]()  |
-| Something else               | [.csv]() | [varz.do]()  | [varz.sps]() | [varz.r]()  |
+<!-- | Description                  | file     | Stata-script | SPSS-syntax  | R-script    |   -->
+<!-- | -------------------------    | -------- | ----------   | ----------   | -------     | -->
+<!-- | **for 2015 data**            |          |          |          |          | -->
+<!-- | Wright class vars            | [.csv]() | [varx.do]()  | [varx.sps]() | [varx.r]()  | -->
+<!-- | Kivinen class & autonomy     | [.csv]() | [vary.do]()  | [vary.sps]() | [class_variable1.R](./code/class_variable1.R)  | -->
+<!-- | Something else               | [.csv]() | [varz.do]()  | [varz.sps]() | [varz.r]()  | -->
+<!-- | **for all wawes**            |          |          |          |          | -->
+<!-- | Wright class vars            | [.csv]() | [varx.do]()  | [varx.sps]() | [varx.r]()  | -->
+<!-- | Kivinen class & autonomy     | [.csv]() | [vary.do]()  | [vary.sps]() | [vary.r]()  | -->
+<!-- | Something else               | [.csv]() | [varz.do]()  | [varz.sps]() | [varz.r]()  | -->
 
-# Merged data
+<!-- # Merged data -->
 
-Data with all the variables shown above!
+<!-- Data with all the variables shown above! -->
 
-| What                            |.sav | .csv numeric | .csv labels | .RData numeric | .RData labels |
-| ------------------------------- |---- | ------------ |------------- |--------------- |-------------- |
-| structure_2015_with_class       | [.sav](./data/structure_2015_with_class.sav)  | |   |   |   |
-| merged_4wave   | [.sav](./data/merged_4wave.sav)    | |   |   |   |
-| STR_1991a_1998_2007_2015 (Wright,etc.)-1   | [.sav](./data/STR_1991a_1998_2007_2015 (Wright,etc.)-1.sav)   | |   |   |   |
-| merged_database_new_class_groups_and_autonomy_09032016   | [.sav](./data/merged_database_new_class_groups_and_autonomy_09032016.sav)   | |   |   |   |
+<!-- | What                            |.sav | .csv numeric | .csv labels | .RData numeric | .RData labels | -->
+<!-- | ------------------------------- |---- | ------------ |------------- |--------------- |-------------- | -->
+<!-- | structure_2015_with_class       | [.sav](./data/structure_2015_with_class.sav)  | |   |   |   | -->
+<!-- | merged_4wave   | [.sav](./data/merged_4wave.sav)    | |   |   |   | -->
+<!-- | STR_1991a_1998_2007_2015 (Wright,etc.)-1   | [.sav](./data/STR_1991a_1998_2007_2015 (Wright,etc.)-1.sav)   | |   |   |   | -->
+<!-- | merged_database_new_class_groups_and_autonomy_09032016   | [.sav](./data/merged_database_new_class_groups_and_autonomy_09032016.sav)   | |   |   |   | -->
 
 
-# Using the datas
+<!-- # Using the datas -->
 
-## In R
+<!-- ## In R -->
 
-Type:
+<!-- Type: -->
 
-```{r loadR, eval=FALSE}
-# Cross-sectional NUMERIC 2015 raw data
-load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionN.RData"))
-# Cross-sectional LABELS 2015 raw data
-load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionL.RData"))
-```
+<!-- ```{r loadR, eval=FALSE} -->
+<!-- # Cross-sectional NUMERIC 2015 raw data -->
+<!-- load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionN.RData")) -->
+<!-- # Cross-sectional LABELS 2015 raw data -->
+<!-- load(url("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_4_english_language_versionL.RData")) -->
+<!-- ``` -->
 
 
 
