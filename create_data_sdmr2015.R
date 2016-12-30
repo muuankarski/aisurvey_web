@@ -30,7 +30,7 @@ saveRDS(d, file = "~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/s
 
 #' # Creating a metadata based on variable attributes
 
-#+ label_data, results="asis"
+#+ meta_df, results="asis"
 
 # 
 library(labelled)
@@ -44,28 +44,35 @@ d$V75c1[d$V75c1 == 9999999] <- NA
 
 var_label(d$age) <- "Respondents age"
 
-label_data <- data.frame()
+library(tidyverse)
+library(labelled)
+meta_df <- data_frame()
 for (i in 1:ncol(d)){
-  df <- data.frame()
+  df <- data_frame()
   code  <- names(d[i])
   name <- attributes(d[[i]])$label
   labels <- names(attributes(d[[i]])$labels)
   if (is.null(labels)){
-    values = unique(d[[i]])
+    values = NA
     labels=NA
   } else {
-    values = as.integer(attributes(d[[i]])$labels)
+    values = attributes(d[[i]])$labels
+    names(values) <- NULL
   }
   if (is.null(name)) name="not applicaple"
-  df <- data.frame(code=code,
-                   name=name,
-                   labels=labels,
-                   values=values, stringsAsFactors=FALSE)
-  label_data <- rbind(label_data,df)
+  class <- ifelse(is.na(values), "numeric", "factor")
+  if (class == "numeric") class <- ifelse(class(d[[i]]) %in% "numeric", "numeric", "character") 
+  new_row <- data_frame(code=code,
+                        name=name,
+                        labels=labels,
+                        values=values,
+                        class=class)
+  meta_df <- rbind(meta_df,new_row)
 }
+# meta_df <- meta_df
 
-dim(label_data)
-knitr::kable(label_data[1:20,])
+dim(meta_df)
+knitr::kable(meta_df[1:20,])
 
 #' Now we have a data frame with separate wor for each value in each variable
 #' 
@@ -78,14 +85,13 @@ knitr::kable(label_data[1:20,])
 for (i in 1:ncol(d)) {
   z<-class(d[[i]])
   if (z[[1]]=='labelled'){
-    class(d[[i]])<-z[-1]
-    attr(d[[i]],'label')<-NULL
+    class(d[[i]]) <- z[-1]
     attr(d[[i]],'labels')<-NULL
-    attr(d[[i]],'names')<-NULL
-  } else {
-    attr(d[[i]],'names')<-NULL
-    attr(d[[i]],'label')<-NULL
   }
+  attr(d[[i]],'names')<-NULL
+  attr(d[[i]],'label')<-NULL
+  attr(d[[i]],'format.stata')<-NULL
+  attr(d[[i]],'format.spss')<-NULL
 }
 
 dim(d)
@@ -107,7 +113,7 @@ library(tidyverse)
 library(ggplot2)
 
 source("~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/code/label_data.R")
-d$V14_CODE_labeled <- label_sdmr(data = d, var = "V14_CODE")
+d$V14_CODE_labeled <- label_data(data = d, variable = "V14_CODE")
 
 # Occupational groups
 d[["occup_groups_labeled"]] <- NA
@@ -888,15 +894,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 #% ------------------------------------
 
@@ -1000,15 +1006,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 #% ------------------------------------
 
@@ -1834,15 +1840,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 #% ------------------------------------
 
@@ -1907,15 +1913,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 #% ------------------------------------
 
@@ -2099,15 +2105,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 #% ------------------------------------
 
@@ -2132,33 +2138,33 @@ print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-s
 # palkkaindeksi - working class mean == 100
 # d %>% filter(kivinen_class_08 == 3) %>% summarise(kpalkka = mean(V74c1, na.rm=TRUE))
 d$wage_index_mean_working_class <- d$V74c1 / 18515.76 *100
-new_row_for_label_data <- data_frame(code="wage_index_mean_working_class",
+new_row_for_meta_df <- data_frame(code="wage_index_mean_working_class",
                                      name="wage_index_mean_working_class",
                                      labels=NA,
                                      values=1)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 
 # palkkaindeksi  - mean == 100
 # d %>%  summarise(kpalkka = mean(V74c1, na.rm=TRUE))
 d$wage_index_mean <- d$V74c1 / 22249.38 *100
-new_row_for_label_data <- data_frame(code="wage_index_mean",
+new_row_for_meta_df <- data_frame(code="wage_index_mean",
                                      name="wage_index_mean",
                                      labels=NA,
                                      values=1)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 
 
 # palkkaindeksi  - median == 100
 # d %>%  summarise(kpalkka = median(V74c1, na.rm=TRUE))
 d$wage_index_median <- d$V74c1 / 17000 *100
-new_row_for_label_data <- data_frame(code="wage_index_median",
+new_row_for_meta_df <- data_frame(code="wage_index_median",
                                      name="wage_index_median",
                                      labels=NA,
                                      values=1)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 
 
 22249.38
@@ -2181,15 +2187,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 
 # poverty 50%
@@ -2205,15 +2211,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 
 # poverty 40%
@@ -2229,15 +2235,15 @@ labels <- levels(d[[this_var_name]])
 values <- 1:length(labels)
 code <- rep(unlabeled_varname, length(labels))
 name <- rep(unlabeled_varname, length(labels))
-new_row_for_label_data <- data_frame(code,name,labels,values)
-# Write lines for label_data
-label_data <- rbind(label_data,new_row_for_label_data)
+new_row_for_meta_df <- data_frame(code,name,labels,values)
+# Write lines for meta_df
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
 for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_label_data[new_row_for_label_data$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
 }
 
 ####################################################################################
@@ -2247,24 +2253,24 @@ for (i in 1:nrow(d)){
 d <- d[names(d)[!grepl("labeled", names(d))]]
 
 saveRDS(d, file="./data/sdmr15.RDS")
-saveRDS(label_data, file="./data/label_data.RDS")
+saveRDS(meta_df, file="./data/meta_df.RDS")
 
 
 
 
 #+ convert_to_spss
-label_data$numeric <- ifelse(is.na(label_data$labels), TRUE, FALSE)
+meta_df$numeric <- ifelse(is.na(meta_df$labels), TRUE, FALSE)
 library(labelled)
 for (n in names(d)){
-  var_label(d[[n]]) <- label_data[label_data$code %in% n, "name"][1]
+  var_label(d[[n]]) <- meta_df[meta_df$code %in% n, "name"][1]
 }
 
 for (n in names(d)){
   # if numeric, no need for value labels
-  if (is.na(label_data[label_data$code %in% n, "numeric"][1])) next()
-  if (label_data[label_data$code %in% n, "numeric"][1]) next()
-  vec <- as.integer(label_data[label_data$code %in% n, "values"])
-  names(vec) <- label_data[label_data$code %in% n, "labels"]
+  if (is.na(meta_df[meta_df$code %in% n, "numeric"][1])) next()
+  if (meta_df[meta_df$code %in% n, "numeric"][1]) next()
+  vec <- as.integer(meta_df[meta_df$code %in% n, "values"])
+  names(vec) <- meta_df[meta_df$code %in% n, "labels"]
   d[[n]] <- labelled(d[[n]], labels=vec)
 }
 

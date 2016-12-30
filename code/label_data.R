@@ -52,24 +52,33 @@
 # # var="V95_1c1"
 # # var="V54_6c1"
  
-label_sdmr <- function(data,var,into.factor=TRUE){
-  # load("./data/label_data.RData")
-  label_data <- readRDS("./data/label_data.RDS")
-  labdat <- label_data[label_data$code %in% var,]
-  if (NA %in% labdat$labels){
-    data[["newvar"]] <- data[[var]]
-  } else {
-    for (vals in unique(labdat$value)){
-      data[["newvar"]][data[[var]] %in% vals] <- labdat[labdat$value %in% vals,"labels"]
-    }
-  }
-  if (!NA %in% labdat$labels & into.factor){
-    # remove possible duplicated levels
-    levs <- labdat[order(labdat$value),]$labels
-    levs <- levs[!duplicated(levs)]
-    data[["newvar"]] <- factor(data[["newvar"]], levels=levs)
-  }
-  return(data[["newvar"]])
+# label_sdmr <- function(data,var,into.factor=TRUE){
+#   # load("./data/label_data.RData")
+#   label_data <- readRDS("./data/label_data.RDS")
+#   labdat <- label_data[label_data$code %in% var,]
+#   if (NA %in% labdat$labels){
+#     data[["newvar"]] <- data[[var]]
+#   } else {
+#     for (vals in unique(labdat$value)){
+#       data[["newvar"]][data[[var]] %in% vals] <- labdat[labdat$value %in% vals,"labels"]
+#     }
+#   }
+#   if (!NA %in% labdat$labels & into.factor){
+#     # remove possible duplicated levels
+#     levs <- labdat[order(labdat$value),]$labels
+#     levs <- levs[!duplicated(levs)]
+#     data[["newvar"]] <- factor(data[["newvar"]], levels=levs)
+#   }
+#   return(data[["newvar"]])
+# }
+
+
+label_data <- function(data=d, variable="tvtot", metadata=meta_df, into.factor=TRUE){
+  if (metadata[metadata$code %in% variable,"class"] %in% c("numeric","character")) stop("Variable is either character or numeric and has no labels")
+  vardata <- metadata[metadata$code %in% variable,]
+  new_values <- with(vardata, labels[match(data[[variable]], values)])
+  if (into.factor) new_values <- factor(new_values, levels=vardata$labels)
+  return(new_values)
 }
 
 
@@ -124,24 +133,24 @@ label_sdmr <- function(data,var,into.factor=TRUE){
 # label_data_merge <- label_data_orig_merge
 # save(label_data_merge, file="./data/label_data_merge.RData")
 
-label_sdmr_merge <- function(data,var,into.factor=TRUE){
-  load("./data/label_data_merge.RData")
-  labdat <- label_data[label_data$code %in% var,]
-  if (NA %in% labdat$labels){
-    data[["newvar"]] <- data[[var]]
-  } else {
-    for (vals in unique(labdat$value)){
-      data[["newvar"]][data[[var]] %in% vals] <- labdat[labdat$value %in% vals,"labels"]
-    }
-  }
-  if (!NA %in% labdat$labels & into.factor){
-    # remove possible duplicated levels
-    levs <- labdat[order(labdat$value),]$labels
-    levs <- levs[!duplicated(levs)]
-    data[["newvar"]] <- factor(data[["newvar"]], levels=levs)
-  }
-  return(data[["newvar"]])
-}
+# label_sdmr_merge <- function(data,var,into.factor=TRUE){
+#   load("./data/label_data_merge.RData")
+#   labdat <- label_data[label_data$code %in% var,]
+#   if (NA %in% labdat$labels){
+#     data[["newvar"]] <- data[[var]]
+#   } else {
+#     for (vals in unique(labdat$value)){
+#       data[["newvar"]][data[[var]] %in% vals] <- labdat[labdat$value %in% vals,"labels"]
+#     }
+#   }
+#   if (!NA %in% labdat$labels & into.factor){
+#     # remove possible duplicated levels
+#     levs <- labdat[order(labdat$value),]$labels
+#     levs <- levs[!duplicated(levs)]
+#     data[["newvar"]] <- factor(data[["newvar"]], levels=levs)
+#   }
+#   return(data[["newvar"]])
+# }
 
 # load("./data/d_merge_N_class.RData")
 # head(d_merge_N_class)
