@@ -2129,15 +2129,43 @@ print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-s
 
 
 ############ UUSIA MUUTTUJIA!!! ###################################################
-# palkkaindeksi
-# d %>% filter(kivinen_class_08 == 2) %>% summarise(kpalkka = mean(V74c1, na.rm=TRUE))
-d$wage_index <- d$V74c1 / 25270.17 *100
-new_row_for_label_data <- data_frame(code="wage_index",
-                                     name="wage_index",
+# palkkaindeksi - working class mean == 100
+# d %>% filter(kivinen_class_08 == 3) %>% summarise(kpalkka = mean(V74c1, na.rm=TRUE))
+d$wage_index_mean_working_class <- d$V74c1 / 18515.76 *100
+new_row_for_label_data <- data_frame(code="wage_index_mean_working_class",
+                                     name="wage_index_mean_working_class",
                                      labels=NA,
                                      values=1)
 # Write lines for label_data
 label_data <- rbind(label_data,new_row_for_label_data)
+
+# palkkaindeksi  - mean == 100
+# d %>%  summarise(kpalkka = mean(V74c1, na.rm=TRUE))
+d$wage_index_mean <- d$V74c1 / 22249.38 *100
+new_row_for_label_data <- data_frame(code="wage_index_mean",
+                                     name="wage_index_mean",
+                                     labels=NA,
+                                     values=1)
+# Write lines for label_data
+label_data <- rbind(label_data,new_row_for_label_data)
+
+
+# palkkaindeksi  - median == 100
+# d %>%  summarise(kpalkka = median(V74c1, na.rm=TRUE))
+d$wage_index_median <- d$V74c1 / 17000 *100
+new_row_for_label_data <- data_frame(code="wage_index_median",
+                                     name="wage_index_median",
+                                     labels=NA,
+                                     values=1)
+# Write lines for label_data
+label_data <- rbind(label_data,new_row_for_label_data)
+
+
+22249.38
+
+17000
+
+
 
 
 # poverty 60%
@@ -2220,6 +2248,9 @@ d <- d[names(d)[!grepl("labeled", names(d))]]
 
 saveRDS(d, file="./data/sdmr15.RDS")
 saveRDS(label_data, file="./data/label_data.RDS")
+
+
+
 
 #+ convert_to_spss
 label_data$numeric <- ifelse(is.na(label_data$labels), TRUE, FALSE)

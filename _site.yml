@@ -51,9 +51,12 @@ navbar:
         - text: "Descriptive app for 2015 data"
           icon: fa-line-chart
           href: http://82.181.168.173:443/shiny_aisurvey_desc/
-        - text: "Descriptive app for merged data"
-          icon: fa-line-chart
-          href: http://82.181.168.173:443/shiny_aisurvey_desc_merge
+#        - text: "Factor analysis for 2015 data"
+#          icon: fa-line-chart
+#          href: http://82.181.168.173:443/lavaanshiny/
+#        - text: "Descriptive app for merged data"
+#          icon: fa-line-chart
+#          href: http://82.181.168.173:443/shiny_aisurvey_desc_merge
     - text: "Upload file"
       icon: fa-file
       href: upload/index.php
