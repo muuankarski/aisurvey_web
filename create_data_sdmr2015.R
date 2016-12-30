@@ -33,43 +33,59 @@ saveRDS(d, file = "~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/s
 #+ meta_df, results="asis"
 
 # 
-library(labelled)
-val_labels(d$V74c1) <- NULL # force into numeric - Respondent’s aggregate monthly income 
-d$V74c1[d$V74c1 == 9999998] <- NA
-d$V74c1[d$V74c1 == 9999999] <- NA
-
-val_labels(d$V75c1) <- NULL # force into numeric - Respondent’s family aggregate monthly income
-d$V75c1[d$V75c1 == 9999998] <- NA
-d$V75c1[d$V75c1 == 9999999] <- NA
 
 var_label(d$age) <- "Respondents age"
 
 library(tidyverse)
 library(labelled)
-meta_df <- data_frame()
+# meta_df <- data_frame()
+# for (i in 1:ncol(d)){
+#   df <- data_frame()
+#   code  <- names(d[i])
+#   name <- attributes(d[[i]])$label
+#   label <- names(attributes(d[[i]])$label)
+#   if (is.null(label)){
+#     value = NA
+#     label=NA
+#   } else {
+#     value = attributes(d[[i]])$label
+#     names(value) <- NULL
+#   }
+#   if (is.null(name)) name="not applicaple"
+#   class <- ifelse(is.na(value), "numeric", "factor")
+#   if (class == "numeric") class <- ifelse(class(d[[i]]) %in% "numeric", "numeric", "character") 
+#   new_row <- data_frame(code=code,
+#                         name=name,
+#                         label=label,
+#                         value=value,
+#                         class=class)
+#   meta_df <- rbind(meta_df,new_row)
+# }
+
+label_data <- data.frame()
 for (i in 1:ncol(d)){
-  df <- data_frame()
+  df <- data.frame()
   code  <- names(d[i])
   name <- attributes(d[[i]])$label
-  labels <- names(attributes(d[[i]])$labels)
-  if (is.null(labels)){
-    values = NA
-    labels=NA
+  label <- names(attributes(d[[i]])$labels)
+  if (is.null(label)){
+    value = NA
+    label=NA
   } else {
-    values = attributes(d[[i]])$labels
-    names(values) <- NULL
+    value = as.integer(attributes(d[[i]])$labels)
+    names(value) <- NULL
   }
   if (is.null(name)) name="not applicaple"
-  class <- ifelse(is.na(values), "numeric", "factor")
+  class <- ifelse(is.na(value), "numeric", "factor")
   if (class == "numeric") class <- ifelse(class(d[[i]]) %in% "numeric", "numeric", "character") 
-  new_row <- data_frame(code=code,
-                        name=name,
-                        labels=labels,
-                        values=values,
-                        class=class)
-  meta_df <- rbind(meta_df,new_row)
+  df <- data.frame(code=code,
+                   name=name,
+                   label=label,
+                   value=value,
+                   class=class, stringsAsFactors=FALSE)
+  label_data <- rbind(label_data,df)
 }
-# meta_df <- meta_df
+meta_df <- label_data
 
 dim(meta_df)
 knitr::kable(meta_df[1:20,])
@@ -78,21 +94,28 @@ knitr::kable(meta_df[1:20,])
 #' 
 #' # Strip variable attributes before recoding the variables in R
 #' 
-#' It is complicated to manipulate data with variable labels in R, therefore we strip off the variable 
-#' labels and create a function to label the variables when that is needed.
+#' It is complicated to manipulate data with variable label in R, therefore we strip off the variable 
+#' label and create a function to label the variables when that is needed.
 
 #+ remove_attributes
 for (i in 1:ncol(d)) {
   z<-class(d[[i]])
   if (z[[1]]=='labelled'){
     class(d[[i]]) <- z[-1]
-    attr(d[[i]],'labels')<-NULL
+    attr(d[[i]],'label')<-NULL
   }
   attr(d[[i]],'names')<-NULL
   attr(d[[i]],'label')<-NULL
   attr(d[[i]],'format.stata')<-NULL
   attr(d[[i]],'format.spss')<-NULL
 }
+
+d$V74c1[d$V74c1 == 9999998] <- NA
+d$V74c1[d$V74c1 == 9999999] <- NA
+
+
+d$V75c1[d$V75c1 == 9999998] <- NA
+d$V75c1[d$V75c1 == 9999999] <- NA
 
 dim(d)
 writeLines(capture.output(str(d)), con = "~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/structure_2015_with_class_stripped_str.txt")
@@ -112,8 +135,17 @@ saveRDS(d, file = "~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/s
 library(tidyverse)
 library(ggplot2)
 
-source("~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/code/label_data.R")
-d$V14_CODE_labeled <- label_data(data = d, variable = "V14_CODE")
+# source("~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/code/label_data.R")
+
+label_data <- function(data=d, variable="tvtot", metadata=meta_df, into.factor=TRUE){
+  if (!"factor" %in% unique(metadata[metadata$code %in% variable,]$class)) stop("Variable is either character or numeric and has no labels")
+  vardata <- metadata[metadata$code %in% variable,]
+  new_values <- with(vardata, label[match(data[[variable]], value)])
+  if (into.factor) new_values <- factor(new_values, levels=vardata$label)
+  return(new_values)
+}
+
+d$V14_CODE_labeled <- label_data(data = d, variable = "V14_CODE", metadata = meta_df, into.factor = FALSE)
 
 # Occupational groups
 d[["occup_groups_labeled"]] <- NA
@@ -890,11 +922,11 @@ d$occup_groups_labeled <- factor(d$occup_groups_labeled, levels=c("3-Technicians
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "occup_groups_labeled"
 unlabeled_varname <- "occup_groups"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -902,7 +934,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 #% ------------------------------------
 
@@ -1002,11 +1034,11 @@ d$autonomia_labeled <- factor(d$autonomia_labeled, levels=c("1-managerial",
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "autonomia_labeled"
 unlabeled_varname <- "autonomia"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -1014,7 +1046,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 #% ------------------------------------
 
@@ -1836,11 +1868,11 @@ d[["occr_labeled"]] <- factor(d[["occr_labeled"]], levels=c("Managers",
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "occr_labeled"
 unlabeled_varname <- "occr"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -1848,7 +1880,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 #% ------------------------------------
 
@@ -1909,11 +1941,11 @@ d$skill2_labeled <- factor(d$skill2_labeled, levels=c("Expert","Skilled","Low/se
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "skill2_labeled"
 unlabeled_varname <- "skill2"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -1921,7 +1953,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d$occup_groups[i] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 #% ------------------------------------
 
@@ -2101,11 +2133,11 @@ table(d$kivinen_class_08_labeled)
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "kivinen_class_08_labeled"
 unlabeled_varname <- "kivinen_class_08"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -2113,7 +2145,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 #% ------------------------------------
 
@@ -2140,8 +2172,8 @@ print(knitr::kable(arrange(tbl, -Freq), "html", table.attr='class="table table-s
 d$wage_index_mean_working_class <- d$V74c1 / 18515.76 *100
 new_row_for_meta_df <- data_frame(code="wage_index_mean_working_class",
                                      name="wage_index_mean_working_class",
-                                     labels=NA,
-                                     values=1)
+                                     label=NA,
+                                     value=1,class="numeric")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
@@ -2150,8 +2182,8 @@ meta_df <- rbind(meta_df,new_row_for_meta_df)
 d$wage_index_mean <- d$V74c1 / 22249.38 *100
 new_row_for_meta_df <- data_frame(code="wage_index_mean",
                                      name="wage_index_mean",
-                                     labels=NA,
-                                     values=1)
+                                     label=NA,
+                                     value=1,class="numeric")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
@@ -2161,8 +2193,8 @@ meta_df <- rbind(meta_df,new_row_for_meta_df)
 d$wage_index_median <- d$V74c1 / 17000 *100
 new_row_for_meta_df <- data_frame(code="wage_index_median",
                                      name="wage_index_median",
-                                     labels=NA,
-                                     values=1)
+                                     label=NA,
+                                     value=1,class="numeric")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
@@ -2183,11 +2215,11 @@ d$poverty60_labeled <- factor(d$poverty60_labeled)
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "poverty60_labeled"
 unlabeled_varname <- "poverty60"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -2195,7 +2227,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 
 # poverty 50%
@@ -2207,11 +2239,11 @@ d$poverty50_labeled <- factor(d$poverty50_labeled)
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "poverty50_labeled"
 unlabeled_varname <- "poverty50"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -2219,7 +2251,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 
 # poverty 40%
@@ -2231,11 +2263,11 @@ d$poverty40_labeled <- factor(d$poverty40_labeled)
 # This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
 this_var_name <- "poverty40_labeled"
 unlabeled_varname <- "poverty40"
-labels <- levels(d[[this_var_name]])
-values <- 1:length(labels)
-code <- rep(unlabeled_varname, length(labels))
-name <- rep(unlabeled_varname, length(labels))
-new_row_for_meta_df <- data_frame(code,name,labels,values)
+label <- levels(d[[this_var_name]])
+value <- 1:length(label)
+code <- rep(unlabeled_varname, length(label))
+name <- rep(unlabeled_varname, length(label))
+new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
 # Write lines for meta_df
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 # Recode the new variable into numeric!
@@ -2243,7 +2275,7 @@ for (i in 1:nrow(d)){
   label_value <- as.character(d[[this_var_name]][[i]])
   if (is.na(label_value)){
     d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$labels %in% label_value,]$values
+  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
 }
 
 ####################################################################################
@@ -2259,19 +2291,19 @@ saveRDS(meta_df, file="./data/meta_df.RDS")
 
 
 #+ convert_to_spss
-meta_df$numeric <- ifelse(is.na(meta_df$labels), TRUE, FALSE)
+meta_df$numeric <- ifelse(is.na(meta_df$label), TRUE, FALSE)
 library(labelled)
 for (n in names(d)){
   var_label(d[[n]]) <- meta_df[meta_df$code %in% n, "name"][1]
 }
 
 for (n in names(d)){
-  # if numeric, no need for value labels
+  # if numeric, no need for value label
   if (is.na(meta_df[meta_df$code %in% n, "numeric"][1])) next()
   if (meta_df[meta_df$code %in% n, "numeric"][1]) next()
-  vec <- as.integer(meta_df[meta_df$code %in% n, "values"])
-  names(vec) <- meta_df[meta_df$code %in% n, "labels"]
-  d[[n]] <- labelled(d[[n]], labels=vec)
+  vec <- as.integer(meta_df[meta_df$code %in% n, "value"])
+  names(vec) <- meta_df[meta_df$code %in% n, "label"]
+  d[[n]] <- labelled(d[[n]], label=vec)
 }
 
 foreign::write.foreign(d,  
