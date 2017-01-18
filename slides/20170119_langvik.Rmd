@@ -1,0 +1,64 @@
+---
+title: "Scaling quantitative analysis with software development"
+subtitle: "Case: SDMR 2015 data"
+author: "Markus Kainu"
+date: "Långvik 19\\. January 2017"
+output:
+  xaringan::moon_reader:
+    css: ["default", "custom.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, eval=FALSE, include=FALSE}
+# dir.create("~/public_html/esitykset/tieviejoulu2016/", showWarnings = FALSE, recursive = TRUE)
+# system("rsync --exclude=data --exclude=*.Rproj --exclude=.gitignore -arv --delete ~/esitykset/tieviejoulu2016/ ~/public_html/esitykset/tieviejoulu2016/")
+```
+
+
+
+### The problem and the solutions
+
+![](img/skaalautuvuus.png)
+
+- **I Manual labor**: datamonkey writes required (by specialists) analysis manually and improves them incrementally as the research advances - testing new ideas require action from the datamonkey
+- **II Automating**: datamonkey scripts/automates the repetitive parts of analysis and improves the scripts incrementally as the reseach advances - testing new ideas require action from the datamonkey
+- **III Software development**: datamonkey writes an application that many specialists can consult. Datamonkey can focus on developing the application, methods etc.
+
+---
+
+#### Idea
+
+- Idea is to develop flexible *user interfaces*/*applications* for research data that specialists can use to browse/analyze the data directly. 
+
+#### Benefits
+
+- shorten the cycle in empirical reseach between hypothesis formation and hypothesis testing
+- make better use of time & intellectual capacity of specialist
+- frees datamonkey from repetitive crosstabulation - *automate your job before someone else does* 
+
+#### Details
+
+- written in R language
+- free & open source for any type of use
+- currently hosted at my home server
+- part of my work at Kela
+
+---
+
+class: inverse center
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+# <http://muuankarski.kapsi.fi/aisurvey>

@@ -28,8 +28,8 @@ opts_chunk$set(fig.width = 6, fig.height = 6)
 dir.create("./localdata", showWarnings = FALSE)
 download.file("http://muuankarski.kapsi.fi/aisurvey/data/sdmr15.RDS", destfile = "./localdata/sdmr15.RDS")
 dat <- readRDS("./localdata/sdmr15.RDS")
-download.file("http://muuankarski.kapsi.fi/aisurvey/data/label_data.RDS", destfile = "./localdata/label_data.RDS")
-label_data  <- readRDS("./localdata/label_data.RDS")
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/meta_df.RDS", destfile = "./localdata/meta_df.RDS")
+meta  <- readRDS("./localdata/meta_df.RDS")
 ```
 
 ## For SPSS
@@ -65,6 +65,65 @@ file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110N.RData", to="./data/"
 file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.csv", to="./data/")
 file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.RData", to="./data/")
 ```
+
+
+
+# Download up-to-dates files for all waves
+
+## For R
+
+```{r, eval=FALSE}
+dir.create("./localdata", showWarnings = FALSE)
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/sdmr_merge.RDS", destfile = "./localdata/sdmr_merge.RDS")
+dat <- readRDS("./localdata/sdmr_merge.RDS")
+download.file("http://muuankarski.kapsi.fi/aisurvey/data/meta_df_merge.RDS", destfile = "./localdata/label_data.RDS")
+meta  <- readRDS("./localdata/meta_df_merge.RDS")
+```
+
+## For SPSS
+
+
+- [code](http://muuankarski.kapsi.fi/aisurvey/data/sdmr_merge.sps)
+- [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr_merge.sav)
+
+
+## For Stata
+
+
+- [code](http://muuankarski.kapsi.fi/aisurvey/data/sdmr_merge.do)
+- [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr_merge.dta)
+
+
+## As .csv
+
+
+- [data](http://muuankarski.kapsi.fi/aisurvey/data/sdmr_merge.csv)
+
+
+
+```{r, eval=FALSE, echo=FALSE, include=FALSE}
+dir.create("./data/")
+file.copy(from="~/btsync/mk/data/sdmr/sdmr_4_english_language_versionN.csv", to="./data/")
+file.copy(from="~/btsync/mk/data/sdmr//sdmr_4_english_language_versionN.RData", to="./data/")
+file.copy(from="~/btsync/mk/data/sdmr/sdmr_4_english_language_versionL.csv", to="./data/")
+file.copy(from="~/btsync/mk/data/sdmr//sdmr_4_english_language_versionL.RData", to="./data/")
+
+file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110N.csv", to="./data/")
+file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110N.RData", to="./data/")
+file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.csv", to="./data/")
+file.copy(from="~/btsync/mk/data/sdmr/merged_4wave20151110L.RData", to="./data/")
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- # Raw data  -->
 

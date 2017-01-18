@@ -4,9 +4,19 @@ title: "Institute survey 2015"
 
 `Generated: `r Sys.time()``
 
-I will collect data & analysis within this site. It reflects the state of my analysis in real-time.
+I will collect data & analysis & documentation within this site.
 
 <a href="mailto:markuskainu@gmail.com?Subject=AIsurvey-site" target="_top">Mail me</a> if any questions!
+
+## Latest
+
+- [Workshop in Lånvik in 19-20, 2017](workshop_langvik_20170119.html)
+- app for longitudinal data: <http://82.181.168.173:443/sdmr_merge/>
+- app for cross-section 2015 data: <http://82.181.168.173:443/sdmr_2015/>
+
+
+
+
 
 <!-- <a href="https://www.r-project.org/"> -->
 <!-- <img src="https://www.r-project.org/logo/Rlogo.png" alt="Smiley face" style="float:right;width:150px;"> -->

@@ -1,0 +1,36 @@
+---
+title: "Långvik"
+author: "Markus"
+date: "16 tammikuuta 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Program
+
+## Thursday January 19th
+
+- 09.00 – Departure from Aleksanteri Institute
+- 10.00 – Arrival to Långvik
+- 10.30 -12.00: 1st session: Aims of the seminar, schedule (Markku) & introduction to analytical tool (Markus)
+    - [Markus slides](slides/20170119_langvik.html)
+    - 2015 app: <http://82.181.168.173:443/sdmr_2015/>
+    - merge data app: <http://82.181.168.173:443/sdmr_merge/>
+    - [SDMR2015QuestionnaireRus.pdf](data/SDMR2015QuestionnaireRus.pdf)
+- 12.00 – 13.00: Lunch
+- 13.30 -15.00: Recreational activities outdoors
+- 15.30 – 17.30: 2nd session on analyses
+- 18.00 – 20.00: Sauna
+- 20.30 – Dinner
+- 21.30-: Free time
+
+## Friday January 20th 
+
+08.00 – 09.00: Breakfast
+09.30 – 11.00: 3rd session on analyses
+12.00-13.00:  Check-out & Lunch
+13.30 – 14.30: Final session: Plan and timetable for the cluster
+15.00: Departure to Helsinki

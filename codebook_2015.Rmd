@@ -34,17 +34,17 @@ library(dplyr)
 library(dplyr)
 library(ggplot2)
 
-label_data <- readRDS("./data/label_data.RDS")
+meta <- readRDS("./data/meta_df.RDS")
 
-for (ind in unique(label_data$code)){
+for (ind in unique(meta$code)){
   
   code <- ind
-  name <- label_data[label_data$code %in% ind,]$name[1]
+  name <- meta[meta$code %in% ind,]$name[1]
   cat("\n\n")
   cat(paste("#",code,"-",name))
   cat("\n\n")
   
-  df <- label_data[label_data$code %in% ind,]
+  df <- meta[meta$code %in% ind,]
   
   if (nrow(df) >= 450){
    print(knitr::kable(df[1:10,], "html", table.attr='class="table table-striped table-hover"')) 
