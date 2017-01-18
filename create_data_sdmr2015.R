@@ -2199,84 +2199,103 @@ new_row_for_meta_df <- data_frame(code="wage_index_median",
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
 
-22249.38
+# relative poverty rate .70
+d %>% mutate(kraja = median(V74c1, na.rm=TRUE)*.7,
+             poverty70 = ifelse(V74c1 >= kraja, 0, 1)) %>% 
+  select(-kraja)-> d
 
-17000
-
-
-
-
-# poverty 60%
-d %>% summarise(kraja = median(V74c1, na.rm=TRUE)*.6) %>% .$kraja-> raja60
-d$poverty60_labeled <- ifelse(d$V74c1 <= raja60, "poor", "non-poor")
-d$poverty60_labeled <- factor(d$poverty60_labeled)
-
-#% ------------------------------------
-# This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
-this_var_name <- "poverty60_labeled"
-unlabeled_varname <- "poverty60"
-label <- levels(d[[this_var_name]])
-value <- 1:length(label)
-code <- rep(unlabeled_varname, length(label))
-name <- rep(unlabeled_varname, length(label))
-new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
-# Write lines for meta_df
+new_row_for_meta_df <- data_frame(code="poverty70",
+                                  name="relative poverty rate at 70 % of median income threshold",
+                                  label=c("non-poor","poor"),
+                                  value=c(0,1),
+                                  class="factor")  
 meta_df <- rbind(meta_df,new_row_for_meta_df)
-# Recode the new variable into numeric!
-for (i in 1:nrow(d)){
-  label_value <- as.character(d[[this_var_name]][[i]])
-  if (is.na(label_value)){
-    d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
-}
 
-# poverty 50%
-d %>% summarise(kraja = median(V74c1, na.rm=TRUE)*.5) %>% .$kraja-> raja50
-d$poverty50_labeled <- ifelse(d$V74c1 <= raja50, "poor", "non-poor")
-d$poverty50_labeled <- factor(d$poverty50_labeled)
 
-#% ------------------------------------
-# This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
-this_var_name <- "poverty50_labeled"
-unlabeled_varname <- "poverty50"
-label <- levels(d[[this_var_name]])
-value <- 1:length(label)
-code <- rep(unlabeled_varname, length(label))
-name <- rep(unlabeled_varname, length(label))
-new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
-# Write lines for meta_df
+# relative poverty rate .60
+d %>% mutate(kraja = median(V74c1, na.rm=TRUE)*.6,
+         poverty60 = ifelse(V74c1 >= kraja, 0, 1)) %>% 
+  select(-kraja)-> d
+
+new_row_for_meta_df <- data_frame(code="poverty60",
+                                  name="relative poverty rate at 60 % of median income threshold",
+                                  label=c("non-poor","poor"),
+                                  value=c(0,1),
+                                  class="factor")  
 meta_df <- rbind(meta_df,new_row_for_meta_df)
-# Recode the new variable into numeric!
-for (i in 1:nrow(d)){
-  label_value <- as.character(d[[this_var_name]][[i]])
-  if (is.na(label_value)){
-    d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
-}
 
-# poverty 40%
-d %>% summarise(kraja = median(V74c1, na.rm=TRUE)*.4) %>% .$kraja-> raja40
-d$poverty40_labeled <- ifelse(d$V74c1 <= raja40, "poor", "non-poor")
-d$poverty40_labeled <- factor(d$poverty40_labeled)
 
-#% ------------------------------------
-# This bloc of code is to recode the string variable into numeric and add equivalent rows into label data for analysis later on
-this_var_name <- "poverty40_labeled"
-unlabeled_varname <- "poverty40"
-label <- levels(d[[this_var_name]])
-value <- 1:length(label)
-code <- rep(unlabeled_varname, length(label))
-name <- rep(unlabeled_varname, length(label))
-new_row_for_meta_df <- data_frame(code,name,label,value,class="factor")
-# Write lines for meta_df
+# relative poverty rate .50
+d %>% mutate(kraja = median(V74c1, na.rm=TRUE)*.5,
+             poverty50 = ifelse(V74c1 >= kraja, 0, 1)) %>% 
+  select(-kraja)-> d
+
+new_row_for_meta_df <- data_frame(code="poverty50",
+                                  name="relative poverty rate at 50 % of median income threshold",
+                                  label=c("non-poor","poor"),
+                                  value=c(0,1),
+                                  class="factor")  
 meta_df <- rbind(meta_df,new_row_for_meta_df)
-# Recode the new variable into numeric!
-for (i in 1:nrow(d)){
-  label_value <- as.character(d[[this_var_name]][[i]])
-  if (is.na(label_value)){
-    d[[unlabeled_varname]][[i]] <- NA
-  } else  d[[unlabeled_varname]][[i]] <- new_row_for_meta_df[new_row_for_meta_df$label %in% label_value,]$value
-}
+
+# relative poverty rate .40
+d %>% mutate(kraja = median(V74c1, na.rm=TRUE)*.4,
+             poverty40 = ifelse(V74c1 >= kraja, 0, 1)) %>% 
+  select(-kraja)-> d
+
+new_row_for_meta_df <- data_frame(code="poverty40",
+                                  name="relative poverty rate at 40 % of median income threshold",
+                                  label=c("non-poor","poor"),
+                                  value=c(0,1),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# new 
+d$V113c1_rec[d$V113c1 %in% c(1,2)] <- 1
+d$V113c1_rec[d$V113c1 %in% c(3,4,5)] <- 2
+d$V113c1_rec[d$V113c1 %in% c(6,7,8)] <- 3
+d$V113c1_rec[d$V113c1 %in% c(9,10)] <- 4
+
+new_row_for_meta_df <- data_frame(code="V113c1_rec",
+                                  name="Four-class type of settlement variables",
+                                  label=c("Moscow & St. Petersburg",
+                                          "City more than 100000 people",
+                                          "Town with less than 100000 people",
+                                          "Village"),
+                                  value=c(1:4),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+
+new_row_for_meta_df <- data_frame(code="V113c1_rec",
+                                  name="Four-class type of settlement variables",
+                                  label=c("Moscow & St. Petersburg",
+                                          "City more than 100000 people",
+                                          "Town with less than 100000 people",
+                                          "Village"),
+                                  value=c(1:4),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+d$V74c1[d$V74c1 == "9999998"] <- NA
+d$V74c1[d$V74c1 == "9999999"] <- NA
+d$V75c1[d$V75c1 == "9999998"] <- NA
+d$V75c1[d$V75c1 == "9999999"] <- NA
+
+meta_df %>% filter(!code %in% c("V74c1","V75c1")) -> meta_df
+
+new_row_for_meta_df <- data_frame(code="V74c1",
+                                  name="Respondent's aggregate monthly income",
+                                  label=NA,
+                                  value=1,class="numeric")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+new_row_for_meta_df <- data_frame(code="V75c1",
+                                  name="Respondent's family aggregate monthly income",
+                                  label=NA,
+                                  value=1,class="numeric")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
 
 ####################################################################################
 #% ------------------------------------
@@ -2286,8 +2305,6 @@ d <- d[names(d)[!grepl("labeled", names(d))]]
 
 saveRDS(d, file="./data/sdmr15.RDS")
 saveRDS(meta_df, file="./data/meta_df.RDS")
-
-
 
 
 #+ convert_to_spss
