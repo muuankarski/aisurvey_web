@@ -33,11 +33,11 @@ saveRDS(d, file = "~/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/s
 #+ meta_df, results="asis"
 
 # 
-
+library(labelled)
 var_label(d$age) <- "Respondents age"
 
 library(tidyverse)
-library(labelled)
+
 # meta_df <- data_frame()
 # for (i in 1:ncol(d)){
 #   df <- data_frame()
@@ -2519,7 +2519,7 @@ d$V95_sum <- rowSums(d[c("V95_1c1_rec",
                          "V95_16c1_rec")], na.rm = FALSE)
 
 new_row_for_meta_df <- data_frame(code="V95_sum",
-                                  name="Public participation",
+                                  name="Trust, numeric sum from negative to positive",
                                   label=NA,
                                   value=NA,
                                   class="numeric")
@@ -2745,6 +2745,59 @@ new_row_for_meta_df <- data_frame(code="V93_sum_rec",
                                   label=c("active in 3 or more","active in 1 or 2","passive"),
                                   value=c(2,1,0),
                                   class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+# ---------- vulnerability --------
+
+# ----- Participation in public activity ------------------
+vars <- c("V88_1c1",
+          "V88_2c1",
+          "V88_3c1",
+          "V88_4c1",
+          "V88_5c1")
+# 
+# meta_df %>% filter(code %in% vars, label == "Never") %>% .$name %>% print_cs1()
+# meta_df %>% filter(code %in% "V88_5c1") %>% .$label %>% print_cs1()
+
+# 
+for (i in vars){
+  ii <- paste0(i,"_rec")
+  d[[ii]] <-  d[[i]]
+  d[[ii]][d[[ii]] %in% 9] <- NA
+  d[[ii]] <- d[[ii]] - 1
+}
+# 
+vars_names <- c("Problems in getting medical care: doctors services too expensive", 
+                "Problems in getting medical care: staying in a hospital too expensive", 
+                "Problems in getting medical care: no specialists of the needed profile", 
+                "Problems in getting medical care: clinics are too far from my place of residence", 
+                "Problems in getting medical care: no necessary equipment")
+# 
+for (i in 1:length(vars)){
+  
+  new_row_for_meta_df <- data_frame(code=paste0(vars[i],"_rec"),
+                                    name=paste(vars_names[i], ",NA removed"),
+                                    label=c("Never",
+                                            "Seldom",
+                                            "Sometimes",
+                                            "Often",
+                                            "Always"),
+                                    value=c(0,1,2,3,4),
+                                    class="factor")
+  meta_df <- rbind(meta_df,new_row_for_meta_df)
+}
+
+d$V88_sum <- rowSums(d[c("V88_1c1_rec",
+                         "V88_2c1_rec",
+                         "V88_3c1_rec",
+                         "V88_4c1_rec",
+                         "V88_5c1_rec")], na.rm = TRUE)
+
+new_row_for_meta_df <- data_frame(code="V88_sum",
+                                  name="Problems in getting medical care - vulnerability index",
+                                  label=NA,
+                                  value=NA,
+                                  class="numeric")
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
 

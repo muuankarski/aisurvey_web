@@ -2297,43 +2297,104 @@ new_row_for_meta_df <- data_frame(code="V75c1",
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
 
+
+### Recode all the variables with 1= yes, 2 no, into 1=yes, 0=no
+
+# maternity capital
+d$V77c1[d$V77c1 == 2] <- 0
+d$V77c1[d$V77c1 == 9] <- NA
+meta_df %>% filter(!code %in% c("V77c1")) -> meta_df
+new_row_for_meta_df <- data_frame(code="V77c1",
+                                  name="Did the respondent get maternity capital?",
+                                  label=c("No","Yes"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+# State benefits
+vars <- c("V76_1c1",
+          "V76_2c1",
+          "V76_3c1",
+          "V76_4c1",
+          "V76_5c1",
+          "V76_6c1",
+          "V76_7c1",
+          "V76_8c1")
+
+# meta_df %>% filter(code %in% vars, label == "Yes") %>% .$name %>% print_cs1()
+
+meta_df %>% filter(!code %in% vars) -> meta_df
+
+for (i in vars){
+  d[[i]][d[[i]] == 2] <- 0
+  d[[i]][d[[i]] == 9] <- NA
+}
+
+vars_names <- c("State benefits: unemployment benefit", 
+                "State benefits: children support benefit", 
+                "State benefits: adopted children benefit", 
+                "State benefits: communal payment rebate", 
+                "State benefits: benefits for the handicapped", 
+                "State benefits: pension", 
+                "State benefits: medical drug purchase benefit", 
+                "State benefits: other")
+
+for (i in 1:length(vars)){
+  
+  new_row_for_meta_df <- data_frame(code=vars[i],
+                                    name=vars_names[i],
+                                    label=c("No","Yes"),
+                                    value=c(0,1),
+                                    class="factor")
+  meta_df <- rbind(meta_df,new_row_for_meta_df)
+  
+  
+}
+
+
+
+
+
+
+
+
 ####################################################################################
 #% ------------------------------------
 
 # in the end, lets remove all variables with variable name including "labeled"
 d <- d[names(d)[!grepl("labeled", names(d))]]
 
-saveRDS(d, file="./data/sdmr15.RDS")
-saveRDS(meta_df, file="./data/meta_df.RDS")
+saveRDS(d, file="/home/aurelius/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/sdmr15.RDS")
+saveRDS(meta_df, file="/home/aurelius/btsync/mk/workspace/russia/huippari2016/aisurvey_web/data/meta_df.RDS")
 
 
 #+ convert_to_spss
-meta_df$numeric <- ifelse(is.na(meta_df$label), TRUE, FALSE)
-library(labelled)
-for (n in names(d)){
-  var_label(d[[n]]) <- meta_df[meta_df$code %in% n, "name"][1]
-}
-
-for (n in names(d)){
-  # if numeric, no need for value label
-  if (is.na(meta_df[meta_df$code %in% n, "numeric"][1])) next()
-  if (meta_df[meta_df$code %in% n, "numeric"][1]) next()
-  vec <- as.integer(meta_df[meta_df$code %in% n, "value"])
-  names(vec) <- meta_df[meta_df$code %in% n, "label"]
-  d[[n]] <- labelled(d[[n]], label=vec)
-}
-
-foreign::write.foreign(d,  
-              codefile="./data/sdmr2015.sps",
-              datafile="./data/sdmr2015.sav", 
-              package="SPSS") 
-
-foreign::write.foreign(d,  
-                       codefile="./data/sdmr2015.do",
-                       datafile="./data/sdmr2015.dta", 
-                       package="Stata") 
-
-write.csv(d,  file = "./data/sdmr2015.csv")
+# meta_df$numeric <- ifelse(is.na(meta_df$label), TRUE, FALSE)
+# library(labelled)
+# for (n in names(d)){
+#   var_label(d[[n]]) <- meta_df[meta_df$code %in% n, "name"][1]
+# }
+# 
+# for (n in names(d)){
+#   # if numeric, no need for value label
+#   if (is.na(meta_df[meta_df$code %in% n, "numeric"][1])) next()
+#   if (meta_df[meta_df$code %in% n, "numeric"][1]) next()
+#   vec <- as.integer(meta_df[meta_df$code %in% n, "value"])
+#   names(vec) <- meta_df[meta_df$code %in% n, "label"]
+#   d[[n]] <- labelled(d[[n]], label=vec)
+# }
+# 
+# foreign::write.foreign(d,  
+#               codefile="./data/sdmr2015.sps",
+#               datafile="./data/sdmr2015.sav", 
+#               package="SPSS") 
+# 
+# foreign::write.foreign(d,  
+#                        codefile="./data/sdmr2015.do",
+#                        datafile="./data/sdmr2015.dta", 
+#                        package="Stata") 
+# 
+# write.csv(d,  file = "./data/sdmr2015.csv")
 
 
 
