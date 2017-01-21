@@ -11,14 +11,26 @@ output:
 ```{r setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
-                           eval=FALSE,
-                           cache=FALSE,
+                           eval=TRUE,
+                           cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
 opts_chunk$set(fig.width = 10, fig.height = 10)
 library(ggplot2)
 library(dplyr)
 options(scipen=999)
+
+d <- readRDS("./data/sdmr15.RDS")
+meta <- readRDS("./data/meta_df.RDS")
+
+label_data <- function(data=d, variable="tvtot", metadata=meta, into.factor=TRUE){
+  if (!"factor" %in% unique(metadata[metadata$code %in% variable,]$class)) stop("Variable is either character or numeric and has no labels")
+  vardata <- metadata[metadata$code %in% variable,]
+  new_values <- with(vardata, label[match(data[[variable]], value)])
+  if (into.factor) new_values <- factor(new_values, levels=vardata$label)
+  return(new_values)
+}
+
 ```
 
 # Sites of interview
@@ -26,15 +38,19 @@ options(scipen=999)
 ## Whole Russia
 
 ```{r draawmap, fig.height=10}
-load("./data/location_df.RData")
+load("./data/archive/location_df.RData")
 
-load("./data/sdmr_4_english_language_versionL.RData")
 library(dplyr)
-n_cases <- d15l %>% group_by(PUNKTc1) %>% 
-  summarise(n = n()) %>% 
-  filter(!grepl("[0-9]",PUNKTc1))
 
-location_df <- merge(location_df,n_cases,by="PUNKTc1")
+d$PUNKTc1_lab <- label_data(data = d, variable = "PUNKTc1")
+
+n_cases <- d %>% group_by(PUNKTc1_lab) %>%
+  summarise(n = n()) %>%
+  filter(!grepl("[0-9]",PUNKTc1_lab)) %>% 
+  rename(PUNKTc1 = PUNKTc1_lab)
+
+# 
+# location_df <- merge(location_df,n_cases,by.x="PUNKTc1",by.y="PUNKTc1_lab")
 
 library(rgdal)
 

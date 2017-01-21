@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
     - 2015 app: <http://82.181.168.173:443/sdmr_2015/>
     - merge data app: <http://82.181.168.173:443/sdmr_merge/>
     - [SDMR2015QuestionnaireRus.pdf](data/SDMR2015QuestionnaireRus.pdf)
+    - pad <https://pad.okfn.org/p/jRVhXMjJNs>
 - 12.00 – 13.00: Lunch
 - 13.30 -15.00: Recreational activities outdoors
 - 15.30 – 17.30: 2nd session on analyses

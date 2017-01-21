@@ -12,8 +12,8 @@ output:
 ```{r setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
-                           eval=FALSE,
-                           cache=FALSE,
+                           eval=TRUE,
+                           cache=TRUE,
                            warning=FALSE,
                            message=FALSE))
 opts_chunk$set(fig.width = 10, fig.height = 6)
@@ -24,11 +24,23 @@ options(scipen=999)
 # if (!file.exists("./data/d_merge_L_class.RData")) source("./lataa_datat.R")
 # load("./data/sdmr_4_english_language_versionN.RData")
 # d <- d15n
-d <- readRDS("./data/sdmr15.RDS")
+# d <- readRDS("./data/sdmr15.RDS")
 # lets apply the new class variables
 # source("./code/class_variable_2015.R")
 # Lets make the label_data()-function available
-source("./code/label_data.R")
+# source("./code/label_data.R")
+
+d <- readRDS("./data/sdmr15.RDS")
+meta <- readRDS("./data/meta_df.RDS")
+
+label_data <- function(data=d, variable="tvtot", metadata=meta, into.factor=TRUE){
+  if (!"factor" %in% unique(metadata[metadata$code %in% variable,]$class)) stop("Variable is either character or numeric and has no labels")
+  vardata <- metadata[metadata$code %in% variable,]
+  new_values <- with(vardata, label[match(data[[variable]], value)])
+  if (into.factor) new_values <- factor(new_values, levels=vardata$label)
+  return(new_values)
+}
+
 ```
 
 # Cross-sectional 2015
@@ -51,10 +63,11 @@ d %>% # data
             mediaani_tulot1 = median(tulot, na.rm=TRUE),
             keskihajonta_tulot1 = sd(tulot,na.rm = TRUE)
   ) %>% kable()
+
 ```
 
 ```{r incomekuva}
-dd <- d15n %>% filter(V74c1 <= 100000)
+dd <- d %>% filter(V74c1 <= 100000)
 
 dd <- d %>% 
   mutate(sex = ifelse(V112c1 == 1, "male", "female")) %>% 
@@ -81,7 +94,7 @@ dd <- d %>%
   filter(V74c1 <= 100000)
 
 ## --------------
-dd$subpov <- label_sdmr(dd,"V81c1")
+dd$subpov <- label_data(dd,"V81c1")
 
 dd <- dd[!is.na(dd$subpov),]
 
@@ -112,12 +125,11 @@ name code
 '), stringsAsFactors=FALSE, header=TRUE)
 
 # lets add the institutional trust
-label_data <- readRDS("./data/label_data.RDS")
-trust_vars <- label_data[grepl("Trust:", label_data$name),]
+trust_vars <- meta[grepl("Trust:", meta$name),]
 trust_vars <- trust_vars[!duplicated(trust_vars$code),c("name","code")]
 bg_vars <- rbind(bg_vars,trust_vars)
 
-dd$subpov <- label_sdmr(dd,"V81c1", factor=TRUE)
+dd$subpov <- label_data(dd,"V81c1",metadata = meta)
 
 for (i in bg_vars$code){
   
@@ -138,7 +150,7 @@ for (i in bg_vars$code){
                                  "50-59",
                                  "60-69",
                                  "70 and older")))
-  } else dd$depend <- label_sdmr(dd,i, factor=TRUE)
+  } else dd$depend <- label_data(dd,i)
   
   tbl <- as.data.frame(prop.table(table(dd$subpov,dd$depend),2)*100)
   
