@@ -1,0 +1,50 @@
+---
+title: "Survey apps"
+output: html_document
+---
+  
+```{r applist_setup, include = F}
+library(knitr)
+knitr::opts_chunk$set(list(echo=FALSE,
+                           eval=TRUE,
+                           cache=FALSE,
+                           warning=FALSE,
+                           message=FALSE))
+opts_chunk$set(fig.width = 6, fig.height = 6)
+```
+
+```{r}
+library(tidyverse)
+d_list <- yaml::yaml.load_file("~/btsync/workspace/apps/templates/header_info.yml")
+info <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
+```
+
+```{r, results="asis"}
+app_url <- paste0("http://82.181.168.173:443/",info$id,"/")
+app_title <- info$title
+info_link_url <- info$info_link_url
+info_link_text <- info$info_link_text
+
+app_dat <- data_frame(app_url=app_url,
+                      app_title=app_title,
+                      info_link_url=info_link_url,
+                      info_link_text=info_link_text)
+# Kelat veks
+app_dat <- app_dat %>% filter(!info_link_text %in% "Kela")
+
+
+for (i in 1:nrow(app_dat)){
+  if (i==1){
+    cat(
+      '|App|Info|
+| -- | -- |
+')    
+  }
+  cat(paste(
+    '|[',app_dat$app_title[i],'](',app_dat$app_url[i],')|[',app_dat$info_link_text[i],'](',app_dat$info_link_url[i],')|
+'))
+  
+}
+```
+
+
