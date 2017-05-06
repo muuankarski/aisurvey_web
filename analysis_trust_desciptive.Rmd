@@ -30,8 +30,8 @@ options(scipen=999)
 # cross15 <- d15n
 # dd <- cross15
 
-d <- readRDS("../sdmr_processing/output/sdmr15_data.RDS")
-meta <- readRDS("../sdmr_processing/output/sdmr15_meta.RDS")
+d <- readRDS("../sdmr_processing/output/sdmr2015_data.RDS")
+meta <- readRDS("../sdmr_processing/output/sdmr2015_meta.RDS")
 # 
 # 
 # dd <- readRDS("./data/sdmr15.RDS")

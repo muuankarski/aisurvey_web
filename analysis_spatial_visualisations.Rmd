@@ -20,8 +20,8 @@ library(ggplot2)
 library(dplyr)
 options(scipen=999)
 
-d <- readRDS("../sdmr_processing/output/sdmr15_data.RDS")
-meta <- readRDS("../sdmr_processing/output/sdmr15_meta.RDS")
+d <- readRDS("../sdmr_processing/output/sdmr2015_data.RDS")
+meta <- readRDS("../sdmr_processing/output/sdmr2015_meta.RDS")
 
 label_data <- function(data=d, variable="tvtot", metadata=meta, into.factor=TRUE){
   if (!"factor" %in% unique(metadata[metadata$code %in% variable,]$class)) stop("Variable is either character or numeric and has no labels")
