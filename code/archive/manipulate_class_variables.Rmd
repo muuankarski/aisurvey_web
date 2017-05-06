@@ -12,7 +12,7 @@ output:
 This page documents the construction of various class variables. Click "Show"-button to see the code applied!
 
 
-```{r setup, include = F}
+```{r manipulate_class_vars_setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=FALSE,

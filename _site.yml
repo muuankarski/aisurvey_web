@@ -1,29 +1,8 @@
 name: "Aisurvey"
 navbar:
-  title: "Survey 2015"
+  title: "sdmr analysis"
   type: inverse
   left:
-    - text: "Data & data manipulation"
-      icon: fa-database
-      menu:
-        - text: "Data overview"
-          icon: fa-list-ul
-          href: data.html
-        - text: "Creating class variables"
-          icon: fa-wrench
-          href: manipulate_class_variables_strings.html
-    - text: "Codebooks"
-      icon: fa-book
-      menu:
-        - text: "Codebook 2015 data"
-          icon: fa-book
-          href: codebook_2015.html
-        - text: "Variable list 2015 data"
-          icon: fa-table
-          href: codebook_2015_varlist.html
-        - text: "Codebook merged file"
-          icon: fa-book
-          href: codebook_merge.html
     - text: "Analysis"
       icon: fa-line-chart
       menu:
@@ -36,34 +15,13 @@ navbar:
         - text: "Spatial visualisations"
           icon: fa-map
           href: analysis_spatial_visualisations.html
-#        - text: "Descriptive visualisations"
-#          icon: fa-bar-chart
-#          href: viz.html
-#        - text: "Modelling"
-#          icon: fa-tasks
-#          href: model.html
-#        - text: "Analysis application (In progress)"
-#          icon: fa fa-cog fa-spin
-#          href: http://82.181.168.173:443/sdmr_shiny/
     - text: "Applications"
       icon: fa fa-cog fa-spin
-      menu:
-        - text: "Descriptive app for 2015 data"
-          icon: fa-line-chart
-          href: http://82.181.168.173:443/sdmr_2015/
-#        - text: "Factor analysis for 2015 data"
-#          icon: fa-line-chart
-#          href: http://82.181.168.173:443/lavaanshiny/
-        - text: "Descriptive app for merged data"
-          icon: fa-line-chart
-          href: http://82.181.168.173:443/sdmr_merge/
+      href: applist.html
     - text: "Upload file"
       icon: fa-file
       href: upload/index.php
   right:
-#    - text: "Mistä on kyse?"
-#      img: plot/kela_logo.svg
-#      href: about.html
     - icon: fa-info
       href: http://markuskainu.fi
 output:

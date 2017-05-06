@@ -1984,6 +1984,11 @@ d$V34c1[d$V34c1 %in% c(9)] <- 2
 d$V35c1[d$V35c1 %in% c(9)] <- 1
 d$V37c1[d$V37c1 %in% c(9)] <- 1
 
+prop.table(table_na(d$V34c1))*100
+
+
+
+
 # d$V34c1[is.na(d$V34c1)] <- 0
 # d$V34c1[is.na(d$V35c1)] <- 0
 # d$V34c1[is.na(d$V37c1)] <- 0
@@ -2266,17 +2271,54 @@ new_row_for_meta_df <- data_frame(code="V113c1_rec",
                                   class="factor")  
 meta_df <- rbind(meta_df,new_row_for_meta_df)
 
+# Moscow
+d$moscowpiter[d$V113c1 %in% c(1,2)] <- 1
+d$moscowpiter[is.na(d$moscowpiter)] <- 0
 
+d$bigcity[d$V113c1 %in% c(3,4,5)] <- 1
+d$bigcity[is.na(d$bigcity)] <- 0
 
-new_row_for_meta_df <- data_frame(code="V113c1_rec",
-                                  name="Four-class type of settlement variables",
-                                  label=c("Moscow & St. Petersburg",
-                                          "City more than 100000 people",
-                                          "Town with less than 100000 people",
-                                          "Village"),
-                                  value=c(1:4),
+d$smalltown[d$V113c1 %in% c(6,7,8)] <- 1
+d$smalltown[is.na(d$smalltown)] <- 0
+
+d$village[d$V113c1 %in% c(9,10)] <- 1
+d$village[is.na(d$village)] <- 0
+
+new_row_for_meta_df <- data_frame(code="moscowpiter",
+                                  name="Lives in Moscow or St Petersburg",
+                                  label=c("No",
+                                          "Yes"),
+                                  value=c(0:1),
                                   class="factor")  
 meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+new_row_for_meta_df <- data_frame(code="bigcity",
+                                  name="Lives in City more than 100000 people",
+                                  label=c("No",
+                                          "Yes"),
+                                  value=c(0:1),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+new_row_for_meta_df <- data_frame(code="smalltown",
+                                  name="Lives in Town with less than 100000 people",
+                                  label=c("No",
+                                          "Yes"),
+                                  value=c(0:1),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+new_row_for_meta_df <- data_frame(code="village",
+                                  name="Lives in Village",
+                                  label=c("No",
+                                          "Yes"),
+                                  value=c(0:1),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+
+# income
 
 d$V74c1[d$V74c1 == "9999998"] <- NA
 d$V74c1[d$V74c1 == "9999999"] <- NA
@@ -2347,12 +2389,404 @@ for (i in 1:length(vars)){
                                     value=c(0,1),
                                     class="factor")
   meta_df <- rbind(meta_df,new_row_for_meta_df)
-  
-  
 }
 
 
+# -----  bank credit ------------------
+d$V60_7c1[d$V60_7c1 == 2] <- 0
+d$V60_7c1[d$V60_7c1 == 9] <- NA
+meta_df %>% filter(!code %in% c("V60_7c1")) -> meta_df
+new_row_for_meta_df <- data_frame(code="V60_7c1",
+                                  name="Has the respondent got a bank credit since 2008?",
+                                  label=c("No","Yes"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
 
+
+
+# -----  etchi group2 ------------------
+d$V105c1_rec <- d$V105c1
+d$V105c1_rec[d$V105c1_rec == 9] <- NA
+d$V105c1_rec[d$V105c1_rec != 1] <- 0
+new_row_for_meta_df <- data_frame(code="V105c1_rec",
+                                  name="Respondent's ethnic group, in two classes",
+                                  label=c("other","Russian"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# -----  dweller gatherings------------------
+d$V94_14c1_rec <- d$V94_14c1
+d$V94_14c1_rec[d$V94_14c1_rec == 2] <- 1
+d$V94_14c1_rec[d$V94_14c1_rec == 3] <- 0
+new_row_for_meta_df <- data_frame(code="V94_14c1_rec",
+                                  name="Participation in public activity: dweller gatherings, formal or informal, in two classes",
+                                  label=c("Not a member and do not participate","Member of dweller gatherings"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# -----  Income group ------------------
+d$V81c1_rec <- d$V81c1
+d$V81c1_rec[d$V81c1_rec %in% 1:2] <- 0
+d$V81c1_rec[d$V81c1_rec %in% 3:6] <- 1
+new_row_for_meta_df <- data_frame(code="V81c1_rec",
+                                  name="Income group, in two classes - subjective poverty",
+                                  label=c("Cannot make ends meet & hard to buy clothes",
+                                          "durables problem, expensive problem, real estate problem, no problem"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# ----- trust ------------------
+vars <- c("V95_1c1",
+          "V95_2c1",
+          "V95_3c1",
+          "V95_4c1",
+          "V95_5c1",
+          "V95_6c1",
+          "V95_7c1",
+          "V95_8c1",
+          "V95_9c1",
+          "V95_10c1",
+          "V95_11c1",
+          "V95_12c1",
+          "V95_13c1",
+          "V95_14c1",
+          "V95_15c1",
+          "V95_16c1")
+
+# meta_df %>% filter(code %in% vars, label == "Fully trust") %>% .$name %>% print_cs1()
+
+# meta_df %>% filter(!code %in% vars) -> meta_df
+
+for (i in vars){
+  ii <- paste0(i,"_rec")
+  d[ii] <- d[i]
+  d[[ii]][d[[i]] %in% 1] <- -2
+  d[[ii]][d[[i]] %in% 2] <- -1
+  d[[ii]][d[[ii]] == 9] <- 0
+  d[[ii]][d[[ii]] == 3] <- 0
+  d[[ii]][d[[i]] %in% 4] <- 1
+  d[[ii]][d[[i]] %in% 5] <- 2
+}
+
+vars_names <- c("Trust: Council of the Federation", 
+                "Trust: the State Duma", 
+                "Trust: the President", 
+                "Trust: the RF government", 
+                "Trust: regional administration", 
+                "Trust: municipal, village administration", 
+                "Trust: the Russian Orthodox church", 
+                "Trust: the army", 
+                "Trust: courts", 
+                "Trust: the police", 
+                "Trust: trade unions", 
+                "Trust: NGO", 
+                "Trust: TV", 
+                "Trust: papers", 
+                "Trust: banks", 
+                "Trust: entrepreneurs")
+
+for (i in 1:length(vars)){
+  
+  new_row_for_meta_df <- data_frame(code=paste0(vars[i],"_rec"),
+                                    name=paste(vars_names[i], ",in two classes"),
+                                    label=c("Completely distrust",
+                                            "Mainly distrust",
+                                            "Hard to say + Somewhat trust, somewhat distrust",
+                                            "Mainly trust",
+                                            "Fully trust"),
+                                    value=c(-2,-1,0,1,2),
+                                    class="factor")
+  meta_df <- rbind(meta_df,new_row_for_meta_df)
+}
+
+d$V95_sum <- rowSums(d[c("V95_1c1_rec",
+                         "V95_2c1_rec",
+                         "V95_3c1_rec",
+                         "V95_4c1_rec",
+                         "V95_5c1_rec",
+                         "V95_6c1_rec",
+                         "V95_7c1_rec",
+                         "V95_8c1_rec",
+                         "V95_9c1_rec",
+                         "V95_10c1_rec",
+                         "V95_11c1_rec",
+                         "V95_12c1_rec",
+                         "V95_13c1_rec",
+                         "V95_14c1_rec",
+                         "V95_15c1_rec",
+                         "V95_16c1_rec")], na.rm = FALSE)
+
+new_row_for_meta_df <- data_frame(code="V95_sum",
+                                  name="Public participation",
+                                  label=NA,
+                                  value=NA,
+                                  class="numeric")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+d$V95_sum_rec[d$V95_sum >= 1] <- 2
+d$V95_sum_rec[d$V95_sum <= -1 ] <- 0
+d$V95_sum_rec[d$V95_sum == 0] <- 1
+
+
+new_row_for_meta_df <- data_frame(code="V95_sum_rec",
+                                  name="Trust, in three classes",
+                                  label=c("Trusting","Neutral","Distrusting"),
+                                  value=c(2,1,0),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# ----- trusting others ------------------
+d$V96c1_rec <- d$V96c1
+d$V96c1_rec[d$V96c1_rec %in% 1:3] <- 1
+d$V96c1_rec[d$V96c1_rec %in% 4:6] <- 0
+new_row_for_meta_df <- data_frame(code="V96c1_rec",
+                                  name="Trusting others, in two classes",
+                                  label=c("Little trust",
+                                          "Lot of trust"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+# ----- Current job type of organization ------------------
+d$V28c1_rec <- d$V28c1
+d$V28c1_rec[d$V28c1_rec %in% 8:9] <- NA
+d$V28c1_rec[d$V28c1_rec %in% 1] <- 0
+d$V28c1_rec[d$V28c1_rec %in% 2:3] <- 1
+new_row_for_meta_df <- data_frame(code="V28c1_rec",
+                                  name="Current job type of organization, in two classes",
+                                  label=c("Public",
+                                          "Private"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+
+# -----  etchi group2 ------------------
+d$V105c1_rec <- d$V105c1
+d$V105c1_rec[d$V105c1_rec == 9] <- NA
+d$V105c1_rec[d$V105c1_rec != 1] <- 0
+new_row_for_meta_df <- data_frame(code="V105c1_rec",
+                                  name="Respondent's ethnic group, in two classes",
+                                  label=c("other","Russian"),
+                                  value=c(0,1),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# ----- Participation in public activity ------------------
+vars <- c("V94_1c1",
+          "V94_2c1",
+          "V94_3c1",
+          "V94_4c1",
+          "V94_5c1",
+          "V94_6c1",
+          "V94_7c1",
+          "V94_8c1",
+          "V94_9c1",
+          "V94_10c1",
+          "V94_11c1",
+          "V94_12c1",
+          "V94_13c1",
+          "V94_14c1",
+          "V94_15c1",
+          "V94_16c1",
+          "V94_17c1",
+          "V94_18c1")
+# 
+# meta_df %>% filter(code %in% vars, label == "Yes, fully") %>% .$name %>% print_cs1()
+
+# 
+for (i in vars){
+  ii <- paste0(i,"_rec")
+  d[[ii]][d[[i]] %in% 1:2] <- 1
+  d[[ii]][d[[i]] %in% 2] <- 0
+}
+# 
+vars_names <- c("Participation in public activity: charity organizations", 
+                "Participation in public activity: religious, church organizations", 
+                "Participation in public activity: cultural, art organizations", 
+                "Participation in public activity: trade unions", 
+                "Participation in public activity: political parties", 
+                "Participation in public activity: minority protection movements", 
+                "Participation in public activity: environmental organizations", 
+                "Participation in public activity: veterans' organizations", 
+                "Participation in public activity: handicapped assistance organizations", 
+                "Participation in public activity: youth organizations", 
+                "Participation in public activity: women's organizations", 
+                "Participation in public activity: sports clubs, unions", 
+                "Participation in public activity: consumer organizations", 
+                "Participation in public activity: dweller gatherings, formal or informal", 
+                "Participation in public activity: intererst groups (fishermen)",
+                "Participation in public activity: volunteer organizations",
+                "Participation in public activity: ethnic, nationalist movements, organizations",
+                "Participation in public activity: other organizations or clubs")
+# 
+for (i in 1:length(vars)){
+  
+  new_row_for_meta_df <- data_frame(code=paste0(vars[i],"_rec"),
+                                    name=paste(vars_names[i], ",in two classes"),
+                                    label=c("Participates","Not participates"),
+                                    value=c(0,1),
+                                    class="factor")
+  meta_df <- rbind(meta_df,new_row_for_meta_df)
+}
+
+
+d$V94_sum <- rowSums(d[c("V94_1c1_rec",
+                         "V94_2c1_rec",
+                         "V94_3c1_rec",
+                         "V94_4c1_rec",
+                         "V94_5c1_rec",
+                         "V94_6c1_rec",
+                         "V94_7c1_rec",
+                         "V94_8c1_rec",
+                         "V94_9c1_rec",
+                         "V94_10c1_rec",
+                         "V94_11c1_rec",
+                         "V94_12c1_rec",
+                         "V94_13c1_rec",
+                         "V94_14c1_rec",
+                         "V94_15c1_rec",
+                         "V94_16c1_rec",
+                         "V94_17c1_rec",
+                         "V94_18c1_rec")], na.rm = TRUE)
+
+new_row_for_meta_df <- data_frame(code="V94_sum",
+                                  name="Public participation",
+                                  label=NA,
+                                  value=NA,
+                                  class="numeric")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+d$V94_sum_rec[d$V94_sum >= 2] <- 2
+d$V94_sum_rec[d$V94_sum > 0 & d$V94_sum < 2] <- 1
+d$V94_sum_rec[d$V94_sum == 0] <- 0
+
+
+new_row_for_meta_df <- data_frame(code="V94_sum_rec",
+                                  name="Public participation, in three classes",
+                                  label=c("active in 2 or more","active in 1","passive"),
+                                  value=c(2,1,0),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+# ----- Participation in public activity ------------------
+vars <- c("V93_1c1",
+          "V93_2c1",
+          "V93_3c1",
+          "V93_4c1",
+          "V93_5c1",
+          "V93_6c1",
+          "V93_7c1",
+          "V93_8c1",
+          "V93_9c1")
+# 
+# meta_df %>% filter(code %in% vars, label == "Yes") %>% .$name %>% print_cs1()
+
+# 
+for (i in vars){
+  ii <- paste0(i,"_rec")
+  d[[ii]][d[[i]] %in% 1] <- 1
+  d[[ii]][d[[i]] %in% 2] <- 0
+}
+# 
+vars_names <- c("Events the respondent participated in in 2013-2014: signed a petition", 
+                "Events the respondent participated in in 2013-2014: public organization congresses, conferences", 
+                "Events the respondent participated in in 2013-2014: strike", 
+                "Events the respondent participated in in 2013-2014: protest march", 
+                "Events the respondent participated in in 2013-2014: Victory day celebrations", 
+                "Events the respondent participated in in 2013-2014: rally", 
+                "Events the respondent participated in in 2013-2014: a letter to a newspaper", 
+                "Events the respondent participated in in 2013-2014: a candidate's election campaign", 
+                "Events the respondent participated in in 2013-2014: voted in a local elections")
+# 
+for (i in 1:length(vars)){
+  
+  new_row_for_meta_df <- data_frame(code=paste0(vars[i],"_rec"),
+                                    name=paste(vars_names[i], ",in two classes"),
+                                    label=c("Participates","Not participates"),
+                                    value=c(0,1),
+                                    class="factor")
+  meta_df <- rbind(meta_df,new_row_for_meta_df)
+}
+
+
+d$V93_sum <- rowSums(d[c("V93_1c1_rec",
+                         "V93_2c1_rec",
+                         "V93_3c1_rec",
+                         "V93_4c1_rec",
+                         "V93_5c1_rec",
+                         "V93_6c1_rec",
+                         "V93_7c1_rec",
+                         "V93_8c1_rec",
+                         "V93_9c1_rec")], na.rm = TRUE)
+
+new_row_for_meta_df <- data_frame(code="V93_sum",
+                                  name="Participation in public events",
+                                  label=NA,
+                                  value=NA,
+                                  class="numeric")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+d$V93_sum_rec[d$V93_sum >= 3] <- 2
+d$V93_sum_rec[d$V93_sum > 0 & d$V93_sum < 3] <- 1
+d$V93_sum_rec[d$V93_sum == 0] <- 0
+
+
+new_row_for_meta_df <- data_frame(code="V93_sum_rec",
+                                  name="Participation in public events, in three classes",
+                                  label=c("active in 3 or more","active in 1 or 2","passive"),
+                                  value=c(2,1,0),
+                                  class="factor")
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+
+d$region1[d$PUNKTc1 %in% c(40, 3201,3213,3219,3225,12230,12401,14401,
+                           18251,27420,41420,42206,42215,42401,47205,
+                           47415,49225,49239,58401,86401, 46223,46228,
+                           46230,46231, 46234, 46238, 46239, 46241, 46245,
+                           46247, 46249, 46250, 46252, 46253, 46254, 46256,
+                           46257, 46259, 46405, 46411, 46416, 46418, 46424,
+                           46425, 46432, 46434, 46436, 46438, 46441, 46457,
+                           46460, 46462, 46464, 46467, 46470, 46480, 46483,
+                           46490, 46493, 46505)] <- 1
+d$region1[d$PUNKTc1 %in% c(99, 14401,14410,14430, 17230,17435,20401,20410,24201,
+                           24233,24401,28238,27420,28401,28450,29401,34214,34244,
+                           54243,54401,56259,56401,61212,61401,66236,70240,70250,
+                           70401,78401,78417)] <- 2
+d$region1[d$PUNKTc1 %in% c(1213.1229,1401,1410,25208,25226,25401,25438,32401,32431,
+                           32440,81401,95401,502575)] <- 3
+d$region1[d$PUNKTc1 %in% c(4401,4403,37228,37401,37405,38226,50254,50257,50401,52239,
+                           52401,65210,65401,65409,65478,71250,71401,75233,75401,
+                           75409,75412,75438)] <- 4
+d$region1[d$PUNKTc1 %in% c(5226,5401,5547,64254,64401)] <- 5
+d$region1[d$PUNKTc1 %in% c(7236,7258, 7427,82235,82401,90205,90220,91235,96401)] <- 6
+d$region1[d$PUNKTc1 %in% c(18401,18410,19224,19401, 60235,60401,60412,85210,85228,85237,85401)] <- 7
+d$region1[d$PUNKTc1 %in% c(22205,22212,22242,22401,33208,33249,36204,36228,36401,36413,
+                           36440,53412,53425,57401,57420,63206,63450,63701,73401,73405,
+                           80218,80401,80445,89210,89218,89229,89243,89420,92208,92401,
+                           92425,94212,94401,94430,9444097253,97401)] <- 8
+d$region1[d$PUNKTc1 %in% c(35000:35419)] <- 9
+
+new_row_for_meta_df <- data_frame(code="region1",
+                                  name="Regional variable nr1",
+                                  label=c("North-western","Central","Siberia","Ural","Far-East","South-Caucasia","Southern","Volga","Crimea"),
+                                  value=c(1,2,3,4,5,6,7,8,9),
+                                  class="factor")  
+meta_df <- rbind(meta_df,new_row_for_meta_df)
+
+# change the name of age-var into	Respondents age numeric
+meta_df$name[meta_df$code == "age"] <- "Respondents age numeric"
 
 
 

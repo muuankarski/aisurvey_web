@@ -9,7 +9,7 @@ output:
 ---
 
 
-```{r setup, include = F}
+```{r trust_setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=FALSE,
@@ -29,9 +29,14 @@ options(scipen=999)
 # load("./data/sdmr_4_english_language_versionN.RData")
 # cross15 <- d15n
 # dd <- cross15
-dd <- readRDS("./data/sdmr15.RDS")
 
-source("./code/label_data.R")
+d <- readRDS("../sdmr_processing/output/sdmr15_data.RDS")
+meta <- readRDS("../sdmr_processing/output/sdmr15_meta.RDS")
+# 
+# 
+# dd <- readRDS("./data/sdmr15.RDS")
+# 
+# source("./code/label_data.R")
 ```
 
 # Cross-sectional 2015

@@ -9,7 +9,7 @@ output:
 ---
 
 
-```{r setup, include = F}
+```{r poverty_setup, include = F}
 library(knitr)
 knitr::opts_chunk$set(list(echo=TRUE,
                            eval=TRUE,
@@ -30,8 +30,8 @@ options(scipen=999)
 # Lets make the label_data()-function available
 # source("./code/label_data.R")
 
-d <- readRDS("./data/sdmr15.RDS")
-meta <- readRDS("./data/meta_df.RDS")
+d <- readRDS("../sdmr_processing/output/sdmr15_data.RDS")
+meta <- readRDS("../sdmr_processing/output/sdmr15_meta.RDS")
 
 label_data <- function(data=d, variable="tvtot", metadata=meta, into.factor=TRUE){
   if (!"factor" %in% unique(metadata[metadata$code %in% variable,]$class)) stop("Variable is either character or numeric and has no labels")
