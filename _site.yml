@@ -3,24 +3,9 @@ navbar:
   title: "sdmr analysis"
   type: inverse
   left:
-    - text: "Analysis"
-      icon: fa-line-chart
-      menu:
-        - text: "Descriptive poverty analysis"
-          icon: fa-hand-grab-o
-          href: analysis_poverty_desciptive.html
-        - text: "Descriptive trust analysis"
-          icon: fa-group
-          href: analysis_trust_desciptive.html
-        - text: "Spatial visualisations"
-          icon: fa-map
-          href: analysis_spatial_visualisations.html
     - text: "Applications"
       icon: fa fa-cog fa-spin
       href: applist.html
-    - text: "Upload file"
-      icon: fa-file
-      href: upload/index.php
   right:
     - icon: fa-info
       href: http://markuskainu.fi

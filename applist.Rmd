@@ -20,7 +20,7 @@ info <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
 ```
 
 ```{r, results="asis"}
-app_url <- paste0("http://82.181.168.173:443/",info$id,"/")
+app_url <- paste0("http://82.181.174.101:443/",info$id,"/")
 app_title <- info$title
 info_link_url <- info$info_link_url
 info_link_text <- info$info_link_text

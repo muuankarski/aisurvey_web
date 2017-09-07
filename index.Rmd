@@ -10,7 +10,7 @@ I will collect data & analysis & documentation within this site.
 
 ## Latest
 
-- new data download site at <http://data.markuskainu.fi/sdmr/>
+- new data download site at <http://data.markuskainu.fi/sdmr/processing>
 - [Workshop in Lånvik in 19-20, 2017](workshop_langvik_20170119.html)
 
 ```{bash, eval=FALSE}
@@ -20,8 +20,8 @@ I will collect data & analysis & documentation within this site.
 - 10.00 – Arrival to Långvik
 - 10.30 -12.00: 1st session: Aims of the seminar, schedule (Markku) & introduction to analytical tool (Markus)
     - [Markus slides](slides/20170119_langvik.html)
-    - 2015 app: <http://82.181.168.173:443/sdmr_2015/>
-    - merge data app: <http://82.181.168.173:443/sdmr_merge/>
+    - 2015 app: <http://82.181.174.101:443/sdmr_2015/>
+    - merge data app: <http://82.181.174.101:443/sdmr_merge/>
     - [SDMR2015QuestionnaireRus.pdf](data/SDMR2015QuestionnaireRus.pdf)
     - pad <https://pad.okfn.org/p/jRVhXMjJNs>
 - 12.00 – 13.00: Lunch
@@ -40,8 +40,8 @@ I will collect data & analysis & documentation within this site.
 15.00: Departure to Helsinki
 ```
 
-- app for longitudinal data: <http://82.181.168.173:443/sdmr_merge/>
-- app for cross-section 2015 data: <http://82.181.168.173:443/sdmr_2015/>
+- app for longitudinal data: <http://82.181.174.101:443/sdmr_merge/>
+- app for cross-section 2015 data: <http://82.181.174.101:443/sdmr_2015/>
 
 
 
